@@ -1155,9 +1155,14 @@ local function applyRobloxBan(userId, reason, privateReason, durationSeconds)
 		return false, "invalid_user"
 	end
 
+	-- nil or -1 = permanent; otherwise it must be a real number of seconds > 0.
 	durationSeconds = tonumber(durationSeconds)
-	if not durationSeconds or durationSeconds <= 0 then
+	if durationSeconds == nil or durationSeconds == -1 then
 		durationSeconds = -1
+	elseif durationSeconds ~= durationSeconds or durationSeconds <= 0 or durationSeconds == math.huge then
+		return false, "invalid_duration"
+	else
+		durationSeconds = math.floor(durationSeconds)
 	end
 
 	-- Permanent ban -> official Roblox ban (BanAsync, alt accounts too).
@@ -1182,6 +1187,11 @@ local function applyRobloxBan(userId, reason, privateReason, durationSeconds)
 			robloxErr = tostring(errBan)
 			warn("[Zone Panel] Roblox BanAsync failed, using panel ban instead:", robloxErr)
 		end
+	else
+		-- A timed ban replaces an older permanent Roblox ban.
+		pcall(function()
+			Players:UnbanAsync({ UserIds = { userId }, ApplyToUniverse = true })
+		end)
 	end
 
 	local bannedAt = now()
@@ -2206,7 +2216,7 @@ local function canTarget(requester, targetPlayer, action)
 	if requester:GetAttribute("AdminPanelAccess") ~= true and rankValue(getRank(requester.UserId)) <= 0 then
 		return false
 	end
-	return (canTargetUserId(requester.UserId, targetPlayer.UserId, action))
+	return canTargetUserId(requester.UserId, targetPlayer.UserId, action)
 end
 
 PROTECTED_ACTIONS = {
@@ -2222,6 +2232,7 @@ PROTECTED_ACTIONS = {
 ZONE_ULTIMATE_SECURITY = ZONE_ULTIMATE_SECURITY or {}
 
 RANK_PROTECTED_ACTIONS = {
+	VoiceMute = true,
 	Ban = true,
 	Mute = true,
 	TempMute = true,
@@ -2651,7 +2662,7 @@ end
 
 function zoneAnnounceSeconds(value)
 	local n = tonumber(value)
-	if not n or n <= 0 then
+	if not n or n ~= n or n <= 0 or n == math.huge then
 		return ANNOUNCE_DISPLAY_SECONDS
 	end
 	return math.clamp(math.floor(n), ANNOUNCE_DISPLAY_MIN_SECONDS, ANNOUNCE_DISPLAY_MAX_SECONDS)
@@ -3957,9 +3968,16 @@ function zoneTimeoutLoad(player)
 		return
 	end
 	local uid = player.UserId
-	local ok, data = pcall(function()
-		return ZONE_TIMEOUT_STORE:GetAsync(tostring(uid))
-	end)
+	local ok, data
+	for attempt = 1, 4 do
+		ok, data = pcall(function()
+			return ZONE_TIMEOUT_STORE:GetAsync(tostring(uid))
+		end)
+		if ok then
+			break
+		end
+		task.wait(attempt * 2)
+	end
 	if not ok or type(data) ~= "table" then
 		return
 	end
@@ -4018,7 +4036,12 @@ function zoneTimeoutCommand(requester, targetUserId, action, value)
 		reason = tostring(raw.reason or "")
 		raw = raw.minutes or raw.value or raw.reason
 	end
-	local minutesText, rest = tostring(raw or ""):match("^%s*(%d+)%s*(.*)$")
+	local rawText = tostring(raw or "")
+	local minutesText, rest = rawText:match("^%s*(%d+)%s+(.*)$")
+	if not minutesText then
+		minutesText = rawText:match("^%s*(%d+)%s*$")
+		rest = ""
+	end
 	local minutes = tonumber(minutesText)
 	if not minutes or minutes < 1 then
 		return false, "Timeout needs minutes, for example: timeout name 30"
@@ -4149,11 +4172,11 @@ for _, plr in ipairs(Players:GetPlayers()) do
 end
 
 Players.PlayerRemoving:Connect(function(plr)
+	-- Timeouts and the ban-spam counter are kept on purpose, so leaving and
+	-- rejoining does not reset them.
 	local uid = plr.UserId
 	ZONE_ULTIMATE_SECURITY[uid] = nil
 	ZONE_VOICE_MUTED[uid] = nil
-	ZONE_TIMEOUTS[uid] = nil
-	ZONE_BAN_SPAM[uid] = nil
 end)
 
 local function getRootAndHumanoid(player)
@@ -7091,6 +7114,20 @@ function commandLookupAction(word)
 	return bestAction
 end
 
+-- "5 reason" -> "5", "reason"; "5" -> "5", ""; "3rd strike" -> nil (no minutes)
+function commandMinutesSplit(text)
+	text = tostring(text or "")
+	local minutesText, rest = string.match(text, "^(%d+)%s+(.*)$")
+	if minutesText then
+		return minutesText, rest
+	end
+	minutesText = string.match(text, "^(%d+)$")
+	if minutesText then
+		return minutesText, ""
+	end
+	return nil, nil
+end
+
 function commandSplit(text)
 	local parts = {}
 	for word in string.gmatch(tostring(text or ""), "%S+") do
@@ -7518,7 +7555,7 @@ function commandRunFor(player, rawText)
 	-- ban <player> <minutes> <reason>  (no minutes = permanent)
 	local commandValue = value ~= "" and value or nil
 	if action == "Ban" then
-		local minutesText, restText = string.match(value, "^(%d+)%s*(.*)$")
+		local minutesText, restText = commandMinutesSplit(value)
 		if minutesText and tonumber(minutesText) and tonumber(minutesText) > 0 then
 			commandValue = { duration = tonumber(minutesText) * 60, reason = restText }
 		else
@@ -7526,7 +7563,7 @@ function commandRunFor(player, rawText)
 		end
 	elseif action == "TempMute" then
 		-- tempmute <player> <minutes> <reason>
-		local minutesText, restText = string.match(value, "^(%d+)%s*(.*)$")
+		local minutesText, restText = commandMinutesSplit(value)
 		if minutesText and tonumber(minutesText) and tonumber(minutesText) > 0 then
 			commandValue = { duration = tonumber(minutesText) * 60, reason = restText }
 		end
