@@ -511,7 +511,7 @@ local function onOpenRequest(player: Player, boxId: any)
 		ev.tools[toolName] -= 1
 		ev.gapLeft = ev.gap
 		ToolData.Award(player, toolName)
-		ToolData.AppendHistory(player.UserId, player.Name, toolName)
+		ToolData.AppendHistory(player.UserId, player.Name, toolName, "win")
 		table.insert(ev.winners, { userId = player.UserId, name = player.DisplayName, tool = toolName })
 		notify(player, "Result", { reward = "Tool", tool = toolName })
 		AnnounceRemote:FireAllClients("Winner", {

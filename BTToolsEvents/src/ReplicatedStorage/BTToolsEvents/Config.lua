@@ -22,6 +22,9 @@ Config.ADMIN_USER_IDS = {
 -- Studio তে টেস্ট করার সময় সবাই অ্যাডমিন হবে (লাইভ গেমে এর কোনো প্রভাব নেই)।
 Config.ALLOW_ADMIN_IN_STUDIO = true
 
+-- চ্যাটে এই কমান্ড লিখলে অ্যাডমিনের 🎁 বাটন দেখা যাবে, আবার লিখলে লুকিয়ে যাবে।
+Config.ADMIN_COMMAND = "/bttools"
+
 ----------------------------------------------------------------------
 -- 💰 খালি বক্সের টাকা
 ----------------------------------------------------------------------
@@ -41,8 +44,10 @@ Config.JOIN_GRANT_DELAY = 5
 -- ডেটাস্টোরের নাম। এটা বদলালে আগের সব সেভ করা টুল হারিয়ে যাবে, তাই বদলাবেন না।
 Config.DATASTORE_NAME = "BTToolsEvents_OwnedTools_v1"
 Config.HISTORY_DATASTORE_NAME = "BTToolsEvents_WinHistory_v1"
--- জেতার ইতিহাসে সর্বোচ্চ কয়টা লাইন রাখা হবে।
-Config.HISTORY_MAX_ENTRIES = 200
+-- ইতিহাসে সর্বোচ্চ কতজন প্লেয়ার থাকবে (বেশি হলে সবচেয়ে পুরনো জন বাদ যাবে)।
+Config.HISTORY_MAX_USERS = 300
+-- প্রতি প্লেয়ারের শেষ কয়টা রেকর্ড থাকবে (জেতা / গিফট / সরানো)।
+Config.HISTORY_MAX_RECORDS_PER_USER = 20
 
 ----------------------------------------------------------------------
 -- 🎁 ইভেন্ট (অ্যাডমিন প্যানেলে এগুলোই ডিফল্ট হিসেবে দেখাবে)
@@ -125,6 +130,71 @@ Config.SOUND_IDS = {
 Config.SOUND_VOLUME = 0.6
 
 ----------------------------------------------------------------------
+-- 🎨 থিম
+----------------------------------------------------------------------
+-- সবার জন্য কোন থিম চলবে: "Midnight", "Frost" অথবা "Ember"।
+-- অ্যাডমিন প্যানেলের "থিম" ট্যাব থেকে নিজের স্ক্রিনে আগে দেখে নিতে পারবেন।
+Config.THEME = "Midnight"
+
+-- রং বদলাতে চাইলে এখানে বদলান, অথবা একই রকম করে নতুন থিম যোগ করুন।
+--   Background  প্যানেলের পেছনের রং       Surface / SurfaceHover  ভেতরের সারি আর বাটন
+--   Text / SubText  লেখা                    Accent / AccentDeep  প্রধান রং (gradient এর দুই মাথা)
+--   OnAccent  Accent এর ওপরের লেখা          Glass  প্যানেল কতটা স্বচ্ছ (0 = একদম ভরাট, 1 = অদৃশ্য)
+Config.THEMES = {
+	-- গাঢ় নীল কাচ, সোনালি accent
+	Midnight = {
+		Background = Color3.fromRGB(13, 16, 25),
+		Surface = Color3.fromRGB(27, 31, 46),
+		SurfaceHover = Color3.fromRGB(38, 43, 62),
+		Stroke = Color3.fromRGB(255, 255, 255),
+		StrokeTransparency = 0.88,
+		Text = Color3.fromRGB(240, 242, 248),
+		SubText = Color3.fromRGB(146, 154, 178),
+		Accent = Color3.fromRGB(246, 192, 72),
+		AccentDeep = Color3.fromRGB(214, 140, 32),
+		OnAccent = Color3.fromRGB(30, 21, 6),
+		Success = Color3.fromRGB(64, 196, 128),
+		Danger = Color3.fromRGB(236, 88, 88),
+		Info = Color3.fromRGB(92, 150, 255),
+		Glass = 0.16,
+	},
+	-- হালকা সাদা কাচ, নীল accent
+	Frost = {
+		Background = Color3.fromRGB(246, 248, 252),
+		Surface = Color3.fromRGB(232, 237, 245),
+		SurfaceHover = Color3.fromRGB(220, 227, 238),
+		Stroke = Color3.fromRGB(15, 23, 42),
+		StrokeTransparency = 0.88,
+		Text = Color3.fromRGB(20, 26, 38),
+		SubText = Color3.fromRGB(96, 106, 126),
+		Accent = Color3.fromRGB(64, 132, 246),
+		AccentDeep = Color3.fromRGB(40, 96, 230),
+		OnAccent = Color3.fromRGB(255, 255, 255),
+		Success = Color3.fromRGB(22, 160, 84),
+		Danger = Color3.fromRGB(220, 50, 50),
+		Info = Color3.fromRGB(14, 150, 220),
+		Glass = 0.08,
+	},
+	-- কয়লা-কালো কাচ, কমলা accent
+	Ember = {
+		Background = Color3.fromRGB(19, 17, 17),
+		Surface = Color3.fromRGB(34, 30, 29),
+		SurfaceHover = Color3.fromRGB(48, 41, 39),
+		Stroke = Color3.fromRGB(255, 255, 255),
+		StrokeTransparency = 0.9,
+		Text = Color3.fromRGB(246, 240, 236),
+		SubText = Color3.fromRGB(170, 156, 148),
+		Accent = Color3.fromRGB(255, 128, 72),
+		AccentDeep = Color3.fromRGB(226, 76, 42),
+		OnAccent = Color3.fromRGB(32, 12, 6),
+		Success = Color3.fromRGB(80, 200, 140),
+		Danger = Color3.fromRGB(240, 84, 84),
+		Info = Color3.fromRGB(120, 160, 255),
+		Glass = 0.16,
+	},
+}
+
+----------------------------------------------------------------------
 -- এর নিচে কিছু বদলানোর দরকার নেই
 ----------------------------------------------------------------------
 local adminSet: { [number]: boolean } = {}
@@ -137,6 +207,11 @@ function Config.IsAdmin(player: Player): boolean
 		return true
 	end
 	return adminSet[player.UserId] == true
+end
+
+-- নাম না মিললে Midnight।
+function Config.GetTheme(name: string?): { [string]: any }
+	return Config.THEMES[name or Config.THEME] or Config.THEMES[Config.THEME] or Config.THEMES.Midnight
 end
 
 function Config.IsSoundSet(id: string?): boolean

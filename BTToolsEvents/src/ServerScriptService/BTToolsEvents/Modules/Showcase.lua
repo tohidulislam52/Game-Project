@@ -5,7 +5,7 @@
 	- জায়গা: Workspace > WinnerShowcase পার্ট। পার্টের সামনের দিকে মুখ করে দাঁড়ায়।
 	- পাশাপাশি সর্বোচ্চ ৩টা জায়গা: মাঝে, ডানে, বামে।
 	- SHOWCASE_DURATION সেকেন্ড পরে ছোট হয়ে মিলিয়ে যায়।
-	- মাথার ওপরে সোনালি "👑 WINNER" ট্যাগ থাকে, countdown বারসহ।
+	- মাথার ওপরে "👑 WINNER" ট্যাগ থাকে, countdown বারসহ। রং Config.THEME অনুযায়ী।
 	  বারটা ক্লায়েন্টে চলে (WinnerTags মডিউল), তাই সার্ভারের ওপর কোনো চাপ নেই।
 	আসল বিজয়ীর মাথার ওপরের ছোট ট্যাগও এখানে তৈরি হয়।
 ]]
@@ -24,11 +24,6 @@ local ToolData = require(script.Parent:WaitForChild("ToolData"))
 local TAG_NAME = "BTWinnerTag"
 local SLOT_ORDER = { 0, 1, -1, 2, -2, 3, -3 }
 
-local GOLD = Color3.fromRGB(255, 205, 60)
-local GOLD_LIGHT = Color3.fromRGB(255, 240, 170)
-local GOLD_DEEP = Color3.fromRGB(214, 140, 20)
-local CARD_DARK = Color3.fromRGB(28, 20, 8)
-local CARD_LIGHT = Color3.fromRGB(70, 48, 12)
 
 type Slot = {
 	userId: number,
@@ -66,14 +61,12 @@ local function new(className: string, props: { [string]: any }, children: { Inst
 	return inst
 end
 
-local function goldGradient(rotation: number): UIGradient
+-- থিমের accent দিয়ে gradient (Config.THEME অনুযায়ী)।
+local function accentGradient(rotation: number): UIGradient
+	local theme = Config.GetTheme()
 	return new("UIGradient", {
 		Rotation = rotation,
-		Color = ColorSequence.new({
-			ColorSequenceKeypoint.new(0, GOLD_LIGHT),
-			ColorSequenceKeypoint.new(0.5, GOLD),
-			ColorSequenceKeypoint.new(1, GOLD_DEEP),
-		}),
+		Color = ColorSequence.new(theme.Accent, theme.AccentDeep),
 	})
 end
 
@@ -83,69 +76,79 @@ local function textLabel(name: string, text: string, posY: number, height: numbe
 		BackgroundTransparency = 1,
 		AnchorPoint = Vector2.new(0.5, 0),
 		Position = UDim2.fromScale(0.5, posY),
-		Size = UDim2.fromScale(0.9, height),
+		Size = UDim2.fromScale(0.86, height),
 		Font = font,
 		Text = text,
 		TextColor3 = color,
 		TextScaled = true,
-		TextStrokeTransparency = 0.4,
-		TextStrokeColor3 = Color3.new(0, 0, 0),
+		TextTruncate = Enum.TextTruncate.AtEnd,
 	})
 end
 
 local function toolsText(tools: { string }): string
-	return "জিতেছে: " .. table.concat(tools, ", ")
+	return "জিতেছে · " .. table.concat(tools, ", ")
 end
 
 -- big = শোকেসের ডামি (countdown সহ), না হলে প্লেয়ারের মাথার ছোট ট্যাগ।
+-- রং আসে Config.THEME থেকে, তাই UI এর সাথে মিলে যায়।
 local function buildTag(displayName: string, tools: { string }, big: boolean): BillboardGui
-	local width, height = if big then 14 else 6, if big then 6.5 else 2.6
+	local theme = Config.GetTheme()
+	local width, height = if big then 13 else 6, if big then 5.6 else 2.4
 
-	local title = textLabel("Title", "👑 WINNER 👑", 0.06, if big then 0.26 else 0.4, Color3.new(1, 1, 1), Enum.Font.FredokaOne)
-	goldGradient(90).Parent = title
+	local title = textLabel("Title", "👑  WINNER", 0.1, if big then 0.17 else 0.26, Color3.new(1, 1, 1), Enum.Font.BuilderSansExtraBold)
+	accentGradient(0).Parent = title
 
 	local card = new("Frame", {
 		Name = "Card",
 		Size = UDim2.fromScale(1, 1),
-		BackgroundColor3 = Color3.new(1, 1, 1),
-		BackgroundTransparency = 0.08,
+		BackgroundColor3 = theme.Background,
+		BackgroundTransparency = math.min(0.4, theme.Glass + 0.06),
+		BorderSizePixel = 0,
 	}, {
-		new("UICorner", { CornerRadius = UDim.new(0.18, 0) }),
-		new("UIStroke", { Color = GOLD, Thickness = 3, Transparency = 0.05 }),
-		new("UIGradient", {
-			Rotation = 90,
-			Color = ColorSequence.new(CARD_LIGHT, CARD_DARK),
-		}),
+		new("UICorner", { CornerRadius = UDim.new(0.16, 0) }),
+		new("UIStroke", { Color = theme.Accent, Thickness = 2, Transparency = 0.25 }),
 		title,
-		textLabel("PlayerName", displayName, if big then 0.33 else 0.46, if big then 0.2 else 0.28, Color3.new(1, 1, 1), Enum.Font.GothamBold),
-		textLabel("ToolText", toolsText(tools), if big then 0.53 else 0.74, if big then 0.15 else 0.22, GOLD_LIGHT, Enum.Font.GothamMedium),
+		textLabel(
+			"PlayerName",
+			displayName,
+			if big then 0.3 else 0.4,
+			if big then 0.24 else 0.32,
+			theme.Text,
+			Enum.Font.BuilderSansBold
+		),
+		textLabel(
+			"ToolText",
+			toolsText(tools),
+			if big then 0.56 else 0.74,
+			if big then 0.13 else 0.18,
+			theme.SubText,
+			Enum.Font.BuilderSansMedium
+		),
 	})
 
 	if big then
 		local barBack = new("Frame", {
 			Name = "BarBack",
-			AnchorPoint = Vector2.new(0.5, 0),
-			Position = UDim2.fromScale(0.44, 0.76),
-			Size = UDim2.fromScale(0.68, 0.11),
-			BackgroundColor3 = Color3.fromRGB(15, 10, 4),
+			AnchorPoint = Vector2.new(0, 0.5),
+			Position = UDim2.fromScale(0.07, 0.83),
+			Size = UDim2.fromScale(0.7, 0.06),
+			BackgroundColor3 = theme.Surface,
 			BorderSizePixel = 0,
-		}, {
-			new("UICorner", { CornerRadius = UDim.new(1, 0) }),
-			new("UIStroke", { Color = GOLD_DEEP, Thickness = 1.5 }),
-		})
+		}, { new("UICorner", { CornerRadius = UDim.new(1, 0) }) })
 		local fill = new("Frame", {
 			Name = "BarFill",
 			Size = UDim2.fromScale(1, 1),
 			BackgroundColor3 = Color3.new(1, 1, 1),
 			BorderSizePixel = 0,
 		}, { new("UICorner", { CornerRadius = UDim.new(1, 0) }) })
-		goldGradient(0).Parent = fill
+		accentGradient(0).Parent = fill
 		fill.Parent = barBack
 		barBack.Parent = card
-		local timeText = textLabel("TimeText", `{Config.SHOWCASE_DURATION}s`, 0.72, 0.18, GOLD_LIGHT, Enum.Font.GothamBold)
-		timeText.AnchorPoint = Vector2.new(0, 0)
-		timeText.Position = UDim2.fromScale(0.8, 0.72)
-		timeText.Size = UDim2.fromScale(0.16, 0.18)
+		local timeText = textLabel("TimeText", `{Config.SHOWCASE_DURATION}s`, 0, 0.14, theme.SubText, Enum.Font.BuilderSansBold)
+		timeText.AnchorPoint = Vector2.new(0, 0.5)
+		timeText.Position = UDim2.fromScale(0.8, 0.83)
+		timeText.Size = UDim2.fromScale(0.13, 0.14)
+		timeText.TextXAlignment = Enum.TextXAlignment.Right
 		timeText.Parent = card
 	end
 
@@ -347,7 +350,8 @@ local function poof(position: Vector3)
 	part.CFrame = CFrame.new(position)
 	local emitter = Instance.new("ParticleEmitter")
 	emitter.Texture = "rbxasset://textures/particles/smoke_main.dds"
-	emitter.Color = ColorSequence.new(GOLD_LIGHT, GOLD)
+	local theme = Config.GetTheme()
+	emitter.Color = ColorSequence.new(theme.Accent, theme.AccentDeep)
 	emitter.Size = NumberSequence.new(3, 6)
 	emitter.Transparency = NumberSequence.new(0.2, 1)
 	emitter.Lifetime = NumberRange.new(0.6, 1)
