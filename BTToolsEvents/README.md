@@ -1,0 +1,116 @@
+# 🎁 BT Tools Event
+
+গেমের ভেতরে অ্যাডমিন একটা ট্রেজার হান্ট ইভেন্ট চালাবেন। ম্যাপে উপহার বক্স ছড়িয়ে পড়ে,
+প্লেয়াররা বক্স তুলে একটা ছোট মিনি-গেম খেলে বক্স খোলে। কিছু বক্সে থাকে **পার্মানেন্ট টুল**,
+বাকিগুলোতে **Taka**। কেউ টুল জিতলে তার বড় অবতার শোকেসে নাচে।
+
+সব requirement আর সিদ্ধান্ত লেখা আছে [`NOTES.md`](NOTES.md) এ।
+
+---
+
+## 📦 ফাইল
+
+| ফাইল / ফোল্ডার | কী আছে |
+|----------------|--------|
+| [`Release/BTToolsEvents.rbxmx`](Release/BTToolsEvents.rbxmx) | **এটাই Studio তে ইনসার্ট করবেন।** পুরো সিস্টেম এক ফাইলে |
+| `src/` | সব স্ক্রিপ্ট আলাদা আলাদা `.lua` ফাইলে, Roblox এর যে সার্ভিসে থাকবে সেই নামের ফোল্ডারে |
+| `build/build_rbxmx.py` | `src/` থেকে নতুন করে `.rbxmx` বানানোর স্ক্রিপ্ট |
+| `Original/` | আগের পুরনো ফাইল (পুরস্কারের টুল আর বক্সের মেশ এখান থেকে নেওয়া হয়) |
+
+```
+src/
+├── ReplicatedStorage/BTToolsEvents/
+│   └── Config.lua                ← ⚙️ সব সেটিং এখানে
+├── ServerScriptService/BTToolsEvents/
+│   ├── Main.server.lua
+│   └── Modules/
+│       ├── AdminService.lua      অ্যাডমিন প্যানেলের অনুরোধ (সার্ভারে যাচাই)
+│       ├── BoxSpawner.lua        বক্স কোথায় পড়বে
+│       ├── EventManager.lua      ইভেন্ট, বক্স তোলা আর খোলা, টুলের নিয়ম
+│       ├── Showcase.lua          বিজয়ীর নাচ আর WINNER ট্যাগ
+│       ├── ToolData.lua          ডেটাস্টোর আর টুল দেওয়া (ডাবল কখনো না)
+│       └── Util.lua
+└── StarterPlayerScripts/BTToolsEvents/
+    ├── ClientMain.client.lua
+    └── Modules/
+        ├── AdminPanel.lua        অ্যাডমিনের প্যানেল
+        ├── BoxVisuals.lua        বক্স ঘোরানো আর ভাসানো
+        ├── HUD.lua               📦 17/20 ⏱ কাউন্টার, ব্যানার, ফলাফল
+        ├── Minigame.lua          টাইমিং বার মিনি-গেম
+        ├── Sounds.lua
+        ├── UI.lua
+        └── WinnerTags.lua        WINNER ট্যাগের countdown
+```
+
+---
+
+## 🛠 Studio তে বসানো
+
+1. Studio তে **Workspace এ রাইট-ক্লিক → Insert from File… → `BTToolsEvents.rbxmx`**।
+2. একটা `BTToolsEvents` ফোল্ডার আসবে। ভেতরের প্রতিটা ফোল্ডারের নামই বলে দেয় সেটা কোথায় যাবে:
+
+   | rbxmx এর ভেতরে | টেনে নিয়ে রাখুন |
+   |----------------|-----------------|
+   | `ReplicatedStorage/BTToolsEvents` | **ReplicatedStorage** |
+   | `ServerScriptService/BTToolsEvents` | **ServerScriptService** |
+   | `ServerStorage/BTToolsEvents` | **ServerStorage** |
+   | `ServerStorage/Tools` | **ServerStorage** (নাম `Tools`, পুরস্কারের সব টুল এখানে) |
+   | `StarterPlayerScripts/BTToolsEvents` | **StarterPlayer → StarterPlayerScripts** |
+   | `Workspace/HuntSpawnZones` | **Workspace** |
+   | `Workspace/WinnerShowcase` | **Workspace** |
+
+3. খালি হয়ে যাওয়া `BTToolsEvents` ফোল্ডারটা মুছে দিন।
+4. **Game Settings → Security → Enable Studio Access to API Services** চালু করুন, না হলে Studio তে টুল সেভ হবে না।
+5. [`ReplicatedStorage → BTToolsEvents → Config`](src/ReplicatedStorage/BTToolsEvents/Config.lua) খুলে সাউন্ড আর নাচের ID বসান।
+
+### 📍 স্পন জোন
+- `HuntSpawnZones` ফোল্ডারের ভেতরে যত খুশি পার্ট রাখুন। বক্স **শুধু এই পার্টগুলোর এলাকার মাটিতে** পড়বে।
+- পার্টগুলো মাটির কাছে পাতলা করে রাখুন (উচ্চতা ১০–২০ stud), তাহলে বক্স ছাদ বা গাছে উঠবে না।
+- Studio তে নীল রঙে দেখা যাবে, গেম চললে অদৃশ্য হয়ে যাবে।
+- কোনো পার্ট না থাকলে অ্যাডমিন যেখানে দাঁড়িয়ে START চাপবেন, তার চারপাশে বক্স পড়বে।
+
+### 🏆 শোকেস
+- `WinnerShowcase` পার্টটা যেখানে বিজয়ীদের নাচ দেখাতে চান সেখানে বসান।
+- পার্টের **সামনের দিক (Front)** যেদিকে, অবতার সেদিকে মুখ করবে। পাশাপাশি ৩ জন দাঁড়াতে পারবে।
+
+---
+
+## ⚙️ Config এ যা বদলাতে পারবেন
+
+| সেটিং | কাজ |
+|-------|-----|
+| `ADMIN_USER_IDS` | অ্যাডমিনদের UserId, নতুন ID কমা দিয়ে যোগ করুন |
+| `CURRENCY_NAME`, `COIN_REWARD_MIN`, `COIN_REWARD_MAX` | খালি বক্সে `leaderstats` এর কোন ভ্যালুতে কত টাকা যোগ হবে |
+| `SOUND_IDS` | সব সাউন্ড (`rbxassetid://0` থাকলে সেই সাউন্ড বাজবে না) |
+| `DANCE_ANIMATION_ID` | বিজয়ীর নাচ |
+| `DEFAULT_TOOL_SAFE_PERCENT`, `DEFAULT_TOOL_GAP` | শুরুতে টুল যেন না পাওয়া যায় (অ্যাডমিন প্যানেল থেকেও বদলানো যায়) |
+| `Minigame` | মিনি-গেম কতটা কঠিন |
+| `SHOWCASE_DURATION`, `SHOWCASE_SCALE` | শোকেস কতক্ষণ থাকবে, অবতার কত বড় হবে |
+
+> ⚠️ `DATASTORE_NAME` কখনো বদলাবেন না, বদলালে আগের সব সেভ করা টুল হারিয়ে যাবে।
+
+---
+
+## 🎮 কীভাবে চলে
+
+1. **অ্যাডমিন** বাঁ পাশের 🎁 বাটন চাপেন, তারপর টুল, কয়টা বক্সে টুল, মোট বক্স আর সময় ঠিক করে START চাপেন।
+2. সবার স্ক্রিনে ব্যানার আসে, আর ওপরে দেখায় `📦 0/20 ⏱ 5:00`।
+3. প্লেয়ার বক্স তুললে সেটা সাথে সাথে হাতে চলে আসে। একসাথে একটার বেশি বক্স রাখা যায় না।
+4. **মিনি-গেম:** কাঁটা সোনালি জায়গায় এলে ৩ বার ক্লিক বা TAP করতে হয়। ভুল ক্লিক করলে ০.৬ সেকেন্ড অপেক্ষা, কিন্তু খোলা তালা বন্ধ হয় না।
+5. বক্সে কী আছে সেটা খোলার মুহূর্তে সার্ভার ঠিক করে:
+   - প্রথম ৪০% বক্সে কখনো টুল নেই। তারপর বক্স যত কমে, টুল আসার সুযোগ তত বাড়ে। শেষ বক্সে অবশ্যই আসে।
+   - যে খুলছে তার কাছে টুলটা আগেই থাকলে সে টাকা পায়, আর টুলটা পরের বক্সের জন্য থেকে যায়।
+6. **জিতলে:**
+   - টুলটা হাতে আসে আর UserId দিয়ে ডেটাস্টোরে সেভ হয়।
+   - সবার স্ক্রিনে ব্যানার আর চ্যাটে মেসেজ যায়।
+   - শোকেসে বিজয়ীর বড় অবতার টুল হাতে ২৫ সেকেন্ড নাচে।
+   - বিজয়ীর মাথায় 👑 WINNER ট্যাগ থাকে।
+7. পরে গেমে ঢুকলে কয়েক সেকেন্ড পরে টুলটা আবার দেওয়া হয়। ইনভেন্টরিতে আগে থেকে থাকলে আর দেওয়া হয় না।
+
+---
+
+## 🔨 নতুন করে `.rbxmx` বানানো (ডেভেলপারদের জন্য)
+
+```bash
+python3 BTToolsEvents/build/build_rbxmx.py
+```
