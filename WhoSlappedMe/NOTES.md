@@ -81,6 +81,19 @@ and the front player has to guess who did it.
 ### R13. Leaving must not break the game
 - If any player leaves mid-game the game keeps running (see D6 for the exact rules).
 
+### R14. Built completely new, map included
+- Everything is rebuilt from scratch, including the map: join area, seats, arena and spectator area are designed with **Parts** (see section 10).
+- The user may later replace any part with their own models, so code must find things **by name**, never by position.
+
+### R15. Sounds
+- All sound IDs live in `Config.SOUNDS`. The user fills them in. Empty ID = that sound is skipped.
+
+### R16. No overhead health bars
+- Do **not** show damage/health bars above players' heads.
+
+### R17. Wait for the go-ahead
+- **Do not start building** until the user says so. The user still has more requirements to add.
+
 ---
 
 ## 2. Round flow
@@ -126,7 +139,7 @@ WINNERS    1st / 2nd banner → everyone back to the lobby
 | D8 | Auto-heal is turned off **only** for players in the game, and restored when they leave |
 | D9 | The slapper is **teleported**, never walked, so footsteps can't give them away |
 | D10 | Every phase has a timer (vote 10s, each charge one sweep, guess 15s) so an AFK player never stalls the game |
-| D11 | Overhead health bar + name for everyone in the game |
+| ~~D11~~ | ~~Overhead health bar~~ → ❌ removed by the user (R16): spectators can see what happens from outside |
 | D12 | Sounds: slap (volume/pitch by power), whoosh, heartbeat during blackout, lottery/vote ticks, correct/wrong |
 | D13 | Red hand-print decal on the cheek for a few seconds after a slap |
 | D14 | Winner banner with avatars on everyone's screen |
@@ -229,13 +242,50 @@ and the front player guesses. Correct guess = swap seats.
 
 ---
 
-## 9. Open questions ❓
+## 9. Questions
 
-| # | Question | My proposal |
-|---|----------|-------------|
-| Q1 | **Join box size and place.** The old `JoinPart` is 4×5×4 studs — too small for 6 people | A flat **12×12 pad** just outside the front border, glowing outline, countdown sign above it |
-| Q2 | **Seat layout for 5 back seats.** Old layout was 2 rows of 3 | **One curved row of 5** behind the front seat, so every back player has the same distance and view |
-| Q3 | **Sounds.** I can't check which Roblox sound IDs work in your game | Empty slots in `Config.SOUNDS` that you fill in; the game works silently until then |
-| Q4 | **Map.** Rebuild with the old arena layout (floor, borders), or will you build your own map? | Rebuild the old layout. Code finds seats/box **by name**, so you can move or redesign parts freely later |
-| Q5 | **Spectator board** (health of every player outside the arena) | Not needed — spectators watch from the border (D25). Overhead health bars (D11) are enough |
+| # | Question | Answer |
+|---|----------|--------|
+| ~~Q1~~ | ~~Join box size and place~~ | ✅ Designer's choice → section 10 |
+| ~~Q2~~ | ~~Seat layout~~ | ✅ Designer's choice → section 10 |
+| ~~Q3~~ | ~~Sounds~~ | ✅ Empty slots in `Config.SOUNDS`, user fills them (R15) |
+| ~~Q4~~ | ~~Map~~ | ✅ Built new with Parts (R14) |
+| ~~Q5~~ | ~~Spectator board / health bars~~ | ✅ No health bars (R16). Spectating designed in section 10 |
+| Q6 | Should players **inside** the game see their own health anywhere? (Roblox's default top-right health bar shows it) | Proposal: a small `HP 70/100` on the player's own screen only, nothing above heads |
 
+---
+
+## 10. Map design proposal 💡 (waiting for approval)
+
+Theme: a **game-show stage**. Everything is plain anchored Parts, so it's easy to swap later.
+
+```
+                    ┌──────── BACKDROP WALL ────────┐   ← big "WHO SLAPPED ME?" sign + phase screen
+                    │                               │
+                    │            [HOT SEAT]         │   ← red throne, spotlight, faces the backdrop
+   BLEACHERS        │            (SlapSpot)         │   BLEACHERS
+   (left side)      │   (B1)  (B2)  (B3)  (B4)  (B5)│   (right side)
+   3 raised rows    │      curved row of 5 stools   │   3 raised rows
+                    │                               │
+                    └──── glass border ── gate ─────┘
+                                   │
+                             [ JOIN PAD 12×12 ]          ← glowing pad + sign "STAND HERE TO JOIN 3/6"
+```
+
+| Part / area | Design |
+|-------------|--------|
+| **Stage** | Round platform, ~44 studs across, 2 studs high, dark floor with a neon ring edge |
+| **Glass border** | Clear glass wall (Transparency 0.85, CanCollide on), 10 studs high, all around the stage. Spectators can see in, nobody can walk in. Closed gate in front of the join pad (decoration only) |
+| **Hot seat** | Big red throne near the backdrop, facing it (so the front player's first-person view is the backdrop, not the back seats). One SpotLight from above |
+| **Back seats** | 5 stools in a **curved arc** ~10 studs behind the hot seat, all the same distance. Each has a numbered plate (1-5) and a coloured floor pad |
+| **SlapSpot** | Invisible marker right behind the hot seat: where the slapper is teleported |
+| **Backdrop wall** | Big "WHO SLAPPED ME?" sign and a **phase screen** (SurfaceGui): `WAITING...`, `VOTING`, `SLAP!`, `85%!`, `WRONG! It was...`, round number and sudden-death multiplier. Visible to everyone, cheap (only text) |
+| **Join pad** | 12×12 glowing pad outside the gate. Colour shows the state: **green** = open, **yellow** = countdown, **red** = full/closed. Sign above: `STAND HERE TO JOIN · 3/6 · Starting in 12` |
+| **Bleachers (spectating)** | 3 rows of raised steps on the left and right sides outside the glass. Raised so people in the back rows can see over the front rows. Knocked-out players are teleported here (`KOSpot`) |
+| **Spectate camera** (optional) | Players standing on the bleachers get a small **"Spectate"** button that switches to a top-down camera over the stage. Off in Config if not wanted (`ENABLE_SPECTATE_CAM`) |
+| **Exit point** | `ExitSpot` next to the join pad, where players go when they leave or the game ends |
+
+**Names the code looks for** (the rest is decoration and can be changed freely):
+`Seats/HotSeat`, `Seats/BackSeat1..5`, `Points/SlapSpot`, `Points/KOSpot`, `Points/ExitSpot`, `JoinPad`, `Border`, `Screens/PhaseScreen`, `Screens/JoinSign`
+
+**Performance for the map:** about 80-100 parts, all **Anchored**, `CanTouch` off and `CastShadow` off on decoration, `CanCollide` off on things nobody walks on, no unions or heavy meshes, only 1-2 lights. Screens update only when the phase changes, not every frame.
