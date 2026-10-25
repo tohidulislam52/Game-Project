@@ -97,10 +97,10 @@ LOTTERY    avatars spin like a slot machine → one goes to the front seat
 │ 3. MOVE      slapper teleported behind the front player, raise-hand anim   │
 │ 4. POWER     slapper does 3 one-sweep charges (R7)                         │
 │ 5. PROTECT   ring shrinks, front player presses BLOCK (R9)                 │
-│ 6. SLAP      slap anim + slapped anim + particle + sound + damage (R10)    │
+│ 6. SLAP      slap anim + slapped anim + particle + sound + damage + 85%!   │
 │ 7. RETURN    slapper teleported back and seated → THEN the screen opens    │
 │ 8. GUESS     front player picks (15s), clue if PERFECT block (R11)         │
-│ 9. REVEAL    everyone sees who it was                                      │
+│ 9. REVEAL    wrong guess → replay + "It was X!" (ENABLE_REVEAL)            │
 │10. CHECK     health 0 → knocked out. 2 left → game over (R12)              │
 └────────────────────────────────────────────────────────────────────────┘
   ↓
@@ -133,33 +133,38 @@ WINNERS    1st / 2nd banner → everyone back to the lobby
 
 ---
 
-## 4. Problems still left in the design ❓
+## 4. More decisions (problems found in review, approved by the user) ✅
 
-| # | Problem | Proposal |
-|---|---------|----------|
-| Q1 | **What does "20% / 30% / 40%" mean?** | Proposal: the three charges are worth up to **30% + 30% + 40% = 100%** (later charges are harder and worth more). Screen shows what each charge added and the total, e.g. `+30%` → `+15%` → `+40%` = **85% POWER** |
-| Q2 | **Seats are locked (R6), so how does a player leave on purpose?** Right now the only way would be leaving Roblox | A **Leave Game** button. Leaving = eliminated. Resetting the character also counts as leaving |
-| Q3 | **PERFECT clue with few players.** Crossing out 2 names when only 2 or 3 players sit in the back gives the answer away | Always keep **at least 2 names** on the screen: 5 back → cross out 2, 4 back → 2, 3 back → 1, 2 back → no clue (show "No clue with this few players") |
-| Q4 | **Winner tie:** both players have the same damage | Tie-breaker: fewer slaps taken wins. Still tied → both are 1st |
-| Q5 | **Players leave until only 1 is left** (or 0) | 1 left → that player is the only winner. 0 left → reset to lobby |
-| Q6 | **Text/voice chat** can tell the front player who slapped. Code can't fully stop it | Leave it — lying in chat is part of the fun (bluffing). Optional: hide chat bubbles in the arena |
-| Q7 | **Animations must be owned by the game owner** (same user or group). Otherwise they only play in Studio | User uploads all 4 animations (sit, raise-hand, slap, slapped) from the account/group that owns the game |
-| Q8 | **"Pillar":** the map has no pillar | Assumed **behind the front player**. Tell me if a pillar should be added |
-| Q9 | **6-player games can be long.** Only the front player takes damage, and wrong guesses keep them there | Proposal I3 (sudden death) below |
+| # | Decision |
+|---|----------|
+| D15 | **Charge values:** the 3 charges are worth up to **30% + 30% + 40% = 100%**. Screen shows what each charge added and the total, e.g. `+30%` → `+15%` → `+40%` = **85% POWER** |
+| D16 | **Leave Game button** for seated players (seats are locked). Leaving = eliminated. Resetting the character also counts as leaving |
+| D17 | **PERFECT clue never gives the answer away:** at least 2 names always stay. 5 or 4 back → cross out 2 · 3 back → 1 · 2 back → no clue ("No clue with this few players") |
+| D18 | **Winner tie** (same damage): fewer slaps taken wins. Still tied → both 1st |
+| D19 | Players leave until **1** is left → that player wins alone. **0** left → back to lobby |
+| D20 | Chat/voice can't be blocked by code — left as is (bluffing is part of the fun) |
+| D21 | All animations must be uploaded by the **same user/group that owns the game**, or they only play in Studio. Empty animation IDs are skipped, the game still works |
+| D22 | The slapper is teleported **behind the front player** (no pillar) |
+| D23 | **Sudden death, step by step:** from round `SUDDEN_DEATH_ROUND` (12), damage goes up a little **every round** (+10% per round, max ×2). A banner shows "SUDDEN DEATH ×1.3" |
+| D24 | **Power shown to everyone:** after the slap a big `85%!` pops up above the front player for back players and spectators |
+| D25 | **Spectators** can't walk into the arena during a game (border walls). They stand at the border and watch. Joining a free seat is only possible through the join box (R3) |
 
 ---
 
-## 5. New ideas 💡 (waiting for approval)
+## 5. Test features (each one has an on/off switch) 🧪
 
-| # | Idea |
-|---|------|
-| I1 | **Reveal replay:** after the guess, everyone sees a short side-camera shot of the slap with "It was **X**!" — the funniest moment of the round |
-| I2 | **Bluff emotes for back players:** while the front player is guessing, back players can press quick reactions (🤫 😏 👉) that show above their heads, to confuse the front player |
-| I3 | **Sudden death:** after round 12 (Config), all damage ×1.5 so long games still end |
-| I4 | **Rules screen** on first join: 4 short cards (lottery, vote, block + clue, guess). Can be reopened with a "?" button |
-| I5 | **Titles during the game:** "Mind Reader" (2 correct guesses in a row), "Iron Cheek" (3 PERFECT blocks), "Silent Slapper" (slapped 2 times without getting caught) |
-| I6 | **Spectator board** next to the arena: everyone outside can see each player's health and the current phase |
-| I7 | **Slap power shown to everyone:** after the slap a big `85%!` pops up over the front player (for the back players and spectators) |
+These are kept in **separate modules**, so turning the switch off disables them completely and they can be deleted later without touching the rest of the game.
+
+| Switch in `Config.lua` | Default | What it does |
+|------------------------|---------|--------------|
+| `ENABLE_REVEAL` | `true` | After a **wrong guess**, everyone sees who really slapped: a short side-camera replay of the slap + "It was **X**!" with their avatar. (On a correct guess the swap already shows it) |
+| `ENABLE_RULES_SCREEN` | `true` | Rules cards on first join (lottery, vote, block + clue, guess), and a "?" button to reopen them |
+| `ENABLE_TITLES` | `true` | Titles above the head during the game: "Mind Reader" (2 correct guesses in a row), "Iron Cheek" (3 PERFECT blocks), "Silent Slapper" (slapped 2 times without getting caught). Cleared when the game ends |
+
+### Ideas not used
+| Idea | Status |
+|------|--------|
+| Bluff emotes for back players | ❌ Not wanted |
 
 ---
 
@@ -171,17 +176,17 @@ WINNERS    1st / 2nd banner → everyone back to the lobby
 | `JOIN_COUNTDOWN` / `FULL_COUNTDOWN` | `15` / `3` | R2 |
 | `MAX_HEALTH` | `100` | |
 | `MIN_SLAP_DAMAGE` / `MAX_SLAP_DAMAGE` | `5` / `40` | 0% / 100% power (at least 3 slaps to knock someone out) |
-| `CHARGE_VALUES` | `{30, 30, 40}` | Q1 |
+| `CHARGE_VALUES` | `{30, 30, 40}` | D15 |
 | `ZONE_YELLOW_MULT` / `ZONE_RED_MULT` | `0.5` / `0.1` | How much of a charge yellow / red gives |
 | `SWEEP_TIMES` | `{1.3, 1.1, 0.9}` | Seconds per sweep for each charge |
 | `PROTECT_PERFECT` / `PROTECT_GOOD` | `0.7` / `0.4` | Damage reduction |
-| `PERFECT_CLUE_COUNT` | `2` | Names crossed out (Q3 limit applies) |
+| `PERFECT_CLUE_COUNT` | `2` | Names crossed out (D17 limit applies) |
 | `VOTE_TIME` / `GUESS_TIME` | `10` / `15` | Seconds |
 | `MAX_SLAPS_IN_A_ROW` | `0` (off) | D4 |
+| `SUDDEN_DEATH_ROUND` / `SUDDEN_DEATH_STEP` / `SUDDEN_DEATH_MAX` | `12` / `0.1` / `2` | D23 |
+| `ENABLE_REVEAL` / `ENABLE_RULES_SCREEN` / `ENABLE_TITLES` | `true` | Section 5 |
 | `ANIM_SIT` / `ANIM_RAISE_HAND` / `ANIM_SLAP` / `ANIM_SLAPPED` | `""` | Empty — user provides the IDs |
 | `SOUNDS` | table | D12 |
-
----
 
 ## 7. Performance and security rules (everything is built this way)
 
@@ -209,7 +214,7 @@ and the front player guesses. Correct guess = swap seats.
 | # | Problem in the old file | Fixed by |
 |---|------------------------|----------|
 | B1 | The slapper played the animation from their own back seat, 8-14 studs away — the hand never touched anyone | R6 teleport |
-| B2 | The animation ID must be owned by the game owner, otherwise it doesn't play in the live game | Q7 |
+| B2 | The animation ID must be owned by the game owner, otherwise it doesn't play in the live game | D21 |
 | B3 | A round could start with 2 players → only one guess button, always correct | R1 |
 | B4 | Anyone leaving cancelled the whole round and closed everyone's UI | D6 |
 | B5 | Damage value was chosen by the client (an exploiter could always send max) | P1, P2 |
@@ -221,3 +226,16 @@ and the front player guesses. Correct guess = swap seats.
 | B11 | Seats were not locked, players could jump out; seat swaps sometimes snapped onto the wrong seat | R6, P10 |
 | B12 | Power bar looped forever until the player tapped | R7 |
 | B13 | Camera shake did nothing when the camera wasn't locked; status text never hid | Rebuild |
+
+---
+
+## 9. Open questions ❓
+
+| # | Question | My proposal |
+|---|----------|-------------|
+| Q1 | **Join box size and place.** The old `JoinPart` is 4×5×4 studs — too small for 6 people | A flat **12×12 pad** just outside the front border, glowing outline, countdown sign above it |
+| Q2 | **Seat layout for 5 back seats.** Old layout was 2 rows of 3 | **One curved row of 5** behind the front seat, so every back player has the same distance and view |
+| Q3 | **Sounds.** I can't check which Roblox sound IDs work in your game | Empty slots in `Config.SOUNDS` that you fill in; the game works silently until then |
+| Q4 | **Map.** Rebuild with the old arena layout (floor, borders), or will you build your own map? | Rebuild the old layout. Code finds seats/box **by name**, so you can move or redesign parts freely later |
+| Q5 | **Spectator board** (health of every player outside the arena) | Not needed — spectators watch from the border (D25). Overhead health bars (D11) are enough |
+
