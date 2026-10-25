@@ -251,7 +251,7 @@ and the front player guesses. Correct guess = swap seats.
 | ~~Q3~~ | ~~Sounds~~ | ✅ Empty slots in `Config.SOUNDS`, user fills them (R15) |
 | ~~Q4~~ | ~~Map~~ | ✅ Built new with Parts (R14) |
 | ~~Q5~~ | ~~Spectator board / health bars~~ | ✅ No health bars (R16). Spectating designed in section 10 |
-| Q6 | Should players **inside** the game see their own health anywhere? (Roblox's default top-right health bar shows it) | Proposal: a small `HP 70/100` on the player's own screen only, nothing above heads |
+| ~~Q6~~ | ~~Should players inside the game see their own health?~~ | ✅ Use **Roblox's default health bar** (top-right). No custom health UI. The game must never disable the Health CoreGui. (Note: Roblox shows it only after the player has taken damage) |
 
 ---
 
