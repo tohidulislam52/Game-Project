@@ -6,6 +6,7 @@ and the front player has to guess who did it.
 - The old prototype is kept in [`Original/who_slapped_me_original.rbxmx`](Original/who_slapped_me_original.rbxmx).
 - **All in-game text, code and notes are in English** (user request).
 - Status markers: ✅ approved · ❓ open question · 💡 proposal waiting for approval
+- **Status: v1 built** → [`Release/WhoSlappedMe.rbxmx`](Release/WhoSlappedMe.rbxmx), install guide in [`README.md`](README.md).
 
 ---
 
@@ -92,7 +93,15 @@ and the front player has to guess who did it.
 - Do **not** show damage/health bars above players' heads.
 
 ### R17. Wait for the go-ahead
-- **Do not start building** until the user says so. The user still has more requirements to add.
+- ~~Do not start building until the user says so.~~ ✅ The user gave the go-ahead, v1 is built.
+
+### R18. Health bar trick
+- Roblox only shows its default health bar after damage, so every player loses **1 HP when they join** (`Config.START_DAMAGE`).
+
+### R19. How the game is delivered
+- One file: [`Release/WhoSlappedMe.rbxmx`](Release/WhoSlappedMe.rbxmx). All scripts live **only** inside it, never copied as separate files in the repo.
+- Everything is grouped in a `WhoSlappedMe` folder in every service it uses (ReplicatedStorage, ServerScriptService,
+  StarterPlayerScripts, and one `WhoSlappedMe` model in Workspace). Install guide: [`README.md`](README.md).
 
 ---
 
@@ -255,7 +264,7 @@ and the front player guesses. Correct guess = swap seats.
 
 ---
 
-## 10. Map design proposal 💡 (waiting for approval)
+## 10. Map design ✅ (built in v1, see `Docs/map_top.png`)
 
 Theme: a **game-show stage**. Everything is plain anchored Parts, so it's easy to swap later.
 
@@ -277,7 +286,7 @@ Theme: a **game-show stage**. Everything is plain anchored Parts, so it's easy t
 | **Stage** | Round platform, ~44 studs across, 2 studs high, dark floor with a neon ring edge |
 | **Glass border** | Clear glass wall (Transparency 0.85, CanCollide on), 10 studs high, all around the stage. Spectators can see in, nobody can walk in. Closed gate in front of the join pad (decoration only) |
 | **Hot seat** | Big red throne near the backdrop, facing it (so the front player's first-person view is the backdrop, not the back seats). One SpotLight from above |
-| **Back seats** | 5 stools in a **curved arc** ~10 studs behind the hot seat, all the same distance. Each has a numbered plate (1-5) and a coloured floor pad |
+| **Back seats** | 5 stools in a **curved arc** ~14 studs behind the hot seat, all the same distance. Each has a numbered plate (1-5) and a coloured floor pad |
 | **SlapSpot** | Invisible marker right behind the hot seat: where the slapper is teleported |
 | **Backdrop wall** | Big "WHO SLAPPED ME?" sign and a **phase screen** (SurfaceGui): `WAITING...`, `VOTING`, `SLAP!`, `85%!`, `WRONG! It was...`, round number and sudden-death multiplier. Visible to everyone, cheap (only text) |
 | **Join pad** | 12×12 glowing pad outside the gate. Colour shows the state: **green** = open, **yellow** = countdown, **red** = full/closed. Sign above: `STAND HERE TO JOIN · 3/6 · Starting in 12` |

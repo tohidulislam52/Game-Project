@@ -1,0 +1,3750 @@
+<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4"><Meta name="ExplicitAutoJoints">true</Meta><External>null</External><External>nil</External><Item class="Folder" referent="RBX5AE2EDC273184355A74B8677DA8FAB99"><Properties><string name="Name">WhoSlappedMe_INSTALL</string></Properties><Item class="ModuleScript" referent="RBXEDF78064CBF54A5A9E0B3A7139A7264D"><Properties><string name="Name">README</string><ProtectedString name="Source">--[[
+	WHO SLAPPED ME? - where everything goes
+
+	Drag each folder's CONTENT into the Roblox service with the same name:
+
+	  ReplicatedStorage/WhoSlappedMe     -&gt;  ReplicatedStorage
+	  ServerScriptService/WhoSlappedMe   -&gt;  ServerScriptService
+	  StarterPlayerScripts/WhoSlappedMe  -&gt;  StarterPlayer &gt; StarterPlayerScripts
+	  Workspace/WhoSlappedMe             -&gt;  Workspace  (the arena, move it anywhere)
+
+	Then delete this empty WhoSlappedMe_INSTALL folder.
+
+	All settings (sound ids, animation ids, timers, damage, test features):
+	ReplicatedStorage &gt; WhoSlappedMe &gt; Config
+]]
+return nil
+</ProtectedString></Properties></Item><Item class="Folder" referent="RBX5D45DAA6848F4542BFFED99C36C548C4"><Properties><string name="Name">ReplicatedStorage</string></Properties><Item class="Folder" referent="RBXDDE3C15C2D87422C85735194B9EAAED6"><Properties><string name="Name">WhoSlappedMe</string></Properties><Item class="ModuleScript" referent="RBX23FF72EA18F64659A0A9B096248E5E8E"><Properties><string name="Name">Config</string><ProtectedString name="Source">--[[
+	WHO SLAPPED ME? - Config
+	Every setting of the game lives here. Change values, press Play, done.
+]]
+
+local Config = {}
+
+-- PLAYERS ------------------------------------------------------------------
+Config.MIN_PLAYERS = 3 -- a game never starts with fewer
+Config.MAX_PLAYERS = 6 -- 1 hot seat + 5 back seats (also limited by the seats in the map)
+
+-- JOIN PAD -----------------------------------------------------------------
+Config.JOIN_COUNTDOWN = 15 -- seconds after the first player steps on the pad
+Config.FULL_COUNTDOWN = 3 -- countdown drops to this when the pad is full
+
+-- HEALTH -------------------------------------------------------------------
+Config.MAX_HEALTH = 100
+-- Roblox only shows its health bar after the player is damaged,
+-- so everyone loses this much when they join (makes the bar appear).
+Config.START_DAMAGE = 1
+
+-- SLAP POWER (slapper mini-game) --------------------------------------------
+Config.MIN_SLAP_DAMAGE = 5 -- damage at 0% power
+Config.MAX_SLAP_DAMAGE = 40 -- damage at 100% power
+Config.CHARGE_VALUES = { 30, 30, 40 } -- max % each charge can add (total 100)
+Config.SWEEP_TIMES = { 1.3, 1.1, 0.9 } -- seconds the needle needs for one sweep, per charge
+Config.GREEN_HALF_WIDTH = 0.07 -- green zone = middle +- this (0..0.5 of the bar)
+Config.YELLOW_HALF_WIDTH = 0.2 -- yellow zone = middle +- this
+Config.YELLOW_MULT = 0.5 -- yellow gives half of the charge
+Config.RED_MULT = 0.1 -- red (or no tap) gives this much of the charge
+
+-- PROTECT (front player mini-game) ------------------------------------------
+Config.RING_TIME_MIN = 1.6 -- ring shrink time is random between these
+Config.RING_TIME_MAX = 3.0
+Config.PERFECT_WINDOW = 0.12 -- seconds from the hit moment for PERFECT
+Config.GOOD_WINDOW = 0.3 -- seconds from the hit moment for GOOD
+Config.PERFECT_REDUCTION = 0.7 -- PERFECT = 70% less damage
+Config.GOOD_REDUCTION = 0.4 -- GOOD = 40% less damage
+Config.PERFECT_CLUE_COUNT = 2 -- PERFECT block crosses out this many innocent players
+Config.MIN_NAMES_LEFT = 2 -- the clue never leaves fewer names than this
+
+-- TIMERS -------------------------------------------------------------------
+Config.LOTTERY_TIME = 4
+Config.VOTE_TIME = 10
+Config.GUESS_TIME = 15
+Config.INTERMISSION = 3 -- pause between rounds
+Config.SLAP_WINDUP = 0.3 -- slap animation starts this long before the hit
+Config.WINNER_TIME = 7 -- winner banner time before everyone is sent out
+
+-- RULES --------------------------------------------------------------------
+Config.MAX_SLAPS_IN_A_ROW = 0 -- 0 = off. 2 = nobody can slap more than 2 times in a row
+
+-- SUDDEN DEATH -------------------------------------------------------------
+Config.SUDDEN_DEATH_ROUND = 12 -- from this round damage grows every round
+Config.SUDDEN_DEATH_STEP = 0.1 -- +10% per round
+Config.SUDDEN_DEATH_MAX = 2 -- never more than x2
+
+-- TEST FEATURES (false = completely off) -----------------------------------
+Config.ENABLE_REVEAL = true -- wrong guess: everyone sees who really slapped (replay)
+Config.ENABLE_RULES_SCREEN = true -- rules cards + "?" button
+Config.ENABLE_TITLES = true -- fun titles above heads during the game
+Config.ENABLE_SPECTATE_CAM = true -- "Spectate" button for people watching outside
+Config.REVEAL_TIME = 3.5
+Config.SPECTATE_RADIUS = 70 -- how close to the arena a player must be to get the button
+
+-- ANIMATIONS (empty = skipped, the game still works) -------------------------
+-- Upload them with the same account / group that owns the game,
+-- otherwise Roblox only plays them in Studio.
+Config.ANIMATIONS = {
+	Sit = "", -- looped while sitting in the game
+	RaiseHand = "", -- slapper holds the hand up while charging (looped)
+	Slap = "", -- the slap swing
+	Slapped = "", -- front player getting hit
+}
+
+-- SOUNDS (put an id like "rbxassetid://123" or just "123", empty = no sound) --
+Config.SOUNDS = {
+	Slap = "", -- the slap hit
+	Whoosh = "", -- protect ring
+	Heartbeat = "", -- loops while the front player's screen is black
+	Tick = "", -- countdowns, lottery spin
+	Vote = "", -- vote clicked
+	Charge = "", -- power tap
+	Perfect = "", -- PERFECT tap / block
+	Block = "", -- block pressed
+	Correct = "", -- right guess
+	Wrong = "", -- wrong guess
+	KnockOut = "", -- a player is knocked out
+	Win = "", -- winners banner
+	Join = "", -- you joined
+}
+Config.SLAP_VOLUME_MIN = 0.4 -- slap volume at 0% power
+Config.SLAP_VOLUME_MAX = 1.2 -- slap volume at 100% power
+
+-- LOOK ---------------------------------------------------------------------
+Config.COLORS = {
+	Background = Color3.fromRGB(20, 18, 30),
+	Panel = Color3.fromRGB(34, 30, 50),
+	Card = Color3.fromRGB(48, 42, 70),
+	Accent = Color3.fromRGB(255, 60, 140),
+	Gold = Color3.fromRGB(255, 200, 70),
+	Text = Color3.fromRGB(255, 255, 255),
+	SubText = Color3.fromRGB(190, 185, 215),
+	Green = Color3.fromRGB(80, 220, 120),
+	Yellow = Color3.fromRGB(255, 205, 60),
+	Red = Color3.fromRGB(235, 70, 70),
+}
+Config.PAD_COLORS = {
+	Open = Color3.fromRGB(80, 220, 120),
+	Countdown = Color3.fromRGB(255, 205, 60),
+	Closed = Color3.fromRGB(235, 70, 70),
+}
+-- Optional decal for the red hand print on the cheek ("" = a hand emoji is used)
+Config.HAND_PRINT_IMAGE = ""
+
+return Config
+</ProtectedString></Properties></Item><Item class="Folder" referent="RBX0C7E2E62909448B8916C26BBEFC1F203"><Properties><string name="Name">Remotes</string></Properties><Item class="RemoteEvent" referent="RBXF46D57DBF6B04E64918290BA870E6934"><Properties><string name="Name">Net</string></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBX939CEE8C4EC84BBCB730C90494CA0CDA"><Properties><string name="Name">ServerScriptService</string></Properties><Item class="Folder" referent="RBXCB22B8F0AF8B4DA68EFC88F1D3EC5D4E"><Properties><string name="Name">WhoSlappedMe</string></Properties><Item class="Script" referent="RBX555D69C5C7BB41A68E4BF325422E8673"><Properties><string name="Name">Main</string><ProtectedString name="Source">--[[
+	WHO SLAPPED ME? - server entry point
+	Lives in ServerScriptService &gt; WhoSlappedMe. Settings: ReplicatedStorage &gt; WhoSlappedMe &gt; Config
+]]
+local ServerScriptService = game:GetService("ServerScriptService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+-- The .rbxmx is inserted into Workspace first; only run once it was moved to ServerScriptService.
+if not script:IsDescendantOf(ServerScriptService) then
+	return
+end
+
+local Shared = ReplicatedStorage:WaitForChild("WhoSlappedMe")
+local Modules = script.Parent:WaitForChild("Modules")
+local Arena = require(Modules.Arena)
+local JoinPad = require(Modules.JoinPad)
+local Game = require(Modules.Game)
+
+Arena.init()
+Game.init()
+JoinPad.start()
+Shared:SetAttribute("JoinState", "Lobby")
+
+while true do
+	local ok, err = pcall(function()
+		local starters = JoinPad.runLobby()
+		Game.run(starters)
+	end)
+	if not ok then
+		warn("[WhoSlappedMe] " .. tostring(err))
+		task.wait(2)
+	end
+end
+</ProtectedString><bool name="Disabled">false</bool></Properties></Item><Item class="Folder" referent="RBXB404CC45007240F29601C762043C74EF"><Properties><string name="Name">Modules</string></Properties><Item class="ModuleScript" referent="RBX99B171D150BC455C8F3556D2F49F74FE"><Properties><string name="Name">Anim</string><ProtectedString name="Source">-- Plays the animations from Config.ANIMATIONS. Empty ids are skipped. Tracks are loaded once per character.
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChild("Config"))
+
+local PRIORITY = {
+	Sit = Enum.AnimationPriority.Idle,
+	RaiseHand = Enum.AnimationPriority.Action,
+	Slap = Enum.AnimationPriority.Action2,
+	Slapped = Enum.AnimationPriority.Action,
+}
+local LOOPED = { Sit = true, RaiseHand = true }
+
+local Anim = {}
+local animations: { [string]: Animation } = {}
+local tracks: { [Animator]: { [string]: AnimationTrack } } = setmetatable({}, { __mode = "k" }) :: any
+
+local function normalize(id: string?): string?
+	if not id or id == "" or id == "0" or id == "rbxassetid://0" then
+		return nil
+	end
+	if tonumber(id) then
+		return "rbxassetid://" .. id
+	end
+	return id
+end
+
+local function getAnimator(character: Model, create: boolean): Animator?
+	local humanoid = character:FindFirstChildOfClass("Humanoid")
+	if not humanoid then
+		return nil
+	end
+	local animator = humanoid:FindFirstChildOfClass("Animator")
+	if not animator and create then
+		animator = Instance.new("Animator")
+		animator.Parent = humanoid
+	end
+	return animator
+end
+
+local function getTrack(character: Model, key: string): AnimationTrack?
+	local id = normalize(Config.ANIMATIONS[key])
+	if not id then
+		return nil
+	end
+	local animator = getAnimator(character, true)
+	if not animator then
+		return nil
+	end
+	local list = tracks[animator]
+	if not list then
+		list = {}
+		tracks[animator] = list
+	end
+	local track = list[key]
+	if track then
+		return track
+	end
+	local animation = animations[key]
+	if not animation then
+		animation = Instance.new("Animation")
+		animation.AnimationId = id
+		animations[key] = animation
+	end
+	local ok, result = pcall(animator.LoadAnimation, animator, animation)
+	if not ok then
+		warn("[WhoSlappedMe] could not load animation " .. key .. ": " .. tostring(result))
+		return nil
+	end
+	track = result :: AnimationTrack
+	track.Priority = PRIORITY[key] or Enum.AnimationPriority.Action
+	track.Looped = LOOPED[key] == true
+	list[key] = track
+	return track
+end
+
+function Anim.play(character: Model?, key: string, speed: number?)
+	if not character then
+		return
+	end
+	local track = getTrack(character, key)
+	if track then
+		track:Play(0.1, 1, speed or 1)
+	end
+end
+
+function Anim.stop(character: Model?, key: string)
+	if not character then
+		return
+	end
+	local animator = getAnimator(character, false)
+	local list = animator and tracks[animator]
+	local track = list and list[key]
+	if track and track.IsPlaying then
+		track:Stop(0.15)
+	end
+end
+
+function Anim.stopAll(character: Model?)
+	for key in PRIORITY do
+		Anim.stop(character, key)
+	end
+end
+
+return Anim
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXCB924467677545FCA36B955242010E81"><Properties><string name="Name">Arena</string><ProtectedString name="Source">-- Finds every map piece BY NAME, so parts can be moved or replaced freely.
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChild("Config"))
+
+local Arena = {}
+
+Arena.model = nil :: Model?
+Arena.hotSeat = nil :: Seat?
+Arena.backSeats = {} :: { Seat }
+Arena.points = {} :: { [string]: BasePart }
+Arena.zone = nil :: BasePart?
+Arena.maxPlayers = Config.MAX_PLAYERS
+
+local padParts: { BasePart } = {}
+local screenLabels: { [string]: TextLabel } = {}
+local signLabels: { [string]: TextLabel } = {}
+
+local function findSeat(container: Instance, name: string): Seat?
+	local holder = container:FindFirstChild(name)
+	if not holder then
+		return nil
+	end
+	if holder:IsA("Seat") then
+		return holder
+	end
+	return holder:FindFirstChildWhichIsA("Seat", true)
+end
+
+local function collectLabels(gui: Instance?, into: { [string]: TextLabel })
+	if not gui then
+		return
+	end
+	for _, d in gui:GetDescendants() do
+		if d:IsA("TextLabel") then
+			into[d.Name] = d
+		end
+	end
+end
+
+function Arena.init()
+	local model = workspace:WaitForChild("WhoSlappedMe")
+	Arena.model = model :: Model
+
+	local seats = model:WaitForChild("Seats")
+	Arena.hotSeat = findSeat(seats, "HotSeat")
+	assert(Arena.hotSeat, "[WhoSlappedMe] Seats/HotSeat with a Seat inside is missing")
+	local i = 1
+	while true do
+		local seat = findSeat(seats, "BackSeat" .. i)
+		if not seat then
+			break
+		end
+		table.insert(Arena.backSeats, seat)
+		i += 1
+	end
+	Arena.maxPlayers = math.min(Config.MAX_PLAYERS, 1 + #Arena.backSeats)
+
+	local points = model:WaitForChild("Points")
+	for _, name in { "SlapSpot", "KOSpot", "ExitSpot", "RevealCam", "SpectateCam" } do
+		local part = points:WaitForChild(name) :: BasePart
+		part.Transparency = 1
+		part.CanCollide = false
+		part.CanTouch = false
+		part.CanQuery = false
+		Arena.points[name] = part
+	end
+
+	local pad = model:WaitForChild("JoinPad")
+	Arena.zone = pad:WaitForChild("Zone") :: BasePart
+	for _, d in pad:GetDescendants() do
+		if d:IsA("BasePart") and d.Name == "Glow" then
+			table.insert(padParts, d)
+		end
+	end
+	collectLabels(pad:FindFirstChild("Sign"), signLabels)
+
+	local screens = model:FindFirstChild("Screens")
+	collectLabels(screens and screens:FindFirstChild("PhaseScreen"), screenLabels)
+
+	-- Clients read these instead of looking into the workspace (works with streaming).
+	local shared = ReplicatedStorage:WaitForChild("WhoSlappedMe")
+	shared:SetAttribute("RevealCam", Arena.points.RevealCam.CFrame)
+	shared:SetAttribute("SpectateCam", Arena.points.SpectateCam.CFrame)
+	shared:SetAttribute("ArenaCenter", Arena.hotSeat.Position)
+end
+
+local function setText(labels: { [string]: TextLabel }, name: string, text: string?)
+	local label = labels[name]
+	if label and text then
+		label.Text = text
+	end
+end
+
+-- Big screen behind the hot seat (everyone can see it, so never put the slapper's name here before the reveal)
+function Arena.setScreen(title: string, sub: string?, info: string?)
+	setText(screenLabels, "Title", title)
+	setText(screenLabels, "Sub", sub or "")
+	setText(screenLabels, "Info", info or "")
+end
+
+function Arena.setScreenInfo(info: string)
+	setText(screenLabels, "Info", info)
+end
+
+-- Join pad colour + sign. state = "Open" | "Countdown" | "Closed"
+function Arena.setPad(state: string, title: string, count: string, info: string)
+	local color = Config.PAD_COLORS[state] or Config.PAD_COLORS.Open
+	for _, part in padParts do
+		part.Color = color
+	end
+	setText(signLabels, "Title", title)
+	setText(signLabels, "Count", count)
+	setText(signLabels, "Info", info)
+	local titleLabel = signLabels.Title
+	if titleLabel then
+		titleLabel.TextColor3 = color
+	end
+end
+
+return Arena
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXDD71044AEA3244ADB0F9F8082D5F82B9"><Properties><string name="Name">Game</string><ProtectedString name="Source">-- The game itself: lottery -&gt; vote -&gt; slap -&gt; guess, round after round, until 2 players are left.
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local Shared = ReplicatedStorage:WaitForChild("WhoSlappedMe")
+local Config = require(Shared:WaitForChild("Config"))
+local Modules = script.Parent
+local Waiter = require(Modules.Waiter)
+local Net = require(Modules.Net)
+local Arena = require(Modules.Arena)
+local Anim = require(Modules.Anim)
+local Participants = require(Modules.Participants)
+local JoinPad = require(Modules.JoinPad)
+local Titles = require(Modules.Titles)
+local Reveal = require(Modules.Reveal)
+
+type Rec = Participants.Rec
+type Waiter = Waiter.Waiter
+type Ctx = { aborted: boolean, waiters: { [Waiter]: boolean } }
+
+local WINNERS_LEFT = 2 -- the game ends when this many (or fewer) players are left
+local rng = Random.new()
+
+local Game = {}
+
+local state = {
+	running = false,
+	round = 1, -- number of the next slap (sudden death uses it)
+	everFull = false, -- once full, nobody can join this game any more
+	eliminated = {} :: { [number]: boolean },
+	front = nil :: Rec?,
+	slapper = nil :: Rec?,
+	lastSlapper = 0,
+	slapStreak = 0,
+	ctx = nil :: Ctx?,
+	vote = nil :: { votes: { [Player]: number }, voters: { [Player]: boolean }, eligible: { [number]: boolean }, waiter: Waiter }?,
+	charge = nil :: { index: number, sentAt: number, sweep: number, waiter: Waiter }?,
+	block = nil :: { sentAt: number, duration: number, waiter: Waiter }?,
+	guess = nil :: { candidates: { [number]: boolean }, crossed: { [number]: boolean }, waiter: Waiter }?,
+}
+
+---------------------------------------------------------------------------
+-- helpers
+---------------------------------------------------------------------------
+
+local function abort()
+	local ctx = state.ctx
+	if not ctx or ctx.aborted then
+		return
+	end
+	ctx.aborted = true
+	for waiter in ctx.waiters do
+		waiter:resolve(nil)
+	end
+end
+
+local function aborted(): boolean
+	local ctx = state.ctx
+	return ctx ~= nil and ctx.aborted
+end
+
+-- Waits for the waiter (or the timeout). Wakes up early when the round is aborted.
+local function await(waiter: Waiter, timeout: number): any
+	local ctx = state.ctx
+	if ctx then
+		if ctx.aborted then
+			return nil
+		end
+		ctx.waiters[waiter] = true
+	end
+	local value = waiter:await(timeout)
+	if ctx then
+		ctx.waiters[waiter] = nil
+	end
+	return value
+end
+
+-- Returns true when the round was aborted.
+local function sleep(seconds: number): boolean
+	await(Waiter.new(), seconds)
+	return aborted()
+end
+
+local function alive(rec: Rec?): boolean
+	return rec ~= nil and Participants.get(rec.player) == rec
+end
+
+local function players(): { Player }
+	return Participants.players()
+end
+
+local function playersOf(recs: { Rec }): { Player }
+	local list = {}
+	for _, rec in recs do
+		table.insert(list, rec.player)
+	end
+	return list
+end
+
+local function status(list: { Player }, text: string)
+	Net.sendList(list, "Status", { text = text })
+end
+
+local function backRecs(): { Rec }
+	local list = {}
+	for _, seat in Arena.backSeats do
+		local rec = Participants.seatOwner(seat)
+		if rec and alive(rec) then
+			table.insert(list, rec)
+		end
+	end
+	return list
+end
+
+local function freeBackSeat(): Seat?
+	for _, seat in Arena.backSeats do
+		if not Participants.seatOwner(seat) then
+			return seat
+		end
+	end
+	return nil
+end
+
+local function exitCF(): CFrame
+	return Arena.points.ExitSpot.CFrame
+end
+
+local function sendRole(rec: Rec, role: string)
+	Net.send(rec.player, "Role", { role = role, seatCFrame = (Arena.hotSeat :: Seat).CFrame })
+end
+
+local function suddenMult(): number
+	local over = state.round - Config.SUDDEN_DEATH_ROUND
+	if over &lt; 0 then
+		return 1
+	end
+	return math.min(1 + (over + 1) * Config.SUDDEN_DEATH_STEP, Config.SUDDEN_DEATH_MAX)
+end
+
+local function updatePad()
+	local open = not state.everFull
+	Shared:SetAttribute("JoinState", open and "Open" or "Closed")
+	JoinPad.showInGame(open, Participants.count())
+end
+
+local function screenCountdown(seconds: number, waiter: Waiter)
+	task.spawn(function()
+		for s = seconds, 1, -1 do
+			if waiter.done then
+				return
+			end
+			Arena.setScreenInfo(tostring(s))
+			task.wait(1)
+		end
+	end)
+end
+
+---------------------------------------------------------------------------
+-- joining mid-game
+---------------------------------------------------------------------------
+
+local function admitJoiners()
+	if state.everFull then
+		return
+	end
+	for _, player in JoinPad.queue() do
+		if Participants.count() &gt;= Arena.maxPlayers then
+			break
+		end
+		local seat = freeBackSeat()
+		if not seat then
+			break
+		end
+		local rec = Participants.add(player)
+		if rec then
+			if Participants.seat(rec, seat) then
+				sendRole(rec, "back")
+				status(players(), rec.name .. " joined the game!")
+			else
+				Participants.remove(player, "left", exitCF())
+			end
+		end
+	end
+	if Participants.count() &gt;= Arena.maxPlayers then
+		state.everFull = true
+	end
+	updatePad()
+end
+
+---------------------------------------------------------------------------
+-- lottery: who goes into the hot seat
+---------------------------------------------------------------------------
+
+local function runLottery(): boolean
+	local list = Participants.list()
+	if #list &lt;= WINNERS_LEFT then
+		return false
+	end
+	local winner = list[rng:NextInteger(1, #list)]
+	local cards = {}
+	for _, rec in list do
+		table.insert(cards, Participants.card(rec))
+	end
+	Net.sendList(players(), "Lottery", { cards = cards, winner = winner.userId, duration = Config.LOTTERY_TIME })
+	Arena.setScreen("LOTTERY", "Who goes into the HOT SEAT?", "")
+	if sleep(Config.LOTTERY_TIME + 0.4) or not alive(winner) then
+		return false
+	end
+
+	local hotSeat = Arena.hotSeat :: Seat
+	if not Participants.seat(winner, hotSeat) then
+		Participants.remove(winner.player, "left", exitCF())
+		return false
+	end
+	state.front = winner
+	sendRole(winner, "front")
+	for _, rec in Participants.list() do
+		if rec ~= winner and (rec.seat == nil or rec.seat == hotSeat) then
+			local seat = freeBackSeat()
+			if seat and Participants.seat(rec, seat) then
+				sendRole(rec, "back")
+			else
+				Participants.remove(rec.player, "left", exitCF())
+			end
+		end
+	end
+	Arena.setScreen("HOT SEAT", winner.name, "is getting slapped!")
+	status(players(), winner.name .. " is in the HOT SEAT!")
+	return not sleep(1.5)
+end
+
+---------------------------------------------------------------------------
+-- vote: back seats choose the slapper
+---------------------------------------------------------------------------
+
+local function checkAllVoted()
+	local vote = state.vote
+	if not vote then
+		return
+	end
+	for player in vote.voters do
+		if not vote.votes[player] then
+			return
+		end
+	end
+	vote.waiter:resolve(true)
+end
+
+local function runVote(front: Rec): Rec?
+	local backs = backRecs()
+	if #backs &lt; 2 then
+		return nil
+	end
+	local eligible: { Rec } = {}
+	local eligibleSet: { [number]: boolean } = {}
+	local cards = {}
+	for _, rec in backs do
+		local blocked = Config.MAX_SLAPS_IN_A_ROW &gt; 0
+			and state.lastSlapper == rec.userId
+			and state.slapStreak &gt;= Config.MAX_SLAPS_IN_A_ROW
+		if not blocked then
+			table.insert(eligible, rec)
+			eligibleSet[rec.userId] = true
+		end
+		table.insert(cards, { userId = rec.userId, name = rec.name, blocked = blocked })
+	end
+
+	local waiter = Waiter.new()
+	local voters = {}
+	for _, rec in backs do
+		voters[rec.player] = true
+	end
+	state.vote = { votes = {}, voters = voters, eligible = eligibleSet, waiter = waiter }
+	Net.sendList(playersOf(backs), "VoteOpen", { cards = cards, endsAt = workspace:GetServerTimeNow() + Config.VOTE_TIME })
+	Net.send(front.player, "Status", { text = "The others are voting... don't look back!" })
+	Arena.setScreen("VOTING", "Who will slap " .. front.name .. "?", "")
+	screenCountdown(Config.VOTE_TIME, waiter)
+	await(waiter, Config.VOTE_TIME + 0.3)
+	local vote = state.vote
+	state.vote = nil
+	waiter:resolve(nil)
+	if aborted() or not vote then
+		return nil
+	end
+
+	local counts: { [number]: number } = {}
+	for player, userId in vote.votes do
+		if vote.voters[player] and eligibleSet[userId] then
+			counts[userId] = (counts[userId] or 0) + 1
+		end
+	end
+	local best, top = -1, {} :: { Rec }
+	for _, rec in eligible do
+		if alive(rec) and rec ~= front then
+			local c = counts[rec.userId] or 0
+			if c &gt; best then
+				best, top = c, { rec }
+			elseif c == best then
+				table.insert(top, rec)
+			end
+		end
+	end
+	if #top == 0 then
+		return nil
+	end
+	local slapper = top[rng:NextInteger(1, #top)] -- tie (or nobody voted) = random
+	if state.lastSlapper == slapper.userId then
+		state.slapStreak += 1
+	else
+		state.lastSlapper, state.slapStreak = slapper.userId, 1
+	end
+	Net.sendList(playersOf(backRecs()), "VoteResult", { userId = slapper.userId, name = slapper.name })
+	Net.send(slapper.player, "Status", { text = "YOU are the slapper! Get ready..." })
+	return slapper
+end
+
+---------------------------------------------------------------------------
+-- slap: blackout, power mini-game, protect mini-game, damage
+---------------------------------------------------------------------------
+
+local function judgeZone(pos: number): (string, number)
+	local d = math.abs(pos - 0.5)
+	if d &lt;= Config.GREEN_HALF_WIDTH then
+		return "PERFECT", 1
+	elseif d &lt;= Config.YELLOW_HALF_WIDTH then
+		return "GOOD", Config.YELLOW_MULT
+	end
+	return "WEAK", Config.RED_MULT
+end
+
+local function judgeBlock(offset: number?): string
+	if offset == nil then
+		return "MISS"
+	end
+	local a = math.abs(offset)
+	if a &lt;= Config.PERFECT_WINDOW then
+		return "PERFECT"
+	elseif a &lt;= Config.GOOD_WINDOW then
+		return "GOOD"
+	end
+	return "MISS"
+end
+
+type SlapResult = { power: number, damage: number, block: string }
+
+local function runSlap(front: Rec, slapper: Rec): SlapResult?
+	state.slapper = slapper
+	local watchers = {}
+	for _, rec in backRecs() do
+		if rec ~= slapper then
+			table.insert(watchers, rec.player)
+		end
+	end
+
+	-- 1. the front player's screen goes black BEFORE the slapper gets up
+	Net.send(front.player, "Blackout", { on = true })
+	Arena.setScreen("SHHH...", "The slapper is getting up", "")
+	if sleep(0.7) then
+		return nil
+	end
+
+	-- 2. slapper is teleported behind the hot seat, hand up
+	Participants.standAt(slapper, Arena.points.SlapSpot.CFrame)
+	Anim.play(slapper.player.Character, "RaiseHand")
+	status(watchers, slapper.name .. " is charging the slap...")
+	if sleep(0.4) then
+		return nil
+	end
+
+	-- 3. power: one sweep per charge
+	local total = 0
+	local charges = #Config.CHARGE_VALUES
+	for i = 1, charges do
+		local sweep = Config.SWEEP_TIMES[i] or Config.SWEEP_TIMES[#Config.SWEEP_TIMES]
+		local waiter = Waiter.new()
+		state.charge = { index = i, sentAt = os.clock(), sweep = sweep, waiter = waiter }
+		Net.send(slapper.player, "PowerStart", { index = i, count = charges, sweep = sweep, total = total })
+		local pos = await(waiter, sweep + 1.5)
+		state.charge = nil
+		if aborted() then
+			return nil
+		end
+		if typeof(pos) ~= "number" then
+			pos = 1 -- never tapped = end of the bar (red)
+		end
+		local zone, mult = judgeZone(pos)
+		local add = math.floor(Config.CHARGE_VALUES[i] * mult + 0.5)
+		total += add
+		Net.send(slapper.player, "PowerResult", { index = i, add = add, zone = zone, total = total })
+		Arena.setScreenInfo(("Power %d%%"):format(total))
+		if sleep(0.45) then
+			return nil
+		end
+	end
+	Net.send(slapper.player, "PowerDone", { total = total })
+
+	-- 4. protect: ring shrinks, the slap lands when it hits the circle
+	local duration = rng:NextNumber(Config.RING_TIME_MIN, Config.RING_TIME_MAX)
+	local blockWaiter = Waiter.new()
+	state.block = { sentAt = os.clock(), duration = duration, waiter = blockWaiter }
+	Net.send(front.player, "ProtectStart", { duration = duration })
+	Arena.setScreen("SLAP INCOMING!", ("%d%% power"):format(total), "")
+	if sleep(math.max(duration - Config.SLAP_WINDUP, 0)) then
+		return nil
+	end
+	Anim.play(slapper.player.Character, "Slap")
+	if sleep(Config.SLAP_WINDUP) then
+		return nil
+	end
+
+	-- 5. hit
+	Anim.stop(slapper.player.Character, "RaiseHand")
+	Anim.play(front.player.Character, "Slapped")
+	Net.sendAll("SlapFx", { userId = front.userId, power = total })
+	local offset = await(blockWaiter, Config.GOOD_WINDOW + 0.6)
+	state.block = nil
+	if aborted() then
+		return nil
+	end
+	local block = judgeBlock(offset)
+	local reduction = block == "PERFECT" and Config.PERFECT_REDUCTION or block == "GOOD" and Config.GOOD_REDUCTION or 0
+	local base = Config.MIN_SLAP_DAMAGE + (Config.MAX_SLAP_DAMAGE - Config.MIN_SLAP_DAMAGE) * total / 100
+	local damage = math.max(1, math.floor(base * suddenMult() * (1 - reduction) + 0.5))
+	front.hp -= damage
+	front.damage += damage
+	front.slapsTaken += 1
+	Participants.syncHealth(front)
+	state.round += 1
+	Titles.onBlock(front, block)
+	Net.sendAll("SlapResult", { userId = front.userId, power = total, damage = damage, block = block })
+	Arena.setScreen(("%d%% SLAP!"):format(total), ("-%d HP"):format(damage), block ~= "MISS" and (block .. " BLOCK!") or "")
+	sleep(1.1)
+	return { power = total, damage = damage, block = block }
+end
+
+-- Always runs after runSlap: slapper back in the seat FIRST, then the screen opens.
+local function endSlap(front: Rec, slapper: Rec)
+	state.charge, state.block = nil, nil
+	if alive(slapper) then
+		Anim.stop(slapper.player.Character, "RaiseHand")
+		Participants.returnToSeat(slapper)
+	end
+	state.slapper = nil
+	if alive(front) then
+		Net.send(front.player, "Blackout", { on = false })
+	end
+end
+
+---------------------------------------------------------------------------
+-- guess
+---------------------------------------------------------------------------
+
+local function runGuess(front: Rec, slapper: Rec, block: string): (boolean?, number?)
+	local backs = backRecs()
+	local cards, candidates = {}, {}
+	for _, rec in backs do
+		table.insert(cards, Participants.card(rec))
+		candidates[rec.userId] = true
+	end
+
+	-- PERFECT block clue: cross out innocent players, never leaving fewer than MIN_NAMES_LEFT
+	local crossed, crossedList = {}, {}
+	if block == "PERFECT" then
+		local innocent = {}
+		for _, rec in backs do
+			if rec ~= slapper then
+				table.insert(innocent, rec.userId)
+			end
+		end
+		local n = math.min(Config.PERFECT_CLUE_COUNT, #backs - Config.MIN_NAMES_LEFT, #innocent)
+		for i = 1, n do
+			local pick = rng:NextInteger(i, #innocent)
+			innocent[i], innocent[pick] = innocent[pick], innocent[i]
+			crossed[innocent[i]] = true
+			table.insert(crossedList, innocent[i])
+		end
+	end
+
+	local waiter = Waiter.new()
+	state.guess = { candidates = candidates, crossed = crossed, waiter = waiter }
+	Net.send(front.player, "GuessOpen", {
+		cards = cards,
+		crossed = crossedList,
+		endsAt = workspace:GetServerTimeNow() + Config.GUESS_TIME,
+		clue = block == "PERFECT",
+	})
+	status(playersOf(backs), front.name .. " is guessing... keep a straight face!")
+	Arena.setScreen("WHO SLAPPED ME?", front.name .. " is guessing...", "")
+	screenCountdown(Config.GUESS_TIME, waiter)
+	local guess = await(waiter, Config.GUESS_TIME + 0.5)
+	state.guess = nil
+	waiter:resolve(nil)
+	if aborted() then
+		return nil, nil
+	end
+	return guess == slapper.userId, guess
+end
+
+local function knockOut(front: Rec, slapper: Rec)
+	state.front = nil
+	Net.sendAll("KO", { userId = front.userId })
+	Arena.setScreen("KNOCKED OUT!", front.name .. " is out!", "Slapped by " .. slapper.name)
+	status(players(), ("%s was knocked out by %s!"):format(front.name, slapper.name))
+	task.wait(2)
+	if alive(front) then
+		Participants.remove(front.player, "ko", Arena.points.KOSpot.CFrame)
+	end
+end
+
+---------------------------------------------------------------------------
+-- one round
+---------------------------------------------------------------------------
+
+local function playRound()
+	state.ctx = { aborted = false, waiters = {} }
+	admitJoiners()
+	if Participants.count() &lt;= WINNERS_LEFT then
+		return
+	end
+	if not alive(state.front) then
+		state.front = nil
+		if not runLottery() then
+			return
+		end
+	end
+	local front = state.front :: Rec
+
+	local mult = suddenMult()
+	if mult &gt; 1 then
+		status(players(), ("SUDDEN DEATH! Damage x%.1f"):format(mult))
+	end
+
+	local slapper = runVote(front)
+	if not slapper or aborted() then
+		return
+	end
+
+	local result = runSlap(front, slapper)
+	endSlap(front, slapper)
+	if not result or aborted() then
+		return
+	end
+
+	if front.hp &lt;= 0 then
+		knockOut(front, slapper)
+		task.wait(Config.INTERMISSION)
+		return
+	end
+
+	local correct, guessed = runGuess(front, slapper, result.block)
+	if correct == nil then
+		return
+	end
+	local list = players()
+	Titles.onGuess(front, correct)
+	Titles.onSlapper(slapper, correct)
+	if correct then
+		Net.sendList(list, "GuessResult", {
+			correct = true,
+			front = Participants.card(front),
+			slapper = Participants.card(slapper),
+		})
+		Arena.setScreen("CORRECT!", front.name .. " caught " .. slapper.name, "Swapping seats")
+		if sleep(1.5) then
+			return
+		end
+		if alive(slapper) and alive(front) then
+			Participants.swap(front, slapper)
+			state.front = slapper
+			sendRole(slapper, "front")
+			sendRole(front, "back")
+		end
+	else
+		Net.sendList(list, "GuessResult", { correct = false, guessed = guessed, revealed = Config.ENABLE_REVEAL })
+		Arena.setScreen("WRONG!", front.name .. " stays in the hot seat", "")
+		if Config.ENABLE_REVEAL and not sleep(1.5) then
+			Reveal.run(slapper, front, sleep)
+		end
+	end
+	sleep(Config.INTERMISSION)
+end
+
+---------------------------------------------------------------------------
+-- game over
+---------------------------------------------------------------------------
+
+local function finish()
+	local list = Participants.list()
+	if #list &gt; 0 and state.round &gt; 1 then
+		table.sort(list, function(a, b)
+			if a.damage ~= b.damage then
+				return a.damage &lt; b.damage
+			end
+			return a.slapsTaken &lt; b.slapsTaken
+		end)
+		local winners, names = {}, {}
+		local place = 1
+		for i, rec in list do
+			local prev = list[i - 1]
+			if prev and (prev.damage ~= rec.damage or prev.slapsTaken ~= rec.slapsTaken) then
+				place = i
+			end
+			table.insert(winners, { userId = rec.userId, name = rec.name, place = place, damage = rec.damage })
+			table.insert(names, rec.name)
+		end
+		Net.sendAll("Winners", { list = winners })
+		Arena.setScreen("WINNERS!", table.concat(names, " &amp; "), "")
+		task.wait(Config.WINNER_TIME)
+	elseif #list &gt; 0 then
+		status(players(), "Not enough players left. Game cancelled.")
+		Arena.setScreen("GAME CANCELLED", "Not enough players", "")
+		task.wait(2)
+	end
+	state.running = false
+	for _, rec in Participants.list() do
+		Participants.remove(rec.player, "finished", exitCF())
+	end
+end
+
+---------------------------------------------------------------------------
+
+function Game.run(starters: { Player })
+	state.running = true
+	state.round = 1
+	state.everFull = false
+	state.eliminated = {}
+	state.front, state.slapper = nil, nil
+	state.lastSlapper, state.slapStreak = 0, 0
+	for _, player in starters do
+		Participants.add(player)
+	end
+	if Participants.count() &gt;= Arena.maxPlayers then
+		state.everFull = true
+	end
+	updatePad()
+
+	while Participants.count() &gt; WINNERS_LEFT do
+		local ok, err = pcall(playRound)
+		if not ok then
+			warn("[WhoSlappedMe] round error: " .. tostring(err))
+		end
+		if aborted() then
+			Net.sendList(players(), "Close")
+			local front = state.front
+			if alive(front) then
+				Net.send((front :: Rec).player, "Blackout", { on = false })
+			end
+		end
+		state.ctx = nil
+		state.vote, state.charge, state.block, state.guess = nil, nil, nil, nil
+		task.wait(0.2)
+	end
+	finish()
+	state.running = false
+	state.eliminated = {}
+	state.front, state.slapper = nil, nil
+	Shared:SetAttribute("JoinState", "Lobby")
+end
+
+function Game.init()
+	JoinPad.canJoin = function(player: Player): boolean
+		-- knocked-out / left players wait for the NEXT game
+		return Participants.get(player) == nil and not (state.running and state.eliminated[player.UserId])
+	end
+
+	Participants.onRemoved = function(rec: Rec, reason: string)
+		if not state.running then
+			return
+		end
+		state.eliminated[rec.userId] = true
+		local vote = state.vote
+		if vote then
+			vote.voters[rec.player] = nil
+			checkAllVoted()
+		end
+		if state.front == rec then
+			state.front = nil
+			abort()
+		elseif state.slapper == rec then
+			abort()
+		end
+		if Participants.count() &lt;= WINNERS_LEFT then
+			abort()
+		end
+		if reason ~= "finished" then
+			status(players(), rec.name .. (reason == "ko" and " was knocked out!" or " left the game."))
+			updatePad()
+		end
+	end
+
+	Net.on("Leave", function(player)
+		if Participants.get(player) then
+			Participants.remove(player, "left", exitCF())
+		end
+	end)
+
+	Net.on("Vote", function(player, userId)
+		local vote = state.vote
+		if not vote or not vote.voters[player] or vote.votes[player] then
+			return
+		end
+		if typeof(userId) ~= "number" or not vote.eligible[userId] then
+			return
+		end
+		vote.votes[player] = userId
+		checkAllVoted()
+	end)
+
+	Net.on("Charge", function(player, data)
+		local charge = state.charge
+		local slapper = state.slapper
+		if not charge or not slapper or slapper.player ~= player or typeof(data) ~= "table" then
+			return
+		end
+		local pos = data.pos
+		if data.index ~= charge.index or typeof(pos) ~= "number" or pos ~= pos then
+			return
+		end
+		pos = math.clamp(pos, 0, 1)
+		-- the needle can't be further than the time that has really passed
+		if pos &gt; (os.clock() - charge.sentAt) / charge.sweep + 0.05 then
+			pos = 1
+		end
+		charge.waiter:resolve(pos)
+	end)
+
+	Net.on("Block", function(player, offset)
+		local block = state.block
+		local front = state.front
+		if not block or not front or front.player ~= player then
+			return
+		end
+		if typeof(offset) ~= "number" or offset ~= offset or math.abs(offset) == math.huge then
+			return
+		end
+		-- a press can't happen later on the client than the server has seen time pass
+		if block.duration + offset &gt; os.clock() - block.sentAt + 0.05 then
+			offset = math.huge
+		end
+		block.waiter:resolve(offset)
+	end)
+
+	Net.on("Guess", function(player, userId)
+		local guess = state.guess
+		local front = state.front
+		if not guess or not front or front.player ~= player then
+			return
+		end
+		if typeof(userId) ~= "number" or not guess.candidates[userId] or guess.crossed[userId] then
+			return
+		end
+		guess.waiter:resolve(userId)
+	end)
+end
+
+return Game
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX84AE9637680D48D897E76ECE4FF0C8EF"><Properties><string name="Name">JoinPad</string><ProtectedString name="Source">-- Who is standing on the join pad, and the lobby countdown.
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChild("Config"))
+local Modules = script.Parent
+local Net = require(Modules.Net)
+local Arena = require(Modules.Arena)
+
+local SCAN_INTERVAL = 0.25
+
+local JoinPad = {}
+local entered: { [Player]: number } = {}
+
+-- Game.lua sets this: may this player join right now?
+JoinPad.canJoin = function(_player: Player): boolean
+	return true
+end
+
+local function isInside(player: Player): boolean
+	local zone = Arena.zone
+	local character = player.Character
+	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+	local root = character and character:FindFirstChild("HumanoidRootPart") :: BasePart?
+	if not zone or not humanoid or not root or humanoid.Health &lt;= 0 then
+		return false
+	end
+	local rel = zone.CFrame:PointToObjectSpace(root.Position)
+	local half = zone.Size / 2
+	return math.abs(rel.X) &lt;= half.X + 0.5 and math.abs(rel.Z) &lt;= half.Z + 0.5 and rel.Y &gt; -2 and rel.Y &lt; 10
+end
+
+local function scan()
+	for _, player in Players:GetPlayers() do
+		local inside = isInside(player)
+		if inside and not entered[player] then
+			entered[player] = os.clock()
+			Net.send(player, "Pad", { on = true })
+		elseif not inside and entered[player] then
+			entered[player] = nil
+			Net.send(player, "Pad", { on = false })
+		end
+	end
+end
+
+function JoinPad.start()
+	Players.PlayerRemoving:Connect(function(player)
+		entered[player] = nil
+	end)
+	task.spawn(function()
+		while true do
+			local ok, err = pcall(scan)
+			if not ok then
+				warn("[WhoSlappedMe] pad scan: " .. tostring(err))
+			end
+			task.wait(SCAN_INTERVAL)
+		end
+	end)
+end
+
+-- Players on the pad who may join, first come first served.
+function JoinPad.queue(): { Player }
+	local list = {}
+	for player in entered do
+		if player.Parent and JoinPad.canJoin(player) then
+			table.insert(list, player)
+		end
+	end
+	table.sort(list, function(a, b)
+		return entered[a] &lt; entered[b]
+	end)
+	return list
+end
+
+-- Blocks until a game should start. Returns the players that start it.
+function JoinPad.runLobby(): { Player }
+	local countdown: number? = nil
+	local max = Arena.maxPlayers
+	while true do
+		local list = JoinPad.queue()
+		if #list == 0 then
+			countdown = nil
+			Arena.setPad("Open", "STAND HERE TO JOIN", ("0/%d"):format(max), ("Needs %d players"):format(Config.MIN_PLAYERS))
+			Arena.setScreen("WHO SLAPPED ME?", "Step on the glowing pad to play", ("%d - %d players"):format(Config.MIN_PLAYERS, max))
+		else
+			if not countdown then
+				countdown = Config.JOIN_COUNTDOWN
+			end
+			if #list &gt;= max then
+				countdown = math.min(countdown :: number, Config.FULL_COUNTDOWN)
+			end
+			if (countdown :: number) &lt;= 0 then
+				if #list &gt;= Config.MIN_PLAYERS then
+					local chosen = {}
+					for i = 1, math.min(#list, max) do
+						chosen[i] = list[i]
+					end
+					return chosen
+				end
+				countdown = Config.JOIN_COUNTDOWN
+				Net.sendList(list, "Status", { text = ("Need at least %d players. Waiting for more..."):format(Config.MIN_PLAYERS) })
+			end
+			local enough = #list &gt;= Config.MIN_PLAYERS
+			local info = enough and ("Starting in %d"):format(countdown :: number)
+				or ("Need %d more · %d"):format(Config.MIN_PLAYERS - #list, countdown :: number)
+			Arena.setPad("Countdown", "STAND HERE TO JOIN", ("%d/%d"):format(#list, max), info)
+			Arena.setScreen("WHO SLAPPED ME?", ("%d/%d players on the pad"):format(#list, max), info)
+			Net.sendList(list, "PadCount", { seconds = countdown, count = #list, max = max, enough = enough })
+		end
+		task.wait(1)
+		if countdown then
+			countdown -= 1
+		end
+	end
+end
+
+-- Sign while a game is running.
+function JoinPad.showInGame(open: boolean, count: number)
+	local max = Arena.maxPlayers
+	if open then
+		Arena.setPad("Open", "JOIN THE GAME", ("%d/%d"):format(count, max), "You get a seat next round")
+	else
+		Arena.setPad("Closed", "GAME IN PROGRESS", ("%d/%d"):format(count, max), "Wait for the next game")
+	end
+end
+
+return JoinPad
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX4B6A32E8773F4C3CB835DC48B49040BC"><Properties><string name="Name">Net</string><ProtectedString name="Source">-- The single RemoteEvent of the game, with a per-player rate limit.
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local remote = ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChild("Remotes"):WaitForChild("Net") :: RemoteEvent
+
+local MAX_PER_SECOND = 12
+
+local Net = {}
+local handlers: { [string]: (Player, any) -&gt; () } = {}
+local budget: { [Player]: { count: number, window: number } } = {}
+
+function Net.on(name: string, handler: (Player, any) -&gt; ())
+	handlers[name] = handler
+end
+
+function Net.send(player: Player, name: string, data: any?)
+	if player.Parent then
+		remote:FireClient(player, name, data)
+	end
+end
+
+function Net.sendList(players: { Player }, name: string, data: any?)
+	for _, player in players do
+		Net.send(player, name, data)
+	end
+end
+
+function Net.sendAll(name: string, data: any?)
+	remote:FireAllClients(name, data)
+end
+
+remote.OnServerEvent:Connect(function(player: Player, name: any, data: any)
+	if typeof(name) ~= "string" then
+		return
+	end
+	local handler = handlers[name]
+	if not handler then
+		return
+	end
+	local now = os.clock()
+	local b = budget[player]
+	if not b or now - b.window &gt;= 1 then
+		b = { count = 0, window = now }
+		budget[player] = b
+	end
+	b.count += 1
+	if b.count &gt; MAX_PER_SECOND then
+		return
+	end
+	handler(player, data)
+end)
+
+Players.PlayerRemoving:Connect(function(player)
+	budget[player] = nil
+end)
+
+return Net
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXD0A2D06A7B07488AB1D5811F65B41733"><Properties><string name="Name">Participants</string><ProtectedString name="Source">-- Everyone who is inside the current game: health, seat, locks and clean-up.
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChild("Config"))
+local Modules = script.Parent
+local Net = require(Modules.Net)
+local Seating = require(Modules.Seating)
+local Anim = require(Modules.Anim)
+local Titles = require(Modules.Titles)
+
+export type Rec = {
+	player: Player,
+	userId: number,
+	name: string,
+	hp: number,
+	damage: number,
+	slapsTaken: number,
+	seat: Seat?,
+	busy: boolean, -- true while the server is moving this player
+	conns: { RBXScriptConnection },
+	saved: { jumpPower: number, jumpHeight: number, maxHealth: number },
+	stats: { guessStreak: number, perfectBlocks: number, uncaught: number },
+	joinedAt: number,
+}
+
+local Participants = {}
+local records: { [Player]: Rec } = {}
+local seatOwner: { [Seat]: Rec } = {}
+
+-- Game.lua sets this: called after a player was removed (rec, reason)
+Participants.onRemoved = nil :: ((Rec, string) -&gt; ())?
+
+local function getBody(player: Player): (Model?, Humanoid?)
+	local character = player.Character
+	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+	if character and humanoid and humanoid.Health &gt; 0 then
+		return character, humanoid
+	end
+	return nil, nil
+end
+Participants.getBody = getBody
+
+function Participants.get(player: Player): Rec?
+	return records[player]
+end
+
+function Participants.count(): number
+	local n = 0
+	for _ in records do
+		n += 1
+	end
+	return n
+end
+
+function Participants.list(): { Rec }
+	local list = {}
+	for _, rec in records do
+		table.insert(list, rec)
+	end
+	table.sort(list, function(a, b)
+		return a.joinedAt &lt; b.joinedAt
+	end)
+	return list
+end
+
+function Participants.players(): { Player }
+	local list = {}
+	for player in records do
+		table.insert(list, player)
+	end
+	return list
+end
+
+function Participants.seatOwner(seat: Seat): Rec?
+	return seatOwner[seat]
+end
+
+-- Card data for the client pickers
+function Participants.card(rec: Rec): { userId: number, name: string }
+	return { userId = rec.userId, name = rec.name }
+end
+
+local function setHealthScript(character: Model, enabled: boolean)
+	local script = character:FindFirstChild("Health")
+	if script and script:IsA("Script") then
+		script.Enabled = enabled
+	end
+end
+
+-- Shows the hp on the Roblox health bar. Never lets the humanoid really die (KO is handled by the game).
+function Participants.syncHealth(rec: Rec)
+	local _, humanoid = getBody(rec.player)
+	if humanoid then
+		humanoid.Health = math.max(rec.hp, 1)
+	end
+end
+
+function Participants.add(player: Player): Rec?
+	if records[player] then
+		return records[player]
+	end
+	local character, humanoid = getBody(player)
+	if not character or not humanoid then
+		return nil
+	end
+	local rec: Rec = {
+		player = player,
+		userId = player.UserId,
+		name = player.DisplayName,
+		hp = Config.MAX_HEALTH - Config.START_DAMAGE,
+		damage = 0,
+		slapsTaken = 0,
+		seat = nil,
+		busy = false,
+		conns = {},
+		saved = { jumpPower = humanoid.JumpPower, jumpHeight = humanoid.JumpHeight, maxHealth = humanoid.MaxHealth },
+		stats = { guessStreak = 0, perfectBlocks = 0, uncaught = 0 },
+		joinedAt = os.clock(),
+	}
+	records[player] = rec
+
+	-- lock: no jumping out, no healing
+	humanoid.JumpPower = 0
+	humanoid.JumpHeight = 0
+	setHealthScript(character, false)
+	humanoid.MaxHealth = Config.MAX_HEALTH
+	humanoid.Health = rec.hp
+
+	table.insert(
+		rec.conns,
+		humanoid.HealthChanged:Connect(function(health)
+			-- anything that tries to heal a player in the game is undone
+			if health &gt; math.max(rec.hp, 1) + 0.01 then
+				humanoid.Health = math.max(rec.hp, 1)
+			end
+		end)
+	)
+	table.insert(
+		rec.conns,
+		humanoid.Died:Connect(function()
+			Participants.remove(player, "left")
+		end)
+	)
+	table.insert(
+		rec.conns,
+		player.CharacterRemoving:Connect(function()
+			Participants.remove(player, "left")
+		end)
+	)
+	table.insert(
+		rec.conns,
+		humanoid.Seated:Connect(function(active)
+			-- somebody jumped out anyway: put them straight back
+			if not active and not rec.busy and rec.seat then
+				task.delay(0.1, function()
+					if records[player] == rec and not rec.busy and rec.seat and humanoid.SeatPart ~= rec.seat then
+						rec.busy = true
+						Seating.sit(character, humanoid, rec.seat)
+						rec.busy = false
+					end
+				end)
+			end
+		end)
+	)
+
+	Net.send(player, "Joined", { maxHealth = Config.MAX_HEALTH })
+	return rec
+end
+
+-- Puts the player in a seat (frees their old one). Returns true when seated.
+function Participants.seat(rec: Rec, seat: Seat): boolean
+	local character, humanoid = getBody(rec.player)
+	if not character or not humanoid then
+		return false
+	end
+	if rec.seat and seatOwner[rec.seat] == rec then
+		seatOwner[rec.seat] = nil
+	end
+	rec.seat = seat
+	seatOwner[seat] = rec
+	rec.busy = true
+	local ok = Seating.sit(character, humanoid, seat)
+	rec.busy = false
+	if ok then
+		Anim.play(character, "Sit")
+	end
+	return ok
+end
+
+-- Takes the player out of their seat and freezes them at cf (seat stays theirs).
+function Participants.standAt(rec: Rec, cf: CFrame)
+	local character, humanoid = getBody(rec.player)
+	if not character or not humanoid then
+		return
+	end
+	rec.busy = true
+	Anim.stop(character, "Sit")
+	Seating.standAt(character, humanoid, cf)
+end
+
+-- Back to their own seat after standAt.
+function Participants.returnToSeat(rec: Rec): boolean
+	local seat = rec.seat
+	if not seat or records[rec.player] ~= rec then
+		rec.busy = false
+		return false
+	end
+	return Participants.seat(rec, seat)
+end
+
+-- Two players trade seats (correct guess).
+function Participants.swap(a: Rec, b: Rec)
+	local seatA, seatB = a.seat, b.seat
+	if not seatA or not seatB then
+		return
+	end
+	local charA, humA = getBody(a.player)
+	local charB, humB = getBody(b.player)
+	if not (charA and humA and charB and humB) then
+		return
+	end
+	a.busy, b.busy = true, true
+	Seating.unseat(humA)
+	Seating.unseat(humB)
+	seatOwner[seatA], seatOwner[seatB] = nil, nil
+	a.seat, b.seat = nil, nil
+	task.wait(0.1)
+	Participants.seat(a, seatB)
+	Participants.seat(b, seatA)
+end
+
+-- reason: "left" | "ko" | "finished"
+function Participants.remove(player: Player, reason: string, destination: CFrame?)
+	local rec = records[player]
+	if not rec then
+		return
+	end
+	records[player] = nil
+	for _, conn in rec.conns do
+		conn:Disconnect()
+	end
+	table.clear(rec.conns)
+	if rec.seat and seatOwner[rec.seat] == rec then
+		seatOwner[rec.seat] = nil
+	end
+	rec.seat = nil
+	Titles.clear(rec)
+
+	local character, humanoid = getBody(player)
+	if character and humanoid then
+		Anim.stopAll(character)
+		humanoid.JumpPower = rec.saved.jumpPower
+		humanoid.JumpHeight = rec.saved.jumpHeight
+		humanoid.MaxHealth = rec.saved.maxHealth
+		humanoid.Health = humanoid.MaxHealth
+		setHealthScript(character, true)
+		if destination then
+			Seating.release(character, humanoid, destination)
+		else
+			local root = Seating.root(character)
+			if root then
+				root.Anchored = false
+			end
+			Seating.unseat(humanoid)
+		end
+	end
+
+	Net.send(player, "Left", { reason = reason })
+	local callback = Participants.onRemoved
+	if callback then
+		callback(rec, reason)
+	end
+end
+
+return Participants
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXC491CD7FD85544B4AC2AD262BE3E42AF"><Properties><string name="Name">Reveal</string><ProtectedString name="Source">-- TEST FEATURE (Config.ENABLE_REVEAL): after a wrong guess the slapper replays the slap
+-- while everyone in the game watches from the side camera, with "It was X!".
+-- Safe to delete: Game.lua checks Config.ENABLE_REVEAL before calling it.
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChild("Config"))
+local Modules = script.Parent
+local Net = require(Modules.Net)
+local Arena = require(Modules.Arena)
+local Anim = require(Modules.Anim)
+local Participants = require(Modules.Participants)
+
+local Reveal = {}
+
+-- sleep(seconds) returns true when the round was aborted
+function Reveal.run(slapper: any, front: any, sleep: (number) -&gt; boolean)
+	if not Config.ENABLE_REVEAL or Participants.get(slapper.player) ~= slapper then
+		return
+	end
+	local duration = Config.REVEAL_TIME
+	Net.sendAll("Reveal", { userId = slapper.userId, name = slapper.name, duration = duration })
+	Arena.setScreen("IT WAS...", slapper.name .. "!", "")
+
+	Participants.standAt(slapper, Arena.points.SlapSpot.CFrame)
+	local character = slapper.player.Character
+	Anim.play(character, "RaiseHand")
+	local aborted = sleep(duration * 0.35)
+	if not aborted then
+		Anim.play(character, "Slap")
+		aborted = sleep(Config.SLAP_WINDUP)
+		if not aborted and Participants.get(front.player) == front then
+			Anim.play(front.player.Character, "Slapped")
+			Net.sendAll("SlapFx", { userId = front.userId, power = 60, replay = true })
+		end
+		if not aborted then
+			sleep(math.max(duration * 0.65 - Config.SLAP_WINDUP, 0.2))
+		end
+	end
+	Anim.stop(character, "RaiseHand")
+	Participants.returnToSeat(slapper)
+	Net.sendAll("RevealEnd")
+end
+
+return Reveal
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX6FE77E063508464AB31EDC06304FB5BD"><Properties><string name="Name">Seating</string><ProtectedString name="Source">-- Moving characters in and out of seats. All server side.
+local Seating = {}
+
+function Seating.root(character: Model): BasePart?
+	return character:FindFirstChild("HumanoidRootPart") :: BasePart?
+end
+
+function Seating.unseat(humanoid: Humanoid)
+	local seatPart = humanoid.SeatPart
+	if seatPart then
+		local weld = seatPart:FindFirstChild("SeatWeld")
+		if weld then
+			weld:Destroy()
+		end
+	end
+	humanoid.Sit = false
+end
+
+-- Puts the character in the seat, retrying a few times. Returns true when seated.
+function Seating.sit(character: Model, humanoid: Humanoid, seat: Seat): boolean
+	local root = Seating.root(character)
+	if root then
+		root.Anchored = false
+	end
+	if humanoid.SeatPart == seat then
+		return true
+	end
+	Seating.unseat(humanoid)
+	for _ = 1, 8 do
+		if humanoid.SeatPart == seat then
+			return true
+		end
+		if humanoid.Health &lt;= 0 or not character.Parent then
+			return false
+		end
+		character:PivotTo(seat.CFrame * CFrame.new(0, 2.5, 0))
+		seat:Sit(humanoid)
+		task.wait(0.15)
+	end
+	return humanoid.SeatPart == seat
+end
+
+-- Teleports and freezes the character (the slapper behind the hot seat).
+function Seating.standAt(character: Model, humanoid: Humanoid, cf: CFrame)
+	Seating.unseat(humanoid)
+	local root = Seating.root(character)
+	if root then
+		root.Anchored = true
+	end
+	character:PivotTo(cf)
+end
+
+-- Sends the character somewhere outside the game, free to walk.
+function Seating.release(character: Model, humanoid: Humanoid, cf: CFrame)
+	Seating.unseat(humanoid)
+	local root = Seating.root(character)
+	if root then
+		root.Anchored = false
+	end
+	character:PivotTo(cf)
+end
+
+return Seating
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX166568AA19D8474BBA4EC24F1FD6BDBD"><Properties><string name="Name">Titles</string><ProtectedString name="Source">-- TEST FEATURE (Config.ENABLE_TITLES): fun titles above heads during a game.
+-- Safe to delete: Game.lua only calls these functions, and they do nothing when the feature is off.
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChild("Config"))
+
+local TAG = "WSMTitle"
+
+local Titles = {}
+
+local function show(rec: any, text: string, color: Color3)
+	local character = rec.player.Character
+	local head = character and character:FindFirstChild("Head")
+	if not head then
+		return
+	end
+	local gui = head:FindFirstChild(TAG) :: BillboardGui?
+	if not gui then
+		local newGui = Instance.new("BillboardGui")
+		newGui.Name = TAG
+		newGui.Size = UDim2.fromOffset(220, 36)
+		newGui.StudsOffset = Vector3.new(0, 2.8, 0)
+		newGui.MaxDistance = 90
+		newGui.LightInfluence = 0
+		local label = Instance.new("TextLabel")
+		label.Name = "Text"
+		label.Size = UDim2.fromScale(1, 1)
+		label.BackgroundTransparency = 1
+		label.Font = Enum.Font.GothamBlack
+		label.TextScaled = true
+		label.TextStrokeTransparency = 0.2
+		label.Parent = newGui
+		newGui.Parent = head
+		gui = newGui
+	end
+	local label = (gui :: BillboardGui):FindFirstChild("Text") :: TextLabel
+	label.Text = text
+	label.TextColor3 = color
+end
+
+function Titles.clear(rec: any)
+	local character = rec.player.Character
+	local head = character and character:FindFirstChild("Head")
+	local gui = head and head:FindFirstChild(TAG)
+	if gui then
+		gui:Destroy()
+	end
+end
+
+function Titles.onGuess(rec: any, correct: boolean)
+	if not Config.ENABLE_TITLES then
+		return
+	end
+	local stats = rec.stats
+	stats.guessStreak = correct and stats.guessStreak + 1 or 0
+	if stats.guessStreak &gt;= 2 then
+		show(rec, "🧠 MIND READER", Color3.fromRGB(120, 200, 255))
+	end
+end
+
+function Titles.onBlock(rec: any, result: string)
+	if not Config.ENABLE_TITLES or result ~= "PERFECT" then
+		return
+	end
+	local stats = rec.stats
+	stats.perfectBlocks += 1
+	if stats.perfectBlocks &gt;= 3 then
+		show(rec, "🛡️ IRON CHEEK", Color3.fromRGB(200, 200, 210))
+	end
+end
+
+function Titles.onSlapper(rec: any, caught: boolean)
+	if not Config.ENABLE_TITLES then
+		return
+	end
+	local stats = rec.stats
+	stats.uncaught = caught and 0 or stats.uncaught + 1
+	if stats.uncaught &gt;= 2 then
+		show(rec, "🤫 SILENT SLAPPER", Color3.fromRGB(255, 120, 200))
+	end
+end
+
+return Titles
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXAD87EAC29CAF4C47B9D6F366C3DAB56C"><Properties><string name="Name">Waiter</string><ProtectedString name="Source">-- One-shot wait with a timeout. resolve() wakes the waiting thread right away (no polling).
+local Waiter = {}
+Waiter.__index = Waiter
+
+export type Waiter = {
+	done: boolean,
+	value: any,
+	thread: thread?,
+	resolve: (self: Waiter, value: any) -&gt; (),
+	await: (self: Waiter, timeout: number) -&gt; any,
+}
+
+function Waiter.new(): Waiter
+	return (setmetatable({ done = false, value = nil, thread = nil }, Waiter) :: any) :: Waiter
+end
+
+function Waiter.resolve(self: Waiter, value: any)
+	if self.done then
+		return
+	end
+	self.done = true
+	self.value = value
+	local thread = self.thread
+	if thread then
+		self.thread = nil
+		task.defer(thread) -- resume on the next scheduler step, never inside the caller's code
+	end
+end
+
+-- Returns the resolved value, or nil when the timeout ran out first.
+function Waiter.await(self: Waiter, timeout: number): any
+	if self.done then
+		return self.value
+	end
+	self.thread = coroutine.running()
+	local timer = task.delay(timeout, function()
+		self:resolve(nil)
+	end)
+	coroutine.yield()
+	if coroutine.status(timer) == "suspended" then
+		task.cancel(timer)
+	end
+	return self.value
+end
+
+return Waiter
+</ProtectedString></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBXBA9231C107ED4CF9A3F76E3CE0A8FBC4"><Properties><string name="Name">StarterPlayerScripts</string></Properties><Item class="Folder" referent="RBX6C0342C449084DEEBE75CADC31961D38"><Properties><string name="Name">WhoSlappedMe</string></Properties><Item class="LocalScript" referent="RBXDB5F09C141E449DABC0ACD9AFE13C3BA"><Properties><string name="Name">ClientMain</string><ProtectedString name="Source">--[[
+	WHO SLAPPED ME? - client entry point
+	Lives in StarterPlayer &gt; StarterPlayerScripts &gt; WhoSlappedMe
+]]
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local Shared = ReplicatedStorage:WaitForChild("WhoSlappedMe")
+local Config = require(Shared:WaitForChild("Config"))
+local net = Shared:WaitForChild("Remotes"):WaitForChild("Net") :: RemoteEvent
+
+local Modules = script.Parent:WaitForChild("Modules")
+local UI = require(Modules.UI)
+local Fx = require(Modules.Fx)
+local Hud = require(Modules.Hud)
+local Picker = require(Modules.Picker)
+local PowerBar = require(Modules.PowerBar)
+local Protect = require(Modules.Protect)
+local CameraCtl = require(Modules.CameraCtl)
+local Rules = require(Modules.Rules)
+local Spectate = require(Modules.Spectate)
+
+local C = UI.C
+local player = Players.LocalPlayer
+local myId = player.UserId
+
+local inGame = false
+local onPad = false
+
+local function setJumpLocked(locked: boolean)
+	local character = player.Character
+	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+	if humanoid then
+		humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping, not locked)
+	end
+end
+
+local function closeAll()
+	Picker.close()
+	PowerBar.close()
+end
+
+local function refreshButtons()
+	Hud.setButtons(inGame, Config.ENABLE_RULES_SCREEN and (inGame or onPad))
+end
+
+Hud.bind(function()
+	net:FireServer("Leave")
+end, Config.ENABLE_RULES_SCREEN and Rules.show or nil)
+PowerBar.bind(function(index, pos)
+	net:FireServer("Charge", { index = index, pos = pos })
+end)
+Protect.bind(function(offset)
+	net:FireServer("Block", offset)
+end)
+Spectate.start()
+
+local handlers: { [string]: (any) -&gt; () } = {}
+
+handlers.Joined = function()
+	inGame = true
+	setJumpLocked(true)
+	Spectate.setInGame(true)
+	Fx.play("Join")
+	refreshButtons()
+	if Config.ENABLE_RULES_SCREEN then
+		Rules.showFirstTime()
+	end
+end
+
+handlers.Left = function(data)
+	inGame = false
+	setJumpLocked(false)
+	closeAll()
+	Protect.reset()
+	CameraCtl.reset()
+	Spectate.setInGame(false)
+	refreshButtons()
+	if data.reason == "ko" then
+		Hud.banner("KNOCKED OUT!", "Better luck next game", C.Red, myId, 3)
+	end
+end
+
+handlers.Role = function(data)
+	if data.role == "front" then
+		CameraCtl.setFront(data.seatCFrame)
+		Hud.status("You are in the HOT SEAT! Don't look back...")
+	else
+		CameraCtl.setFront(nil)
+	end
+end
+
+handlers.Pad = function(data)
+	onPad = data.on == true
+	Hud.setPad(onPad and not inGame)
+	refreshButtons()
+	if onPad and not inGame and Config.ENABLE_RULES_SCREEN then
+		Rules.showFirstTime()
+	end
+end
+
+handlers.PadCount = function(data)
+	Hud.padCount(data)
+end
+
+handlers.Status = function(data)
+	Hud.status(tostring(data.text))
+end
+
+handlers.Lottery = function(data)
+	Hud.setPad(false)
+	Picker.lottery(data.cards, data.winner, data.duration, function(name)
+		Fx.play("Correct", 0.6)
+		task.delay(1.2, Picker.close)
+		if data.winner == myId then
+			Hud.status("YOU are in the HOT SEAT!")
+		else
+			Hud.status(name .. " is in the HOT SEAT!")
+		end
+	end)
+end
+
+handlers.VoteOpen = function(data)
+	Picker.open({
+		title = "🗳️ WHO SLAPS?",
+		sub = "Vote for the slapper (you can vote for yourself)",
+		cards = data.cards,
+		endsAt = data.endsAt,
+		onPick = function(userId)
+			net:FireServer("Vote", userId)
+			Picker.setSub("Waiting for the other votes...")
+		end,
+	})
+end
+
+handlers.VoteResult = function(data)
+	Picker.close()
+	if data.userId ~= myId then
+		Hud.status(data.name .. " will slap! Shhh... 🤫")
+	end
+end
+
+handlers.Blackout = function(data)
+	Protect.blackout(data.on == true)
+end
+
+handlers.PowerStart = function(data)
+	PowerBar.start(data)
+end
+handlers.PowerResult = function(data)
+	PowerBar.result(data)
+end
+handlers.PowerDone = function(data)
+	PowerBar.done(data)
+end
+
+handlers.ProtectStart = function(data)
+	Protect.start(data.duration)
+end
+
+handlers.SlapFx = function(data)
+	Fx.slap(data.userId, data.power, data.replay)
+	if data.userId == myId then
+		CameraCtl.shake(1.5 + data.power / 25, 0.6)
+		if not data.replay then
+			Protect.hit()
+		end
+	end
+end
+
+handlers.SlapResult = function(data)
+	if data.userId == myId then
+		Protect.showResult(data.block, data.damage)
+	else
+		local sub = ("-%d HP"):format(data.damage)
+		if data.block ~= "MISS" then
+			sub ..= "  " .. data.block .. " BLOCK"
+		end
+		Fx.popup(data.userId, ("%d%%!"):format(data.power), sub)
+	end
+end
+
+handlers.GuessOpen = function(data)
+	local crossed = {}
+	for _, userId in data.crossed do
+		crossed[userId] = true
+	end
+	local cards = {}
+	for _, card in data.cards do
+		table.insert(cards, { userId = card.userId, name = card.name, crossed = crossed[card.userId] })
+	end
+	local sub = "Pick the player who slapped you"
+	if data.clue then
+		sub = #data.crossed &gt; 0 and "PERFECT BLOCK clue: ✕ did NOT slap you!" or "PERFECT BLOCK, but too few players for a clue"
+	end
+	Picker.open({
+		title = "🤔 WHO SLAPPED ME?",
+		sub = sub,
+		cards = cards,
+		endsAt = data.endsAt,
+		onPick = function(userId)
+			net:FireServer("Guess", userId)
+			task.delay(0.4, Picker.close)
+		end,
+	})
+end
+
+handlers.GuessResult = function(data)
+	Picker.close()
+	if data.correct then
+		Fx.play("Correct")
+		Hud.banner("CORRECT!", data.front.name .. " caught " .. data.slapper.name, C.Green, data.slapper.userId, 3)
+	else
+		Fx.play("Wrong")
+		Hud.banner("WRONG GUESS!", data.revealed and "Let's see who it really was..." or "The slapper stays secret 🤫", C.Red, nil, 2.5)
+	end
+end
+
+handlers.Reveal = function(data)
+	Hud.banner("IT WAS...", data.name .. "!", C.Gold, data.userId, data.duration)
+	if inGame then
+		local cf = Shared:GetAttribute("RevealCam")
+		if typeof(cf) == "CFrame" then
+			CameraCtl.setReveal(cf)
+		end
+	end
+end
+
+handlers.RevealEnd = function()
+	CameraCtl.setReveal(nil)
+end
+
+handlers.KO = function(data)
+	Fx.ko(data.userId)
+end
+
+handlers.Winners = function(data)
+	Fx.play("Win")
+	Hud.winners(data.list, 6)
+end
+
+handlers.Close = function()
+	closeAll()
+	CameraCtl.setReveal(nil)
+end
+
+net.OnClientEvent:Connect(function(name, data)
+	local handler = handlers[name]
+	if handler then
+		local ok, err = pcall(handler, data or {})
+		if not ok then
+			warn("[WhoSlappedMe] " .. tostring(name) .. ": " .. tostring(err))
+		end
+	end
+end)
+
+player.CharacterAdded:Connect(function()
+	-- a new character is never in the game (the server removes players when their character goes)
+	CameraCtl.reset()
+end)
+</ProtectedString><bool name="Disabled">false</bool></Properties></Item><Item class="Folder" referent="RBXE25E58F46A094476869B88642AD53281"><Properties><string name="Name">Modules</string></Properties><Item class="ModuleScript" referent="RBXEB28915E16B9432C9DB2F098305D3FD1"><Properties><string name="Name">CameraCtl</string><ProtectedString name="Source">-- Camera modes: front-seat first person lock, reveal shot, spectate shot, and shake.
+-- Priority: reveal &gt; front &gt; spectate. With no mode the normal Roblox camera is back.
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local BIND = "WhoSlappedMeCamera"
+local player = Players.LocalPlayer
+
+local CameraCtl = {}
+
+local frontLook: Vector3? = nil
+local revealCF: CFrame? = nil
+local spectateCF: CFrame? = nil
+local bound = false
+local shakeUntil, shakePower, shakeLength = 0, 0, 1
+
+local function shakeOffset(): CFrame
+	local left = shakeUntil - os.clock()
+	if left &lt;= 0 then
+		return CFrame.identity
+	end
+	local f = shakePower * (left / shakeLength)
+	return CFrame.Angles(
+		math.rad((math.random() - 0.5) * 2 * f),
+		math.rad((math.random() - 0.5) * 2 * f),
+		math.rad((math.random() - 0.5) * f)
+	)
+end
+
+local function step()
+	local camera = workspace.CurrentCamera
+	if not camera then
+		return
+	end
+	local cf: CFrame? = revealCF
+	if not cf and frontLook then
+		local character = player.Character
+		local head = character and character:FindFirstChild("Head") :: BasePart?
+		if head then
+			local look = frontLook :: Vector3
+			local eye = head.Position + look * 1.0 + Vector3.new(0, 0.15, 0)
+			cf = CFrame.lookAt(eye, eye + look)
+		end
+	end
+	if not cf then
+		cf = spectateCF
+	end
+	if not cf then
+		return
+	end
+	if camera.CameraType ~= Enum.CameraType.Scriptable then
+		camera.CameraType = Enum.CameraType.Scriptable
+	end
+	camera.CFrame = (cf :: CFrame) * shakeOffset()
+end
+
+local function refresh()
+	local wanted = revealCF ~= nil or frontLook ~= nil or spectateCF ~= nil
+	if wanted and not bound then
+		bound = true
+		RunService:BindToRenderStep(BIND, Enum.RenderPriority.Camera.Value + 1, step)
+	elseif not wanted and bound then
+		bound = false
+		RunService:UnbindFromRenderStep(BIND)
+		local camera = workspace.CurrentCamera
+		camera.CameraType = Enum.CameraType.Custom
+		local character = player.Character
+		local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+		if humanoid then
+			camera.CameraSubject = humanoid
+		end
+	end
+end
+
+-- seatCFrame = hot seat CFrame (we look where it faces), nil = unlock
+function CameraCtl.setFront(seatCFrame: CFrame?)
+	if seatCFrame then
+		local look = seatCFrame.LookVector
+		local flat = Vector3.new(look.X, 0, look.Z)
+		frontLook = if flat.Magnitude &gt; 0.01 then flat.Unit else Vector3.new(0, 0, -1)
+	else
+		frontLook = nil
+	end
+	refresh()
+end
+
+function CameraCtl.setReveal(cf: CFrame?)
+	revealCF = cf
+	refresh()
+end
+
+function CameraCtl.setSpectate(cf: CFrame?)
+	spectateCF = cf
+	refresh()
+end
+
+function CameraCtl.isSpectating(): boolean
+	return spectateCF ~= nil
+end
+
+function CameraCtl.shake(power: number, length: number?)
+	shakePower = power
+	shakeLength = length or 0.5
+	shakeUntil = os.clock() + shakeLength
+end
+
+function CameraCtl.reset()
+	frontLook, revealCF, spectateCF = nil, nil, nil
+	refresh()
+end
+
+return CameraCtl
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX874668EC34B24A4BA68BD23DB0E936D9"><Properties><string name="Name">Fx</string><ProtectedString name="Source">-- Sounds, slap particles, hand print, popups. Everything is local and reused (no new parts per slap).
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local SoundService = game:GetService("SoundService")
+local Debris = game:GetService("Debris")
+
+local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChild("Config"))
+local UI = require(script.Parent.UI)
+
+local STAR_TEXTURE = "rbxasset://textures/particles/sparkles_main.dds"
+
+local Fx = {}
+
+---------------------------------------------------------------------------
+-- sounds
+---------------------------------------------------------------------------
+local function soundId(key: string): string?
+	local id = Config.SOUNDS[key]
+	if not id or id == "" or id == "0" or id == "rbxassetid://0" then
+		return nil
+	end
+	if tonumber(id) then
+		return "rbxassetid://" .. id
+	end
+	return id
+end
+
+local flatSounds: { [string]: Sound } = {}
+local soundFolder = Instance.new("Folder")
+soundFolder.Name = "WhoSlappedMeSounds"
+soundFolder.Parent = SoundService
+
+local function flatSound(key: string): Sound?
+	local id = soundId(key)
+	if not id then
+		return nil
+	end
+	local sound = flatSounds[key]
+	if not sound then
+		sound = Instance.new("Sound")
+		sound.Name = key
+		sound.SoundId = id
+		sound.Parent = soundFolder
+		flatSounds[key] = sound
+	end
+	return sound
+end
+
+-- 2D sound only this player hears
+function Fx.play(key: string, volume: number?, pitch: number?)
+	local sound = flatSound(key)
+	if sound then
+		sound.Volume = volume or 0.8
+		sound.PlaybackSpeed = pitch or 1
+		sound.TimePosition = 0
+		sound:Play()
+	end
+end
+
+function Fx.loop(key: string, on: boolean)
+	local sound = flatSound(key)
+	if sound then
+		sound.Looped = on
+		if on then
+			if not sound.IsPlaying then
+				sound:Play()
+			end
+		else
+			sound:Stop()
+		end
+	end
+end
+
+---------------------------------------------------------------------------
+-- one reusable effect anchor in the world (client only)
+---------------------------------------------------------------------------
+local anchor = Instance.new("Part")
+anchor.Name = "WhoSlappedMeFx"
+anchor.Anchored = true
+anchor.CanCollide = false
+anchor.CanTouch = false
+anchor.CanQuery = false
+anchor.Transparency = 1
+anchor.Size = Vector3.new(0.2, 0.2, 0.2)
+anchor.Parent = workspace
+
+local stars = Instance.new("ParticleEmitter")
+stars.Texture = STAR_TEXTURE
+stars.Enabled = false
+stars.Rate = 0
+stars.Lifetime = NumberRange.new(0.35, 0.75)
+stars.Speed = NumberRange.new(10, 22)
+stars.SpreadAngle = Vector2.new(180, 180)
+stars.Drag = 6
+stars.LightEmission = 1
+stars.Size = NumberSequence.new({ NumberSequenceKeypoint.new(0, 1.4), NumberSequenceKeypoint.new(1, 0) })
+stars.Color = ColorSequence.new(Config.COLORS.Gold, Color3.new(1, 1, 1))
+stars.Parent = anchor
+
+local burst = Instance.new("ParticleEmitter")
+burst.Texture = STAR_TEXTURE
+burst.Enabled = false
+burst.Rate = 0
+burst.Lifetime = NumberRange.new(0.6, 1.2)
+burst.Speed = NumberRange.new(18, 34)
+burst.SpreadAngle = Vector2.new(180, 180)
+burst.Drag = 4
+burst.LightEmission = 1
+burst.Size = NumberSequence.new({ NumberSequenceKeypoint.new(0, 2.2), NumberSequenceKeypoint.new(1, 0) })
+burst.Color = ColorSequence.new(Config.COLORS.Accent, Config.COLORS.Gold)
+burst.Parent = anchor
+
+local ring = Instance.new("Part")
+ring.Name = "WhoSlappedMeRing"
+ring.Shape = Enum.PartType.Ball
+ring.Material = Enum.Material.Neon
+ring.Color = Color3.new(1, 1, 1)
+ring.Anchored = true
+ring.CanCollide = false
+ring.CanTouch = false
+ring.CanQuery = false
+ring.CastShadow = false
+ring.Transparency = 1
+ring.Size = Vector3.new(0.5, 0.5, 0.5)
+ring.Parent = workspace
+
+local slapSound = Instance.new("Sound")
+slapSound.RollOffMaxDistance = 140
+slapSound.Parent = anchor
+
+local function headOf(userId: number): BasePart?
+	local target = Players:GetPlayerByUserId(userId)
+	local character = target and target.Character
+	return character and character:FindFirstChild("Head") :: BasePart?
+end
+
+local function handPrint(head: BasePart)
+	local old = head:FindFirstChild("WSMHandPrint")
+	if old then
+		old:Destroy()
+	end
+	local gui = UI.make("BillboardGui", {
+		Name = "WSMHandPrint",
+		Size = UDim2.fromOffset(46, 46),
+		StudsOffsetWorldSpace = head.CFrame.RightVector * 0.7,
+		LightInfluence = 0,
+		MaxDistance = 60,
+		Parent = head,
+	})
+	if Config.HAND_PRINT_IMAGE ~= "" then
+		UI.make("ImageLabel", {
+			Size = UDim2.fromScale(1, 1),
+			BackgroundTransparency = 1,
+			Image = Config.HAND_PRINT_IMAGE,
+			ImageColor3 = Color3.fromRGB(255, 60, 60),
+			Parent = gui,
+		})
+	else
+		UI.label({ Size = UDim2.fromScale(1, 1), Text = "✋", TextColor3 = Color3.fromRGB(255, 60, 60), Parent = gui })
+	end
+	Debris:AddItem(gui, 3)
+end
+
+local function shockwave(position: Vector3, size: number)
+	ring.Position = position
+	ring.Size = Vector3.new(0.5, 0.5, 0.5)
+	ring.Transparency = 0.2
+	UI.tween(ring, 0.35, { Size = Vector3.new(size, size, size), Transparency = 1 })
+end
+
+-- The slap lands on userId's head
+function Fx.slap(userId: number, power: number, replay: boolean?)
+	local head = headOf(userId)
+	if head then
+		anchor.Position = head.Position
+		stars:Emit(math.floor(10 + power * 0.3))
+		shockwave(head.Position, 3 + power / 20)
+		local id = soundId("Slap")
+		if id then
+			slapSound.SoundId = id
+			local t = power / 100
+			slapSound.Volume = Config.SLAP_VOLUME_MIN + (Config.SLAP_VOLUME_MAX - Config.SLAP_VOLUME_MIN) * t
+			slapSound.PlaybackSpeed = 1.1 - t * 0.25
+			slapSound.TimePosition = 0
+			slapSound:Play()
+		end
+		if not replay then
+			handPrint(head)
+		end
+	end
+end
+
+-- Floating text above a player's head
+function Fx.popup(userId: number, title: string, sub: string?, color: Color3?)
+	local head = headOf(userId)
+	if not head then
+		return
+	end
+	local gui = UI.make("BillboardGui", {
+		Size = UDim2.fromOffset(240, 90),
+		StudsOffset = Vector3.new(0, 3, 0),
+		AlwaysOnTop = true,
+		LightInfluence = 0,
+		MaxDistance = 120,
+		Parent = head,
+	})
+	local holder = UI.make("Frame", { Size = UDim2.fromScale(1, 1), BackgroundTransparency = 1, Parent = gui })
+	UI.label({
+		Size = UDim2.fromScale(1, 0.62),
+		Text = title,
+		Font = Enum.Font.GothamBlack,
+		TextColor3 = color or Config.COLORS.Gold,
+		TextStrokeTransparency = 0,
+		MaxText = 60,
+		Parent = holder,
+	})
+	if sub then
+		UI.label({
+			Position = UDim2.fromScale(0, 0.62),
+			Size = UDim2.fromScale(1, 0.38),
+			Text = sub,
+			TextColor3 = Config.COLORS.Red,
+			TextStrokeTransparency = 0,
+			Parent = holder,
+		})
+	end
+	UI.pop(holder, 0.3)
+	UI.tween(gui, 2.2, { StudsOffset = Vector3.new(0, 5, 0) })
+	Debris:AddItem(gui, 2.4)
+end
+
+function Fx.ko(userId: number)
+	local head = headOf(userId)
+	if head then
+		anchor.Position = head.Position
+		burst:Emit(60)
+		shockwave(head.Position, 10)
+	end
+	Fx.play("KnockOut", 1)
+end
+
+return Fx
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX0CDEB626E6134EDA94A862A3DE569879"><Properties><string name="Name">Hud</string><ProtectedString name="Source">-- Status line, pad info, Leave / ? buttons, result banners and the winners screen.
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChild("Config"))
+local UI = require(script.Parent.UI)
+local C = UI.C
+
+local Hud = {}
+
+local root = UI.root()
+local onLeave: (() -&gt; ())? = nil
+local onHelp: (() -&gt; ())? = nil
+
+-- status line (top)
+local status = UI.label({
+	Name = "Status",
+	AnchorPoint = Vector2.new(0.5, 0),
+	Position = UDim2.new(0.5, 0, 0, 58),
+	Size = UDim2.new(0.8, 0, 0, 34),
+	BackgroundTransparency = 0.25,
+	BackgroundColor3 = C.Background,
+	Font = Enum.Font.GothamBold,
+	MaxText = 24,
+	Visible = false,
+	ZIndex = 70,
+	Parent = root,
+})
+UI.corner(10).Parent = status
+UI.make("UISizeConstraint", { MaxSize = Vector2.new(640, 34), Parent = status })
+local statusToken = 0
+
+function Hud.status(text: string, seconds: number?)
+	statusToken += 1
+	local token = statusToken
+	status.Text = text
+	status.Visible = true
+	UI.pop(status, 0.85)
+	task.delay(seconds or 4, function()
+		if statusToken == token then
+			status.Visible = false
+		end
+	end)
+end
+
+-- pad info (above the bottom)
+local padInfo = UI.label({
+	Name = "PadInfo",
+	AnchorPoint = Vector2.new(0.5, 1),
+	Position = UDim2.new(0.5, 0, 1, -110),
+	Size = UDim2.new(0.7, 0, 0, 44),
+	BackgroundTransparency = 0.2,
+	BackgroundColor3 = C.Background,
+	Font = Enum.Font.GothamBlack,
+	TextColor3 = C.Gold,
+	MaxText = 30,
+	Visible = false,
+	ZIndex = 60,
+	Parent = root,
+})
+UI.corner(12).Parent = padInfo
+UI.make("UISizeConstraint", { MaxSize = Vector2.new(520, 44), Parent = padInfo })
+
+function Hud.setPad(on: boolean)
+	if not on then
+		padInfo.Visible = false
+		return
+	end
+	local joinState = ReplicatedStorage:WaitForChild("WhoSlappedMe"):GetAttribute("JoinState")
+	if joinState == "Closed" then
+		padInfo.Text = "Game is full. Wait for the next game!"
+	elseif joinState == "Open" then
+		padInfo.Text = "You get a seat next round..."
+	else
+		padInfo.Text = "Waiting for players..."
+	end
+	padInfo.Visible = true
+end
+
+function Hud.padCount(data: any)
+	if not padInfo.Visible then
+		return
+	end
+	if data.enough then
+		padInfo.Text = ("%d/%d players · Starting in %d"):format(data.count, data.max, data.seconds)
+	else
+		padInfo.Text = ("%d/%d players · Need %d to start · %d"):format(data.count, data.max, Config.MIN_PLAYERS, data.seconds)
+	end
+end
+
+-- buttons (left side)
+local leaveButton = UI.button({
+	Name = "Leave",
+	AnchorPoint = Vector2.new(0, 1),
+	Position = UDim2.new(0, 16, 1, -16),
+	Size = UDim2.fromOffset(150, 46),
+	BackgroundColor3 = C.Red,
+	Text = "LEAVE GAME",
+	MaxText = 20,
+	Visible = false,
+	ZIndex = 75,
+	Parent = root,
+})
+local helpButton = UI.button({
+	Name = "Help",
+	AnchorPoint = Vector2.new(0, 1),
+	Position = UDim2.new(0, 176, 1, -16),
+	Size = UDim2.fromOffset(46, 46),
+	BackgroundColor3 = C.Card,
+	Text = "?",
+	Visible = false,
+	ZIndex = 75,
+	Parent = root,
+})
+
+local confirmUntil = 0
+leaveButton.Activated:Connect(function()
+	if os.clock() &lt; confirmUntil then
+		confirmUntil = 0
+		leaveButton.Text = "LEAVE GAME"
+		if onLeave then
+			onLeave()
+		end
+	else
+		confirmUntil = os.clock() + 3
+		leaveButton.Text = "SURE? TAP AGAIN"
+		task.delay(3, function()
+			if os.clock() &gt;= confirmUntil then
+				leaveButton.Text = "LEAVE GAME"
+			end
+		end)
+	end
+end)
+helpButton.Activated:Connect(function()
+	if onHelp then
+		onHelp()
+	end
+end)
+
+function Hud.bind(leave: () -&gt; (), help: (() -&gt; ())?)
+	onLeave, onHelp = leave, help
+end
+
+function Hud.setButtons(inGame: boolean, showHelp: boolean)
+	leaveButton.Visible = inGame
+	helpButton.Visible = showHelp and onHelp ~= nil
+	helpButton.Position = inGame and UDim2.new(0, 176, 1, -16) or UDim2.new(0, 16, 1, -16)
+end
+
+-- big banner (CORRECT / WRONG / IT WAS ...)
+local banner = UI.make("Frame", {
+	Name = "Banner",
+	AnchorPoint = Vector2.new(0.5, 0),
+	Position = UDim2.new(0.5, 0, 0, 100),
+	Size = UDim2.new(0.9, 0, 0, 120),
+	BackgroundColor3 = C.Panel,
+	Visible = false,
+	ZIndex = 80,
+	Parent = root,
+}, { UI.corner(16), UI.stroke(C.Gold, 3), UI.make("UISizeConstraint", { MaxSize = Vector2.new(560, 120) }) })
+local bannerImage = UI.make("ImageLabel", {
+	Position = UDim2.new(0, 10, 0, 10),
+	Size = UDim2.fromOffset(100, 100),
+	BackgroundColor3 = C.Card,
+	Parent = banner,
+}, { UI.corner(50) })
+local bannerTitle = UI.label({
+	Position = UDim2.new(0, 120, 0, 12),
+	Size = UDim2.new(1, -132, 0, 54),
+	Font = Enum.Font.GothamBlack,
+	TextXAlignment = Enum.TextXAlignment.Left,
+	MaxText = 46,
+	Parent = banner,
+})
+local bannerSub = UI.label({
+	Position = UDim2.new(0, 120, 0, 68),
+	Size = UDim2.new(1, -132, 0, 36),
+	TextColor3 = C.SubText,
+	TextXAlignment = Enum.TextXAlignment.Left,
+	MaxText = 26,
+	Parent = banner,
+})
+local bannerToken = 0
+
+function Hud.banner(title: string, sub: string, color: Color3, userId: number?, seconds: number?)
+	bannerToken += 1
+	local token = bannerToken
+	bannerTitle.Text = title
+	bannerTitle.TextColor3 = color
+	bannerSub.Text = sub
+	bannerImage.Visible = userId ~= nil
+	if userId then
+		bannerImage.Image = UI.avatar(userId)
+	end
+	local hasImage = userId ~= nil
+	bannerTitle.Position = UDim2.new(0, hasImage and 120 or 16, 0, 12)
+	bannerTitle.Size = UDim2.new(1, hasImage and -132 or -32, 0, 54)
+	bannerSub.Position = UDim2.new(0, hasImage and 120 or 16, 0, 68)
+	bannerSub.Size = UDim2.new(1, hasImage and -132 or -32, 0, 36)
+	banner.Visible = true
+	UI.pop(banner, 0.5)
+	task.delay(seconds or 3, function()
+		if bannerToken == token then
+			banner.Visible = false
+		end
+	end)
+end
+
+function Hud.hideBanner()
+	bannerToken += 1
+	banner.Visible = false
+end
+
+-- winners screen
+local winners = UI.panel({ Name = "Winners", Size = UDim2.fromScale(0.9, 0.55), ZIndex = 85, MaxSize = Vector2.new(560, 330) })
+UI.stroke(C.Gold, 4).Parent = winners
+local winnersTitle = UI.label({
+	Position = UDim2.fromScale(0, 0.04),
+	Size = UDim2.fromScale(1, 0.2),
+	Text = "🏆 WINNERS 🏆",
+	Font = Enum.Font.GothamBlack,
+	TextColor3 = C.Gold,
+	MaxText = 48,
+	Parent = winners,
+})
+local winnersRow = UI.make("Frame", {
+	Position = UDim2.fromScale(0.04, 0.28),
+	Size = UDim2.fromScale(0.92, 0.66),
+	BackgroundTransparency = 1,
+	Parent = winners,
+}, {
+	UI.make("UIListLayout", {
+		FillDirection = Enum.FillDirection.Horizontal,
+		HorizontalAlignment = Enum.HorizontalAlignment.Center,
+		Padding = UDim.new(0.04, 0),
+	}),
+})
+
+function Hud.winners(list: { any }, seconds: number)
+	for _, child in winnersRow:GetChildren() do
+		if child:IsA("Frame") then
+			child:Destroy()
+		end
+	end
+	for i, entry in list do
+		local card = UI.make("Frame", {
+			LayoutOrder = i,
+			Size = UDim2.fromScale(0.42, 1),
+			BackgroundColor3 = C.Card,
+			Parent = winnersRow,
+		}, { UI.corner(14), UI.stroke(entry.place == 1 and C.Gold or C.SubText, 2) })
+		UI.make("ImageLabel", {
+			AnchorPoint = Vector2.new(0.5, 0),
+			Position = UDim2.fromScale(0.5, 0.05),
+			Size = UDim2.fromScale(0.55, 0.55),
+			SizeConstraint = Enum.SizeConstraint.RelativeYY,
+			BackgroundTransparency = 1,
+			Image = UI.avatar(entry.userId),
+			Parent = card,
+		}, { UI.corner(100) })
+		UI.label({
+			Position = UDim2.fromScale(0.05, 0.6),
+			Size = UDim2.fromScale(0.9, 0.17),
+			Text = (entry.place == 1 and "🥇 1st  " or "🥈 2nd  ") .. entry.name,
+			Font = Enum.Font.GothamBlack,
+			Parent = card,
+		})
+		UI.label({
+			Position = UDim2.fromScale(0.05, 0.78),
+			Size = UDim2.fromScale(0.9, 0.14),
+			Text = ("%d damage taken"):format(entry.damage),
+			TextColor3 = C.SubText,
+			Parent = card,
+		})
+	end
+	winnersTitle.Text = #list &gt; 1 and "🏆 WINNERS 🏆" or "🏆 WINNER 🏆"
+	winners.Visible = true
+	UI.pop(winners, 0.4)
+	task.delay(seconds, function()
+		winners.Visible = false
+	end)
+end
+
+return Hud
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX592819F9FF5E4DB68C0CF9B3947E85D8"><Properties><string name="Name">Picker</string><ProtectedString name="Source">-- Avatar card panel used for the lottery, the vote and the guess.
+local UI = require(script.Parent.UI)
+local Fx = require(script.Parent.Fx)
+local C = UI.C
+
+type Card = { userId: number, name: string, blocked: boolean?, crossed: boolean? }
+type Options = {
+	title: string,
+	sub: string,
+	cards: { Card },
+	endsAt: number?,
+	onPick: ((number) -&gt; ())?,
+}
+
+local Picker = {}
+
+local panel = UI.panel({ Name = "Picker", ZIndex = 40, MaxSize = Vector2.new(620, 460) })
+local title = UI.label({
+	Position = UDim2.fromScale(0.04, 0.03),
+	Size = UDim2.fromScale(0.92, 0.13),
+	Font = Enum.Font.GothamBlack,
+	TextColor3 = C.Gold,
+	MaxText = 40,
+	Parent = panel,
+})
+local sub = UI.label({
+	Position = UDim2.fromScale(0.04, 0.16),
+	Size = UDim2.fromScale(0.92, 0.08),
+	TextColor3 = C.SubText,
+	MaxText = 22,
+	Parent = panel,
+})
+local grid = UI.make("Frame", {
+	Position = UDim2.fromScale(0.04, 0.27),
+	Size = UDim2.fromScale(0.92, 0.64),
+	BackgroundTransparency = 1,
+	Parent = panel,
+}, {
+	UI.make("UIGridLayout", {
+		CellSize = UDim2.fromScale(0.31, 0.47),
+		CellPadding = UDim2.fromScale(0.035, 0.05),
+		HorizontalAlignment = Enum.HorizontalAlignment.Center,
+		VerticalAlignment = Enum.VerticalAlignment.Center,
+		SortOrder = Enum.SortOrder.LayoutOrder,
+	}),
+})
+local timerBack = UI.make("Frame", {
+	Position = UDim2.fromScale(0.04, 0.94),
+	Size = UDim2.fromScale(0.92, 0.025),
+	BackgroundColor3 = C.Card,
+	Parent = panel,
+}, { UI.corner(6) })
+local timerFill = UI.make("Frame", {
+	Size = UDim2.fromScale(1, 1),
+	BackgroundColor3 = C.Accent,
+	Parent = timerBack,
+}, { UI.corner(6) })
+
+local cardFrames: { [number]: TextButton } = {}
+local picking = false
+local openToken = 0
+local timerTween: Tween? = nil
+
+local function clear()
+	for _, child in grid:GetChildren() do
+		if child:IsA("GuiObject") then
+			child:Destroy()
+		end
+	end
+	table.clear(cardFrames)
+end
+
+local function makeCard(card: Card, order: number, clickable: boolean, onPick: ((number) -&gt; ())?)
+	local button = UI.make("TextButton", {
+		Name = tostring(card.userId),
+		LayoutOrder = order,
+		BackgroundColor3 = C.Card,
+		AutoButtonColor = clickable,
+		Active = clickable,
+		Text = "",
+		Parent = grid,
+	}, { UI.corner(14) })
+	local stroke = UI.stroke(C.Card, 3)
+	stroke.Name = "Highlight"
+	stroke.Parent = button
+	UI.make("ImageLabel", {
+		AnchorPoint = Vector2.new(0.5, 0),
+		Position = UDim2.fromScale(0.5, 0.06),
+		Size = UDim2.fromScale(0.66, 0.66),
+		SizeConstraint = Enum.SizeConstraint.RelativeYY,
+		BackgroundTransparency = 1,
+		Image = UI.avatar(card.userId),
+		Parent = button,
+	}, { UI.corner(100) })
+	UI.label({
+		Position = UDim2.fromScale(0.05, 0.74),
+		Size = UDim2.fromScale(0.9, 0.2),
+		Text = card.name,
+		MaxText = 22,
+		Parent = button,
+	})
+	local tag = UI.label({
+		Name = "Tag",
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Position = UDim2.fromScale(0.5, 0.4),
+		Size = UDim2.fromScale(1, 0.5),
+		Font = Enum.Font.GothamBlack,
+		TextColor3 = C.Red,
+		TextStrokeTransparency = 0,
+		MaxText = 70,
+		Visible = false,
+		Parent = button,
+	})
+	if card.crossed then
+		tag.Text = "✕"
+		tag.Visible = true
+		button.BackgroundTransparency = 0.6
+	elseif card.blocked then
+		tag.Text = "RESTING"
+		tag.TextColor3 = C.SubText
+		tag.Visible = true
+		button.BackgroundTransparency = 0.6
+	end
+	if clickable and onPick and not card.crossed and not card.blocked then
+		button.Activated:Connect(function()
+			if not picking then
+				return
+			end
+			picking = false
+			stroke.Color = C.Gold
+			tag.Text = "✓"
+			tag.TextColor3 = C.Green
+			tag.Visible = true
+			Fx.play("Vote")
+			onPick(card.userId)
+		end)
+	end
+	cardFrames[card.userId] = button
+end
+
+local function startTimer(endsAt: number?)
+	if timerTween then
+		timerTween:Cancel()
+	end
+	timerFill.Size = UDim2.fromScale(1, 1)
+	if not endsAt then
+		timerBack.Visible = false
+		return
+	end
+	timerBack.Visible = true
+	local left = math.max(endsAt - workspace:GetServerTimeNow(), 0.1)
+	timerTween = UI.tween(timerFill, left, { Size = UDim2.fromScale(0, 1) }, Enum.EasingStyle.Linear)
+end
+
+function Picker.open(options: Options)
+	openToken += 1
+	clear()
+	title.Text = options.title
+	sub.Text = options.sub
+	local clickable = options.onPick ~= nil
+	for i, card in options.cards do
+		makeCard(card, i, clickable, options.onPick)
+	end
+	picking = clickable
+	startTimer(options.endsAt)
+	panel.Visible = true
+	UI.pop(panel)
+end
+
+function Picker.setSub(text: string)
+	sub.Text = text
+end
+
+function Picker.close()
+	openToken += 1
+	picking = false
+	panel.Visible = false
+end
+
+-- Lottery: a highlight jumps from card to card, slows down and lands on the winner.
+function Picker.lottery(cards: { Card }, winner: number, duration: number, onDone: (string) -&gt; ())
+	Picker.open({ title = "🎰 LOTTERY", sub = "Who goes into the HOT SEAT?", cards = cards })
+	local token = openToken
+	local order = {}
+	for _, card in cards do
+		table.insert(order, card.userId)
+	end
+	local winnerIndex = table.find(order, winner) or 1
+	local steps = #order * 3 + winnerIndex
+	task.spawn(function()
+		local spin = duration * 0.85
+		local previous: TextButton? = nil
+		for step = 1, steps do
+			if token ~= openToken then
+				return
+			end
+			local userId = order[(step - 1) % #order + 1]
+			local frame = cardFrames[userId]
+			if previous then
+				(previous:FindFirstChild("Highlight") :: UIStroke).Color = C.Card
+				previous.BackgroundColor3 = C.Card
+			end
+			if frame then
+				(frame:FindFirstChild("Highlight") :: UIStroke).Color = C.Gold
+				frame.BackgroundColor3 = C.Accent
+				previous = frame
+			end
+			Fx.play("Tick", 0.5, 1 + step / steps * 0.5)
+			-- slows down towards the end
+			local t = step / steps
+			task.wait(spin / steps * (0.4 + t * t * 2.2))
+		end
+		local name = ""
+		for _, card in cards do
+			if card.userId == winner then
+				name = card.name
+			end
+		end
+		if token == openToken then
+			Picker.setSub(name .. " goes into the HOT SEAT!")
+			onDone(name)
+		end
+	end)
+end
+
+return Picker
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX150A4C432DA34FFE879751486253342D"><Properties><string name="Name">PowerBar</string><ProtectedString name="Source">-- Slapper mini-game: the needle sweeps ONCE per charge. Tap in the green middle.
+-- No tap = it stops at the end by itself (red, weakest).
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local UserInputService = game:GetService("UserInputService")
+
+local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChild("Config"))
+local UI = require(script.Parent.UI)
+local Fx = require(script.Parent.Fx)
+local C = UI.C
+
+local PowerBar = {}
+local send: ((number, number) -&gt; ())? = nil
+
+local panel = UI.make("Frame", {
+	Name = "PowerBar",
+	AnchorPoint = Vector2.new(0.5, 1),
+	Position = UDim2.new(0.5, 0, 1, -20),
+	Size = UDim2.new(0.94, 0, 0, 250),
+	BackgroundColor3 = C.Panel,
+	Visible = false,
+	ZIndex = 40,
+	Parent = UI.root(),
+}, { UI.corner(18), UI.stroke(C.Accent, 3), UI.make("UISizeConstraint", { MaxSize = Vector2.new(560, 250) }) })
+
+UI.label({
+	Position = UDim2.new(0, 16, 0, 10),
+	Size = UDim2.new(0.5, -16, 0, 30),
+	Text = "✋ SLAP POWER",
+	Font = Enum.Font.GothamBlack,
+	TextColor3 = C.Gold,
+	TextXAlignment = Enum.TextXAlignment.Left,
+	MaxText = 26,
+	Parent = panel,
+})
+local totalLabel = UI.label({
+	AnchorPoint = Vector2.new(1, 0),
+	Position = UDim2.new(1, -16, 0, 6),
+	Size = UDim2.new(0.4, 0, 0, 38),
+	Text = "0%",
+	Font = Enum.Font.GothamBlack,
+	TextXAlignment = Enum.TextXAlignment.Right,
+	MaxText = 36,
+	Parent = panel,
+})
+
+-- three chips: what each charge added
+local chipRow = UI.make("Frame", {
+	Position = UDim2.new(0, 16, 0, 50),
+	Size = UDim2.new(1, -32, 0, 34),
+	BackgroundTransparency = 1,
+	Parent = panel,
+}, {
+	UI.make("UIListLayout", {
+		FillDirection = Enum.FillDirection.Horizontal,
+		HorizontalAlignment = Enum.HorizontalAlignment.Center,
+		Padding = UDim.new(0, 10),
+	}),
+})
+local chips: { TextLabel } = {}
+for i, value in Config.CHARGE_VALUES do
+	local chip = UI.label({
+		LayoutOrder = i,
+		Size = UDim2.new(1 / #Config.CHARGE_VALUES, -10, 1, 0),
+		BackgroundTransparency = 0,
+		BackgroundColor3 = C.Card,
+		Text = ("up to %d%%"):format(value),
+		TextColor3 = C.SubText,
+		MaxText = 20,
+		Parent = chipRow,
+	})
+	UI.corner(10).Parent = chip
+	chips[i] = chip
+end
+
+-- the bar: red everywhere, yellow around the middle, green in the middle
+local bar = UI.make("Frame", {
+	Position = UDim2.new(0, 16, 0, 96),
+	Size = UDim2.new(1, -32, 0, 46),
+	BackgroundColor3 = C.Red,
+	ClipsDescendants = true,
+	Parent = panel,
+}, { UI.corner(10) })
+UI.make("Frame", {
+	AnchorPoint = Vector2.new(0.5, 0),
+	Position = UDim2.fromScale(0.5, 0),
+	Size = UDim2.fromScale(Config.YELLOW_HALF_WIDTH * 2, 1),
+	BackgroundColor3 = C.Yellow,
+	BorderSizePixel = 0,
+	Parent = bar,
+})
+UI.make("Frame", {
+	AnchorPoint = Vector2.new(0.5, 0),
+	Position = UDim2.fromScale(0.5, 0),
+	Size = UDim2.fromScale(Config.GREEN_HALF_WIDTH * 2, 1),
+	BackgroundColor3 = C.Green,
+	BorderSizePixel = 0,
+	Parent = bar,
+})
+local needle = UI.make("Frame", {
+	AnchorPoint = Vector2.new(0.5, 0.5),
+	Position = UDim2.fromScale(0, 0.5),
+	Size = UDim2.new(0, 8, 1.3, 0),
+	BackgroundColor3 = Color3.new(1, 1, 1),
+	ZIndex = 3,
+	Parent = bar,
+}, { UI.corner(4), UI.stroke(Color3.new(0, 0, 0), 2) })
+
+local zoneLabel = UI.label({
+	Position = UDim2.new(0, 16, 0, 146),
+	Size = UDim2.new(1, -32, 0, 28),
+	Text = "",
+	Font = Enum.Font.GothamBlack,
+	MaxText = 26,
+	Parent = panel,
+})
+local tapButton = UI.button({
+	AnchorPoint = Vector2.new(0.5, 1),
+	Position = UDim2.new(0.5, 0, 1, -12),
+	Size = UDim2.new(0.6, 0, 0, 56),
+	Text = "TAP!",
+	MaxText = 34,
+	Parent = panel,
+})
+
+local active = false
+local index = 0
+local sweepTime = 1
+local tween: Tween? = nil
+local token = 0
+
+local function stopAt(pos: number)
+	if not active then
+		return
+	end
+	active = false
+	if tween then
+		tween:Cancel()
+		tween = nil
+	end
+	needle.Position = UDim2.fromScale(pos, 0.5)
+	if send then
+		send(index, pos)
+	end
+end
+
+local function tap()
+	if active then
+		Fx.play("Charge", 0.7)
+		-- use what the player actually sees on screen
+		stopAt(math.clamp(needle.Position.X.Scale, 0, 1))
+	end
+end
+
+tapButton.Activated:Connect(tap)
+UserInputService.InputBegan:Connect(function(input, processed)
+	if processed or not active then
+		return
+	end
+	if input.KeyCode == Enum.KeyCode.Space or input.KeyCode == Enum.KeyCode.ButtonA then
+		tap()
+	end
+end)
+
+function PowerBar.bind(sender: (number, number) -&gt; ())
+	send = sender
+end
+
+function PowerBar.start(data: any)
+	token += 1
+	if data.index == 1 then
+		for i, chip in chips do
+			chip.Text = ("up to %d%%"):format(Config.CHARGE_VALUES[i])
+			chip.TextColor3 = C.SubText
+			chip.BackgroundColor3 = C.Card
+		end
+		totalLabel.Text = "0%"
+	end
+	local chip = chips[data.index]
+	if chip then
+		chip.BackgroundColor3 = C.Accent
+		chip.TextColor3 = C.Text
+	end
+	zoneLabel.Text = "Tap when the needle is in the GREEN!"
+	zoneLabel.TextColor3 = C.SubText
+	if not panel.Visible then
+		panel.Visible = true
+		UI.pop(panel)
+	end
+	index = data.index
+	sweepTime = math.max(data.sweep, 0.2)
+	active = true
+	needle.Position = UDim2.fromScale(0, 0.5)
+	local t = UI.tween(needle, sweepTime, { Position = UDim2.fromScale(1, 0.5) }, Enum.EasingStyle.Linear)
+	tween = t
+	t.Completed:Connect(function(state)
+		if state == Enum.PlaybackState.Completed and active then
+			stopAt(1) -- never tapped
+		end
+	end)
+end
+
+function PowerBar.result(data: any)
+	local chip = chips[data.index]
+	local color = data.zone == "PERFECT" and C.Green or data.zone == "GOOD" and C.Yellow or C.Red
+	if chip then
+		chip.Text = ("+%d%%"):format(data.add)
+		chip.BackgroundColor3 = color
+		chip.TextColor3 = C.Background
+	end
+	totalLabel.Text = ("%d%%"):format(data.total)
+	zoneLabel.Text = data.zone .. "!  +" .. data.add .. "%"
+	zoneLabel.TextColor3 = color
+	UI.pop(zoneLabel, 0.6)
+	if data.zone == "PERFECT" then
+		Fx.play("Perfect")
+	end
+end
+
+function PowerBar.done(data: any)
+	totalLabel.Text = ("%d%%"):format(data.total)
+	zoneLabel.Text = ("SLAP AT %d%% POWER!"):format(data.total)
+	zoneLabel.TextColor3 = C.Gold
+	token += 1
+	local myToken = token
+	task.delay(1.2, function()
+		if token == myToken then
+			PowerBar.close()
+		end
+	end)
+end
+
+function PowerBar.close()
+	active = false
+	if tween then
+		tween:Cancel()
+		tween = nil
+	end
+	panel.Visible = false
+end
+
+return PowerBar
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX0993B4B98E424C2CB72D497F51F26A84"><Properties><string name="Name">Protect</string><ProtectedString name="Source">-- Front player: black screen while the slapper is behind, and the BLOCK mini-game
+-- (a ring shrinks onto the circle; the slap lands exactly when it touches).
+local UserInputService = game:GetService("UserInputService")
+
+local UI = require(script.Parent.UI)
+local Fx = require(script.Parent.Fx)
+local C = UI.C
+
+local RING_START = 3.6 -- ring starts this many times bigger than the circle
+local CIRCLE = 0.24 -- circle size (fraction of screen height)
+
+local Protect = {}
+local send: ((number) -&gt; ())? = nil
+
+local black = UI.make("Frame", {
+	Name = "Blackout",
+	Size = UDim2.fromScale(1, 1),
+	BackgroundColor3 = Color3.new(0, 0, 0),
+	BackgroundTransparency = 1,
+	Visible = false,
+	ZIndex = 50,
+	Parent = UI.root(),
+})
+local eyes = UI.label({
+	AnchorPoint = Vector2.new(0.5, 0),
+	Position = UDim2.fromScale(0.5, 0.1),
+	Size = UDim2.fromScale(0.9, 0.08),
+	Text = "😵 EYES CLOSED...",
+	Font = Enum.Font.GothamBlack,
+	TextColor3 = C.SubText,
+	MaxText = 40,
+	Parent = black,
+})
+local hint = UI.label({
+	AnchorPoint = Vector2.new(0.5, 0),
+	Position = UDim2.fromScale(0.5, 0.19),
+	Size = UDim2.fromScale(0.9, 0.05),
+	Text = "Someone is coming. Block at the right moment!",
+	TextColor3 = C.SubText,
+	MaxText = 22,
+	Parent = black,
+})
+local target = UI.make("Frame", {
+	AnchorPoint = Vector2.new(0.5, 0.5),
+	Position = UDim2.fromScale(0.5, 0.5),
+	Size = UDim2.fromScale(CIRCLE, CIRCLE),
+	SizeConstraint = Enum.SizeConstraint.RelativeYY,
+	BackgroundColor3 = C.Accent,
+	BackgroundTransparency = 0.75,
+	Visible = false,
+	Parent = black,
+}, { UI.corner(1000), UI.stroke(Color3.new(1, 1, 1), 5) })
+local ring = UI.make("Frame", {
+	AnchorPoint = Vector2.new(0.5, 0.5),
+	Position = UDim2.fromScale(0.5, 0.5),
+	Size = UDim2.fromScale(CIRCLE * RING_START, CIRCLE * RING_START),
+	SizeConstraint = Enum.SizeConstraint.RelativeYY,
+	BackgroundTransparency = 1,
+	Visible = false,
+	ZIndex = 2,
+	Parent = black,
+}, { UI.corner(1000), UI.stroke(C.Gold, 6) })
+local result = UI.label({
+	AnchorPoint = Vector2.new(0.5, 0.5),
+	Position = UDim2.fromScale(0.5, 0.5),
+	Size = UDim2.fromScale(0.9, 0.14),
+	Text = "",
+	Font = Enum.Font.GothamBlack,
+	MaxText = 70,
+	ZIndex = 4,
+	Parent = black,
+})
+local flash = UI.make("Frame", {
+	Size = UDim2.fromScale(1, 1),
+	BackgroundColor3 = Color3.new(1, 1, 1),
+	BackgroundTransparency = 1,
+	ZIndex = 3,
+	Parent = black,
+})
+local blockButton = UI.button({
+	AnchorPoint = Vector2.new(0.5, 1),
+	Position = UDim2.new(0.5, 0, 1, -40),
+	Size = UDim2.new(0.5, 0, 0, 70),
+	Text = "🛡️ BLOCK",
+	MaxText = 40,
+	Visible = false,
+	ZIndex = 5,
+	Parent = black,
+})
+UI.make("UISizeConstraint", { MaxSize = Vector2.new(360, 70), Parent = blockButton })
+
+local ringActive = false
+local pressed = false
+local hitAt = 0
+local ringTween: Tween? = nil
+
+local function press()
+	if not ringActive or pressed then
+		return
+	end
+	pressed = true
+	if ringTween then
+		ringTween:Pause()
+	end
+	blockButton.Visible = false
+	Fx.play("Block")
+	if send then
+		send(os.clock() - hitAt)
+	end
+end
+
+blockButton.Activated:Connect(press)
+UserInputService.InputBegan:Connect(function(input, processed)
+	if processed or not ringActive then
+		return
+	end
+	if
+		input.KeyCode == Enum.KeyCode.Space
+		or input.KeyCode == Enum.KeyCode.ButtonA
+		or input.UserInputType == Enum.UserInputType.MouseButton1
+	then
+		press()
+	end
+end)
+
+local function hideRing()
+	ringActive = false
+	if ringTween then
+		ringTween:Cancel()
+		ringTween = nil
+	end
+	target.Visible = false
+	ring.Visible = false
+	blockButton.Visible = false
+end
+
+function Protect.bind(sender: (number) -&gt; ())
+	send = sender
+end
+
+function Protect.blackout(on: boolean)
+	if on then
+		hideRing()
+		result.Text = ""
+		eyes.Visible, hint.Visible = true, true
+		black.Visible = true
+		UI.tween(black, 0.5, { BackgroundTransparency = 0 })
+		Fx.loop("Heartbeat", true)
+	else
+		hideRing()
+		Fx.loop("Heartbeat", false)
+		local t = UI.tween(black, 0.4, { BackgroundTransparency = 1 })
+		t.Completed:Connect(function(state)
+			if state == Enum.PlaybackState.Completed and black.BackgroundTransparency &gt;= 0.99 then
+				black.Visible = false
+			end
+		end)
+	end
+end
+
+function Protect.start(duration: number)
+	pressed = false
+	ringActive = true
+	hitAt = os.clock() + duration
+	result.Text = ""
+	target.Visible = true
+	ring.Visible = true
+	blockButton.Visible = true
+	ring.Size = UDim2.fromScale(CIRCLE * RING_START, CIRCLE * RING_START)
+	ringTween = UI.tween(ring, duration, { Size = UDim2.fromScale(CIRCLE, CIRCLE) }, Enum.EasingStyle.Linear)
+	Fx.play("Whoosh")
+	UI.pop(blockButton, 0.5)
+end
+
+-- The slap landed on me
+function Protect.hit()
+	flash.BackgroundTransparency = 0.1
+	UI.tween(flash, 0.5, { BackgroundTransparency = 1 })
+	task.delay(0.5, function()
+		if ringActive and not pressed then
+			hideRing()
+		end
+	end)
+end
+
+function Protect.showResult(block: string, damage: number)
+	hideRing()
+	eyes.Visible, hint.Visible = false, false
+	if block == "PERFECT" then
+		result.Text = ("🛡️ PERFECT BLOCK!  -%d HP"):format(damage)
+		result.TextColor3 = C.Green
+		Fx.play("Perfect")
+	elseif block == "GOOD" then
+		result.Text = ("GOOD BLOCK!  -%d HP"):format(damage)
+		result.TextColor3 = C.Yellow
+	else
+		result.Text = ("OUCH!  -%d HP"):format(damage)
+		result.TextColor3 = C.Red
+	end
+	UI.pop(result, 0.4)
+end
+
+function Protect.reset()
+	hideRing()
+	Fx.loop("Heartbeat", false)
+	black.BackgroundTransparency = 1
+	black.Visible = false
+end
+
+return Protect
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX1A837E7A0FB5490489DDE46B01A42B2D"><Properties><string name="Name">Rules</string><ProtectedString name="Source">-- TEST FEATURE (Config.ENABLE_RULES_SCREEN): rules cards shown the first time, and on the "?" button.
+-- Safe to delete: ClientMain checks the setting before using it.
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChild("Config"))
+local UI = require(script.Parent.UI)
+local C = UI.C
+
+local CARDS = {
+	{
+		"🎰 LOTTERY",
+		"One player is picked to sit in the HOT SEAT. Everyone else sits behind them.",
+	},
+	{
+		"🗳️ VOTE",
+		"The players in the back vote who slaps. Most votes slaps. A tie is decided at random.",
+	},
+	{
+		"✋ SLAP &amp; 🛡️ BLOCK",
+		"The slapper charges power 3 times: tap in the GREEN. The hot seat player sees a black screen. Press BLOCK when the ring hits the circle: less damage. A PERFECT block crosses out 2 players who did NOT slap!",
+	},
+	{
+		"🤔 GUESS",
+		"Guess who slapped you. Right: you swap seats. Wrong: you stay in the hot seat. 0 HP = knocked out. The last 2 players win!",
+	},
+}
+
+local Rules = {}
+
+local panel = UI.panel({ Name = "Rules", ZIndex = 90, MaxSize = Vector2.new(520, 340) })
+local title = UI.label({
+	Position = UDim2.fromScale(0.05, 0.06),
+	Size = UDim2.fromScale(0.9, 0.18),
+	Font = Enum.Font.GothamBlack,
+	TextColor3 = C.Gold,
+	MaxText = 40,
+	Parent = panel,
+})
+local body = UI.label({
+	Position = UDim2.fromScale(0.07, 0.28),
+	Size = UDim2.fromScale(0.86, 0.42),
+	TextWrapped = true,
+	Font = Enum.Font.GothamMedium,
+	MaxText = 24,
+	Parent = panel,
+})
+local page = UI.label({
+	Position = UDim2.fromScale(0.05, 0.71),
+	Size = UDim2.fromScale(0.9, 0.07),
+	TextColor3 = C.SubText,
+	MaxText = 18,
+	Parent = panel,
+})
+local nextButton = UI.button({
+	AnchorPoint = Vector2.new(0.5, 1),
+	Position = UDim2.fromScale(0.5, 0.95),
+	Size = UDim2.fromScale(0.5, 0.14),
+	Text = "NEXT",
+	Parent = panel,
+})
+
+local index = 1
+local shownOnce = false
+
+local function render()
+	local card = CARDS[index]
+	title.Text = card[1]
+	body.Text = card[2]
+	page.Text = ("%d / %d"):format(index, #CARDS)
+	nextButton.Text = index &lt; #CARDS and "NEXT" or "GOT IT!"
+end
+
+nextButton.Activated:Connect(function()
+	if index &lt; #CARDS then
+		index += 1
+		render()
+	else
+		panel.Visible = false
+	end
+end)
+
+function Rules.show()
+	if not Config.ENABLE_RULES_SCREEN then
+		return
+	end
+	index = 1
+	render()
+	panel.Visible = true
+	UI.pop(panel)
+end
+
+function Rules.showFirstTime()
+	if not shownOnce then
+		shownOnce = true
+		Rules.show()
+	end
+end
+
+function Rules.hide()
+	panel.Visible = false
+end
+
+return Rules
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX9F3D5BCAA5F647B8925E581DB1F82047"><Properties><string name="Name">Spectate</string><ProtectedString name="Source">-- TEST FEATURE (Config.ENABLE_SPECTATE_CAM): "SPECTATE" button for players watching near the arena.
+-- Safe to delete: ClientMain checks the setting before using it.
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local Shared = ReplicatedStorage:WaitForChild("WhoSlappedMe")
+local Config = require(Shared:WaitForChild("Config"))
+local UI = require(script.Parent.UI)
+local CameraCtl = require(script.Parent.CameraCtl)
+local C = UI.C
+
+local player = Players.LocalPlayer
+
+local Spectate = {}
+local inGame = false
+
+local button = UI.button({
+	Name = "Spectate",
+	AnchorPoint = Vector2.new(1, 1),
+	Position = UDim2.new(1, -16, 1, -16),
+	Size = UDim2.fromOffset(170, 46),
+	BackgroundColor3 = C.Card,
+	Text = "👁 SPECTATE",
+	MaxText = 20,
+	Visible = false,
+	ZIndex = 75,
+	Parent = UI.root(),
+})
+
+local function near(): boolean
+	local center = Shared:GetAttribute("ArenaCenter")
+	local character = player.Character
+	local root = character and character:FindFirstChild("HumanoidRootPart") :: BasePart?
+	if typeof(center) ~= "Vector3" or not root then
+		return false
+	end
+	return (root.Position - center).Magnitude &lt;= Config.SPECTATE_RADIUS
+end
+
+local function stop()
+	if CameraCtl.isSpectating() then
+		CameraCtl.setSpectate(nil)
+	end
+	button.Text = "👁 SPECTATE"
+end
+
+button.Activated:Connect(function()
+	if CameraCtl.isSpectating() then
+		stop()
+	else
+		local cf = Shared:GetAttribute("SpectateCam")
+		if typeof(cf) == "CFrame" then
+			CameraCtl.setSpectate(cf)
+			button.Text = "✕ STOP"
+		end
+	end
+end)
+
+function Spectate.setInGame(value: boolean)
+	inGame = value
+	if value then
+		stop()
+		button.Visible = false
+	end
+end
+
+function Spectate.start()
+	if not Config.ENABLE_SPECTATE_CAM then
+		return
+	end
+	task.spawn(function()
+		while true do
+			local show = not inGame and near()
+			if not show and button.Visible then
+				stop()
+			end
+			button.Visible = show
+			task.wait(0.5)
+		end
+	end)
+end
+
+return Spectate
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXE1E008DF389548E49383ABC31D430471"><Properties><string name="Name">UI</string><ProtectedString name="Source">-- Small helpers to build the UI in code, plus the one ScreenGui everything lives in.
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TweenService = game:GetService("TweenService")
+
+local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChild("Config"))
+
+local UI = {}
+UI.C = Config.COLORS
+
+function UI.make(className: string, props: { [string]: any }?, children: { Instance }?): any
+	local inst = Instance.new(className)
+	local parent = nil
+	if props then
+		for key, value in props do
+			if key == "Parent" then
+				parent = value
+			else
+				(inst :: any)[key] = value
+			end
+		end
+	end
+	if children then
+		for _, child in children do
+			child.Parent = inst
+		end
+	end
+	if parent then
+		inst.Parent = parent
+	end
+	return inst
+end
+
+function UI.corner(radius: number?): UICorner
+	return UI.make("UICorner", { CornerRadius = UDim.new(0, radius or 12) })
+end
+
+function UI.stroke(color: Color3?, thickness: number?): UIStroke
+	return UI.make("UIStroke", {
+		Color = color or UI.C.Accent,
+		Thickness = thickness or 2,
+		ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+	})
+end
+
+function UI.label(props: { [string]: any }): TextLabel
+	local base = {
+		BackgroundTransparency = 1,
+		Font = Enum.Font.GothamBold,
+		TextColor3 = UI.C.Text,
+		TextScaled = true,
+		Text = "",
+	}
+	for k, v in props do
+		if k ~= "MaxText" then
+			base[k] = v
+		end
+	end
+	return UI.make("TextLabel", base, { UI.make("UITextSizeConstraint", { MaxTextSize = props.MaxText or 40 }) })
+end
+
+function UI.button(props: { [string]: any }): TextButton
+	local base = {
+		BackgroundColor3 = UI.C.Accent,
+		Font = Enum.Font.GothamBlack,
+		TextColor3 = UI.C.Text,
+		TextScaled = true,
+		AutoButtonColor = true,
+	}
+	for k, v in props do
+		if k ~= "MaxText" then
+			base[k] = v
+		end
+	end
+	return UI.make("TextButton", base, {
+		UI.corner(10),
+		UI.make("UITextSizeConstraint", { MaxTextSize = props.MaxText or 32 }),
+		UI.make("UIPadding", {
+			PaddingLeft = UDim.new(0, 8),
+			PaddingRight = UDim.new(0, 8),
+			PaddingTop = UDim.new(0, 4),
+			PaddingBottom = UDim.new(0, 4),
+		}),
+	})
+end
+
+function UI.avatar(userId: number): string
+	return ("rbxthumb://type=AvatarHeadShot&amp;id=%d&amp;w=150&amp;h=150"):format(math.max(userId, 1))
+end
+
+-- Pop-in animation (adds a UIScale once)
+function UI.pop(gui: GuiObject, from: number?)
+	local scale = gui:FindFirstChild("PopScale") :: UIScale?
+	if not scale then
+		scale = UI.make("UIScale", { Name = "PopScale", Parent = gui })
+	end
+	local s = scale :: UIScale
+	s.Scale = from or 0.6
+	TweenService:Create(s, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.Out), { Scale = 1 }):Play()
+end
+
+function UI.tween(inst: Instance, time: number, goal: { [string]: any }, style: Enum.EasingStyle?): Tween
+	local t = TweenService:Create(inst, TweenInfo.new(time, style or Enum.EasingStyle.Quad, Enum.EasingDirection.Out), goal)
+	t:Play()
+	return t
+end
+
+local root: ScreenGui? = nil
+function UI.root(): ScreenGui
+	if root and root.Parent then
+		return root
+	end
+	root = UI.make("ScreenGui", {
+		Name = "WhoSlappedMeUI",
+		ResetOnSpawn = false,
+		IgnoreGuiInset = true,
+		DisplayOrder = 20,
+		ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
+		Parent = Players.LocalPlayer:WaitForChild("PlayerGui"),
+	})
+	return root :: ScreenGui
+end
+
+-- Centered panel with a max size, works on phone and PC.
+function UI.panel(props: { [string]: any }): Frame
+	local maxSize = props.MaxSize or Vector2.new(620, 440)
+	local base = {
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Position = UDim2.fromScale(0.5, 0.5),
+		Size = UDim2.fromScale(0.92, 0.7),
+		BackgroundColor3 = UI.C.Panel,
+		Visible = false,
+		Parent = UI.root(),
+	}
+	for k, v in props do
+		if k ~= "MaxSize" then
+			base[k] = v
+		end
+	end
+	return UI.make("Frame", base, {
+		UI.corner(18),
+		UI.stroke(UI.C.Accent, 3),
+		UI.make("UISizeConstraint", { MaxSize = maxSize }),
+	})
+end
+
+return UI
+</ProtectedString></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBX61BB45914E3E4C85BA6B1153ED770C36"><Properties><string name="Name">Workspace</string></Properties><Item class="Model" referent="RBX348E7F2104764539994C9E0B5A461777"><Properties><string name="Name">WhoSlappedMe</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>0.0</X><Y>0.0</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Folder" referent="RBXFBF6977D928F4282879ED0B68FF5347A"><Properties><string name="Name">Map</string></Properties><Item class="Part" referent="RBX4372066E131849FF9FD8B694241C4C54"><Properties><string name="Name">Ground</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>-0.45</Y><Z>-50.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>100.0</X><Y>1.0</Y><Z>104.0</Z></Vector3><Color3uint8 name="Color3uint8">4282006600</Color3uint8><token name="Material">816</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXB1EC1EEECD82488293970DC024CCE031"><Properties><string name="Name">StageBase</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>1.05</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>52.0</X><Y>2.0</Y><Z>52.0</Z></Vector3><Color3uint8 name="Color3uint8">4280426032</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX1DE88C477F6A489A95B1260A4DB632F0"><Properties><string name="Name">StageFloor</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.15</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>50.0</X><Y>0.2</Y><Z>50.0</Z></Vector3><Color3uint8 name="Color3uint8">4282135130</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX6E338AEA722E42F79CBF78B499B915B2"><Properties><string name="Name">CenterCircle</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.27</Y><Z>-67.0</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.06</X><Y>22.0</Y><Z>22.0</Z></Vector3><Color3uint8 name="Color3uint8">4284760736</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">2</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXF8215AE21D0A444AB6C704FD0E682F23"><Properties><string name="Name">HotSeatGlow</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.28</Y><Z>-72.0</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.06</X><Y>8.0</Y><Z>8.0</Z></Vector3><Color3uint8 name="Color3uint8">4294917260</Color3uint8><token name="Material">288</token><float name="Transparency">0.3</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">2</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXF71F3D1B46944307A71DA73EDD2C64DF"><Properties><string name="Name">EdgeGlow</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.1</Y><Z>-86.05</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>52.6</X><Y>0.5</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4294917260</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXD143A575F53F4D1A9A8255518E501817"><Properties><string name="Name">EdgeGlow</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.1</Y><Z>-33.95</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>52.6</X><Y>0.5</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4294917260</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX8AE280D0ABC84B45B4A34E0DB8ECC2BE"><Properties><string name="Name">EdgeGlow</string><CoordinateFrame name="CFrame"><X>-26.05</X><Y>2.1</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.5</X><Y>0.5</Y><Z>52.6</Z></Vector3><Color3uint8 name="Color3uint8">4294917260</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX2EA629010467496C9E6ECAB247F76F7A"><Properties><string name="Name">EdgeGlow</string><CoordinateFrame name="CFrame"><X>26.05</X><Y>2.1</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.5</X><Y>0.5</Y><Z>52.6</Z></Vector3><Color3uint8 name="Color3uint8">4294917260</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXE520D8807B2745FBB43F0A736C55DCE1"><Properties><string name="Name">Backdrop</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>14.0</Y><Z>-87.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>52.0</X><Y>28.0</Y><Z>2.0</Z></Vector3><Color3uint8 name="Color3uint8">4279768100</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXCBE78C893F4F4927B9611FC8BE064F22"><Properties><string name="Name">ScreenFrame</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>11.0</Y><Z>-85.9</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>30.0</X><Y>13.0</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4294917260</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXFFF37146107B42C4AB00FDAA0BC6C9E4"><Properties><string name="Name">TitleSign</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>22.5</Y><Z>-85.8</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>40.0</X><Y>5.0</Y><Z>0.6</Z></Vector3><Color3uint8 name="Color3uint8">4279768100</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBXC27C6D3C0DC844EA9960C05280381052"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">30.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBXA05EAED355D8474E9D33A17FFB2A3438"><Properties><string name="Name">Title</string><string name="Text">WHO SLAPPED ME?</string><UDim2 name="Position"><XS>0.02</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.96</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.921569</R><G>0.72549</G><B>0.235294</B></Color3><float name="TextStrokeTransparency">0.4</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item><Item class="Part" referent="RBX54ADD4DEAA93437CB49A4BB7191776A7"><Properties><string name="Name">Pillar</string><CoordinateFrame name="CFrame"><X>-26.8</X><Y>7.05</Y><Z>-33.2</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>2.4</X><Y>14.0</Y><Z>2.4</Z></Vector3><Color3uint8 name="Color3uint8">4293638460</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX713619369BE849A088717B6C50077C62"><Properties><string name="Name">PillarCap</string><CoordinateFrame name="CFrame"><X>-26.8</X><Y>14.45</Y><Z>-33.2</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>2.8</X><Y>0.8</Y><Z>2.8</Z></Vector3><Color3uint8 name="Color3uint8">4294917260</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXA43E3B45638941D9ADD5E19DCB51AA2A"><Properties><string name="Name">Pillar</string><CoordinateFrame name="CFrame"><X>26.8</X><Y>7.05</Y><Z>-33.2</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>2.4</X><Y>14.0</Y><Z>2.4</Z></Vector3><Color3uint8 name="Color3uint8">4293638460</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX27B9D0C231644079942B7E603C12B85B"><Properties><string name="Name">PillarCap</string><CoordinateFrame name="CFrame"><X>26.8</X><Y>14.45</Y><Z>-33.2</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>2.8</X><Y>0.8</Y><Z>2.8</Z></Vector3><Color3uint8 name="Color3uint8">4294917260</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXBDA13300A66247B990B667F743BCF191"><Properties><string name="Name">ArchPost</string><CoordinateFrame name="CFrame"><X>-7.4</X><Y>6.3</Y><Z>-31.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>1.2</X><Y>12.5</Y><Z>1.2</Z></Vector3><Color3uint8 name="Color3uint8">4293638460</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXA4D5542B50C94A3E8B0B48F116F7DF59"><Properties><string name="Name">ArchPost</string><CoordinateFrame name="CFrame"><X>7.4</X><Y>6.3</Y><Z>-31.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>1.2</X><Y>12.5</Y><Z>1.2</Z></Vector3><Color3uint8 name="Color3uint8">4293638460</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXCD19854DCFAF43CFB90B8E7538939106"><Properties><string name="Name">ArchSign</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>13.4</Y><Z>-31.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>16.0</X><Y>2.4</Y><Z>1.0</Z></Vector3><Color3uint8 name="Color3uint8">4279768100</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBX06976668AC33467ABDAD0A6A10DBD197"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">30.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBXBF8213BC7D9145959B191BBBB15B4DF0"><Properties><string name="Name">Title</string><string name="Text">WHO SLAPPED ME?</string><UDim2 name="Position"><XS>0.03</XS><XO>0</XO><YS>0.08</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.94</XS><XO>0</XO><YS>0.84</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>1.0</R><G>0.235294</G><B>0.54902</B></Color3><float name="TextStrokeTransparency">0.4</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item><Item class="Part" referent="RBXDDF35538B5D24F619DE6F9A585ED4DB4"><Properties><string name="Name">LightBar</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>20.0</Y><Z>-72.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>6.0</X><Y>0.6</Y><Z>1.2</Z></Vector3><Color3uint8 name="Color3uint8">4280163876</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SpotLight" referent="RBXD36DF0387C1D454EB5D4C7D247754136"><Properties><string name="Name">SpotLight</string><float name="Angle">55.0</float><float name="Brightness">4.0</float><Color3 name="Color"><R>1.0</R><G>0.882353</G><B>0.803922</B></Color3><token name="Face">4</token><float name="Range">24.0</float><bool name="Shadows">true</bool><bool name="Enabled">true</bool></Properties></Item></Item><Item class="Part" referent="RBX4E5A7EF1BD114F6F9F9F076180663DD8"><Properties><string name="Name">Bleacher</string><CoordinateFrame name="CFrame"><X>-31.0</X><Y>0.8</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.0</X><Y>1.5</Y><Z>46.0</Z></Vector3><Color3uint8 name="Color3uint8">4282794080</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXEF9FEC5939FF41F2B7B12C5BF6AD5797"><Properties><string name="Name">Bleacher</string><CoordinateFrame name="CFrame"><X>-34.0</X><Y>1.55</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.0</X><Y>3.0</Y><Z>46.0</Z></Vector3><Color3uint8 name="Color3uint8">4283715184</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXC540DBA4B7D74B039F0FDDBEC6B5E96B"><Properties><string name="Name">Bleacher</string><CoordinateFrame name="CFrame"><X>-37.0</X><Y>2.3</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.0</X><Y>4.5</Y><Z>46.0</Z></Vector3><Color3uint8 name="Color3uint8">4282794080</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXC39901E979E04C7690855157404B88F0"><Properties><string name="Name">Bleacher</string><CoordinateFrame name="CFrame"><X>31.0</X><Y>0.8</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.0</X><Y>1.5</Y><Z>46.0</Z></Vector3><Color3uint8 name="Color3uint8">4282794080</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX1264159A2F724F1D88537D532407E749"><Properties><string name="Name">Bleacher</string><CoordinateFrame name="CFrame"><X>34.0</X><Y>1.55</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.0</X><Y>3.0</Y><Z>46.0</Z></Vector3><Color3uint8 name="Color3uint8">4283715184</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX19270D045A154642BC0BB612A93E5EB3"><Properties><string name="Name">Bleacher</string><CoordinateFrame name="CFrame"><X>37.0</X><Y>2.3</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.0</X><Y>4.5</Y><Z>46.0</Z></Vector3><Color3uint8 name="Color3uint8">4282794080</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item></Item><Item class="Folder" referent="RBX234C434BC4B940028ABEEB3EE95A93B4"><Properties><string name="Name">Border</string></Properties><Item class="Part" referent="RBX8B6ED31409E048A4B950B0A2AEF1500D"><Properties><string name="Name">GlassLeft</string><CoordinateFrame name="CFrame"><X>-25.7</X><Y>7.25</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.6</X><Y>10.0</Y><Z>52.0</Z></Vector3><Color3uint8 name="Color3uint8">4289385215</Color3uint8><token name="Material">1568</token><float name="Transparency">0.8</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXF595B8BEE91841149A07D189C8D6EF53"><Properties><string name="Name">GlassRight</string><CoordinateFrame name="CFrame"><X>25.7</X><Y>7.25</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.6</X><Y>10.0</Y><Z>52.0</Z></Vector3><Color3uint8 name="Color3uint8">4289385215</Color3uint8><token name="Material">1568</token><float name="Transparency">0.8</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX4AEEFCA9655A4757821D537DD51E6A70"><Properties><string name="Name">GlassFront</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>7.25</Y><Z>-34.3</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>52.0</X><Y>10.0</Y><Z>0.6</Z></Vector3><Color3uint8 name="Color3uint8">4289385215</Color3uint8><token name="Material">1568</token><float name="Transparency">0.8</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXCCADFBDB8AA547CE8E194D78DFF7A0D5"><Properties><string name="Name">RailLeft</string><CoordinateFrame name="CFrame"><X>-25.7</X><Y>12.5</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.9</X><Y>0.5</Y><Z>52.0</Z></Vector3><Color3uint8 name="Color3uint8">4294917260</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXB3CDC751595D47A5AC73F10E966D5978"><Properties><string name="Name">RailRight</string><CoordinateFrame name="CFrame"><X>25.7</X><Y>12.5</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.9</X><Y>0.5</Y><Z>52.0</Z></Vector3><Color3uint8 name="Color3uint8">4294917260</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXB57BE1BB638E4673892C60E9DB4D3430"><Properties><string name="Name">RailFront</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>12.5</Y><Z>-34.3</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>52.0</X><Y>0.5</Y><Z>0.9</Z></Vector3><Color3uint8 name="Color3uint8">4294917260</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXF5192D2B100D415A9189475F33D8CA62"><Properties><string name="Name">BarrierLeft</string><CoordinateFrame name="CFrame"><X>-25.7</X><Y>32.5</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.6</X><Y>40.0</Y><Z>52.0</Z></Vector3><Color3uint8 name="Color3uint8">4289385215</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXC006DE10C8B84134B1B5C2CABA877B0B"><Properties><string name="Name">BarrierRight</string><CoordinateFrame name="CFrame"><X>25.7</X><Y>32.5</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.6</X><Y>40.0</Y><Z>52.0</Z></Vector3><Color3uint8 name="Color3uint8">4289385215</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX8B0A8534669B4445BE2293050A93878A"><Properties><string name="Name">BarrierFront</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>32.5</Y><Z>-34.3</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>52.0</X><Y>40.0</Y><Z>0.6</Z></Vector3><Color3uint8 name="Color3uint8">4289385215</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXE6DCF018BDF24BFDACB4014A608B68B2"><Properties><string name="Name">BarrierBack</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>40.0</Y><Z>-86.4</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>52.0</X><Y>24.0</Y><Z>0.6</Z></Vector3><Color3uint8 name="Color3uint8">4289385215</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item></Item><Item class="Folder" referent="RBX89685DCDA9584D76B7282E3FAFAAFC88"><Properties><string name="Name">Seats</string></Properties><Item class="Model" referent="RBX099D3F553B1C48B8A4A8675EFB2BF954"><Properties><string name="Name">HotSeat</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>0.0</X><Y>3.75</Y><Z>-72.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBXB1B248A718154A46A3EEE40BD9DC4F91"><Properties><string name="Name">Pedestal</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.75</Y><Z>-72.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>5.0</X><Y>1.0</Y><Z>5.0</Z></Vector3><Color3uint8 name="Color3uint8">4293638460</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBXE67ED118652C40359449411A6C460216"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>3.75</Y><Z>-72.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.0</X><Y>1.0</Y><Z>3.0</Z></Vector3><Color3uint8 name="Color3uint8">4291961660</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXDE7CCAF17A1D4227AAFC5AA8948A5C49"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>5.25</Y><Z>-70.2</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.4</X><Y>2.0</Y><Z>0.6</Z></Vector3><Color3uint8 name="Color3uint8">4291961660</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX2646FD9636AD4EA7A748D1D554F7C658"><Properties><string name="Name">BackTrim</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>6.4</Y><Z>-70.2</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.8</X><Y>0.35</Y><Z>0.8</Z></Vector3><Color3uint8 name="Color3uint8">4293638460</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX57F257C2758C4BA18E5FB45DD119F098"><Properties><string name="Name">ArmLeft</string><CoordinateFrame name="CFrame"><X>-1.95</X><Y>4.75</Y><Z>-72.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.6</X><Y>1.0</Y><Z>3.2</Z></Vector3><Color3uint8 name="Color3uint8">4293638460</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXC890F4871DB74F2798D1BBB79617DA7B"><Properties><string name="Name">ArmRight</string><CoordinateFrame name="CFrame"><X>1.95</X><Y>4.75</Y><Z>-72.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.6</X><Y>1.0</Y><Z>3.2</Z></Vector3><Color3uint8 name="Color3uint8">4293638460</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item></Item><Item class="Model" referent="RBX94D530DB8ECC4DC1B0C257CC61B444EE"><Properties><string name="Name">BackSeat1</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>-9.725217</X><Y>3.75</Y><Z>-61.929243</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBX1E532F60C8E24428BDBEE149FAC997FE"><Properties><string name="Name">Ring</string><CoordinateFrame name="CFrame"><X>-9.725217</X><Y>2.28</Y><Z>-61.929243</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.06</X><Y>4.6</Y><Z>4.6</Z></Vector3><Color3uint8 name="Color3uint8">4282557941</Color3uint8><token name="Material">288</token><float name="Transparency">0.35</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">2</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX36692BF2F73C4D37B1A3993B0346C2A3"><Properties><string name="Name">Pedestal</string><CoordinateFrame name="CFrame"><X>-9.725217</X><Y>2.75</Y><Z>-61.929243</Z><R00>0.71934</R00><R01>0.0</R01><R02>-0.694658</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.694658</R20><R21>0.0</R21><R22>0.71934</R22></CoordinateFrame><Vector3 name="size"><X>3.2</X><Y>1.0</Y><Z>3.2</Z></Vector3><Color3uint8 name="Color3uint8">4280821304</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBXBCCD8CCBEC0941B59EB3EE3DF81759DD"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>-9.725217</X><Y>3.75</Y><Z>-61.929243</Z><R00>0.71934</R00><R01>0.0</R01><R02>-0.694658</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.694658</R20><R21>0.0</R21><R22>0.71934</R22></CoordinateFrame><Vector3 name="size"><X>2.6</X><Y>1.0</Y><Z>2.6</Z></Vector3><Color3uint8 name="Color3uint8">4282557941</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX6DF781FE8C294746B20A472BE8F038C4"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>-10.801938</X><Y>5.25</Y><Z>-60.814266</Z><R00>0.71934</R00><R01>0.0</R01><R02>-0.694658</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.694658</R20><R21>0.0</R21><R22>0.71934</R22></CoordinateFrame><Vector3 name="size"><X>2.8</X><Y>2.0</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4282557941</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBXA72E677EE5C1456F953B8597AE949154"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBX7E530A7601E04E369CD6B4F9EA6B3F29"><Properties><string name="Name">Number</string><string name="Text">1</string><UDim2 name="Position"><XS>0.25</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.5</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>1.0</R><G>1.0</G><B>1.0</B></Color3><float name="TextStrokeTransparency">0.3</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item><Item class="Model" referent="RBXFEAA1EFCF6A5468CB98EB0C728A6C01B"><Properties><string name="Name">BackSeat2</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>-5.244492</X><Y>3.75</Y><Z>-59.019426</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBX832A7F863D1846D6BA72FD0B0631543E"><Properties><string name="Name">Ring</string><CoordinateFrame name="CFrame"><X>-5.244492</X><Y>2.28</Y><Z>-59.019426</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.06</X><Y>4.6</Y><Z>4.6</Z></Vector3><Color3uint8 name="Color3uint8">4284922730</Color3uint8><token name="Material">288</token><float name="Transparency">0.35</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">2</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX170AAFAC226F4A36A463FAB2D2B8A47F"><Properties><string name="Name">Pedestal</string><CoordinateFrame name="CFrame"><X>-5.244492</X><Y>2.75</Y><Z>-59.019426</Z><R00>0.927184</R00><R01>0.0</R01><R02>-0.374607</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.374607</R20><R21>0.0</R21><R22>0.927184</R22></CoordinateFrame><Vector3 name="size"><X>3.2</X><Y>1.0</Y><Z>3.2</Z></Vector3><Color3uint8 name="Color3uint8">4280821304</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBXEFCA2775C320405AB832AB9C3508890D"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>-5.244492</X><Y>3.75</Y><Z>-59.019426</Z><R00>0.927184</R00><R01>0.0</R01><R02>-0.374607</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.374607</R20><R21>0.0</R21><R22>0.927184</R22></CoordinateFrame><Vector3 name="size"><X>2.6</X><Y>1.0</Y><Z>2.6</Z></Vector3><Color3uint8 name="Color3uint8">4284922730</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXCAF91BE9C27943FBBD00E527538AFCF5"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>-5.825133</X><Y>5.25</Y><Z>-57.582291</Z><R00>0.927184</R00><R01>0.0</R01><R02>-0.374607</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.374607</R20><R21>0.0</R21><R22>0.927184</R22></CoordinateFrame><Vector3 name="size"><X>2.8</X><Y>2.0</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4284922730</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBXD3B3D8900C5946BA8B0A735963ADDEE9"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBXEF82FFB158184F33A88B7EC9BF1E2759"><Properties><string name="Name">Number</string><string name="Text">2</string><UDim2 name="Position"><XS>0.25</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.5</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>1.0</R><G>1.0</G><B>1.0</B></Color3><float name="TextStrokeTransparency">0.3</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item><Item class="Model" referent="RBXE7A9C8B44F1A47A88637CE2C6480C5EF"><Properties><string name="Name">BackSeat3</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>0.0</X><Y>3.75</Y><Z>-58.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBXBA61F98FF4BF466998973A668C7F673B"><Properties><string name="Name">Ring</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.28</Y><Z>-58.0</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.06</X><Y>4.6</Y><Z>4.6</Z></Vector3><Color3uint8 name="Color3uint8">4294953512</Color3uint8><token name="Material">288</token><float name="Transparency">0.35</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">2</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX6072C9DB5761425D9FA34CE95023E93A"><Properties><string name="Name">Pedestal</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.75</Y><Z>-58.0</Z><R00>1.0</R00><R01>0.0</R01><R02>-0.0</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.0</R20><R21>0.0</R21><R22>1.0</R22></CoordinateFrame><Vector3 name="size"><X>3.2</X><Y>1.0</Y><Z>3.2</Z></Vector3><Color3uint8 name="Color3uint8">4280821304</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBXF6A07D7CD36D404C97C3E14266A39B88"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>3.75</Y><Z>-58.0</Z><R00>1.0</R00><R01>0.0</R01><R02>-0.0</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.0</R20><R21>0.0</R21><R22>1.0</R22></CoordinateFrame><Vector3 name="size"><X>2.6</X><Y>1.0</Y><Z>2.6</Z></Vector3><Color3uint8 name="Color3uint8">4294953512</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX5CB0FB78C3B7475685596C75B7810402"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>5.25</Y><Z>-56.45</Z><R00>1.0</R00><R01>0.0</R01><R02>-0.0</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.0</R20><R21>0.0</R21><R22>1.0</R22></CoordinateFrame><Vector3 name="size"><X>2.8</X><Y>2.0</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4294953512</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBXBEA94AF434C742429882BDFA67FB58A6"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBX52DF993005D04C5A94182C442942488E"><Properties><string name="Name">Number</string><string name="Text">3</string><UDim2 name="Position"><XS>0.25</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.5</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>1.0</R><G>1.0</G><B>1.0</B></Color3><float name="TextStrokeTransparency">0.3</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item><Item class="Model" referent="RBX4999359ACB394C4B9D16CC8D3E53C228"><Properties><string name="Name">BackSeat4</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>5.244492</X><Y>3.75</Y><Z>-59.019426</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBXE79B36A41028403D9BE905B34FB88C59"><Properties><string name="Name">Ring</string><CoordinateFrame name="CFrame"><X>5.244492</X><Y>2.28</Y><Z>-59.019426</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.06</X><Y>4.6</Y><Z>4.6</Z></Vector3><Color3uint8 name="Color3uint8">4289415100</Color3uint8><token name="Material">288</token><float name="Transparency">0.35</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">2</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX958CF7B1ED084D4C9DF6E1E4B4ED06F6"><Properties><string name="Name">Pedestal</string><CoordinateFrame name="CFrame"><X>5.244492</X><Y>2.75</Y><Z>-59.019426</Z><R00>0.927184</R00><R01>0.0</R01><R02>0.374607</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.374607</R20><R21>0.0</R21><R22>0.927184</R22></CoordinateFrame><Vector3 name="size"><X>3.2</X><Y>1.0</Y><Z>3.2</Z></Vector3><Color3uint8 name="Color3uint8">4280821304</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBX320442C8A81E493BAE4C46C3CCE40E77"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>5.244492</X><Y>3.75</Y><Z>-59.019426</Z><R00>0.927184</R00><R01>0.0</R01><R02>0.374607</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.374607</R20><R21>0.0</R21><R22>0.927184</R22></CoordinateFrame><Vector3 name="size"><X>2.6</X><Y>1.0</Y><Z>2.6</Z></Vector3><Color3uint8 name="Color3uint8">4289415100</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX1F9B79E3CB7C4C6AAF9B06A89235A759"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>5.825133</X><Y>5.25</Y><Z>-57.582291</Z><R00>0.927184</R00><R01>0.0</R01><R02>0.374607</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.374607</R20><R21>0.0</R21><R22>0.927184</R22></CoordinateFrame><Vector3 name="size"><X>2.8</X><Y>2.0</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4289415100</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBX15D3A4999B7B4A3A84FAC8D6EE64BC75"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBXA336B40B44614E268518FA16A208A695"><Properties><string name="Name">Number</string><string name="Text">4</string><UDim2 name="Position"><XS>0.25</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.5</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>1.0</R><G>1.0</G><B>1.0</B></Color3><float name="TextStrokeTransparency">0.3</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item><Item class="Model" referent="RBX12DCAD65D5D3461BAB039829FCC6253D"><Properties><string name="Name">BackSeat5</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>9.725217</X><Y>3.75</Y><Z>-61.929243</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBXD11FD20EB4F742D5AB7BDD1C3E9A7D7E"><Properties><string name="Name">Ring</string><CoordinateFrame name="CFrame"><X>9.725217</X><Y>2.28</Y><Z>-61.929243</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.06</X><Y>4.6</Y><Z>4.6</Z></Vector3><Color3uint8 name="Color3uint8">4294930499</Color3uint8><token name="Material">288</token><float name="Transparency">0.35</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">2</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX2595C3949C844322A764C35F9597CD68"><Properties><string name="Name">Pedestal</string><CoordinateFrame name="CFrame"><X>9.725217</X><Y>2.75</Y><Z>-61.929243</Z><R00>0.71934</R00><R01>0.0</R01><R02>0.694658</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.694658</R20><R21>0.0</R21><R22>0.71934</R22></CoordinateFrame><Vector3 name="size"><X>3.2</X><Y>1.0</Y><Z>3.2</Z></Vector3><Color3uint8 name="Color3uint8">4280821304</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBX60FD1AAD3C3145BFAAC347AE0AE75AFF"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>9.725217</X><Y>3.75</Y><Z>-61.929243</Z><R00>0.71934</R00><R01>0.0</R01><R02>0.694658</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.694658</R20><R21>0.0</R21><R22>0.71934</R22></CoordinateFrame><Vector3 name="size"><X>2.6</X><Y>1.0</Y><Z>2.6</Z></Vector3><Color3uint8 name="Color3uint8">4294930499</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX428FD02D16CC4BDEAECFB89611817B4F"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>10.801938</X><Y>5.25</Y><Z>-60.814266</Z><R00>0.71934</R00><R01>0.0</R01><R02>0.694658</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.694658</R20><R21>0.0</R21><R22>0.71934</R22></CoordinateFrame><Vector3 name="size"><X>2.8</X><Y>2.0</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4294930499</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBX6F515D431EFD40DDAAF2920B285960E7"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBXFA47DBC31D93474D81CA55D62CD172D3"><Properties><string name="Name">Number</string><string name="Text">5</string><UDim2 name="Position"><XS>0.25</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.5</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>1.0</R><G>1.0</G><B>1.0</B></Color3><float name="TextStrokeTransparency">0.3</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item></Item><Item class="Folder" referent="RBX5540DDF487D747AC88323D70A4E6A611"><Properties><string name="Name">Points</string></Properties><Item class="Part" referent="RBX6F5E82C5E85B4E2992C8BA3E04D7197A"><Properties><string name="Name">SlapSpot</string><CoordinateFrame name="CFrame"><X>1.3</X><Y>5.25</Y><Z>-69.2</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>2.0</X><Y>2.0</Y><Z>1.0</Z></Vector3><Color3uint8 name="Color3uint8">4294922320</Color3uint8><token name="Material">288</token><float name="Transparency">0.5</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX860F77E509D24AC89BA7F25AF5FB0E54"><Properties><string name="Name">KOSpot</string><CoordinateFrame name="CFrame"><X>-34.0</X><Y>6.05</Y><Z>-60.0</Z><R00>0.0</R00><R01>0.0</R01><R02>-1.0</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>1.0</R20><R21>0.0</R21><R22>-0.0</R22></CoordinateFrame><Vector3 name="size"><X>2.0</X><Y>2.0</Y><Z>1.0</Z></Vector3><Color3uint8 name="Color3uint8">4294922320</Color3uint8><token name="Material">288</token><float name="Transparency">0.5</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX5E75147A17D64DF882D6A375E4DB48EC"><Properties><string name="Name">ExitSpot</string><CoordinateFrame name="CFrame"><X>9.0</X><Y>3.35</Y><Z>-20.0</Z><R00>1.0</R00><R01>0.0</R01><R02>-0.0</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.0</R20><R21>0.0</R21><R22>1.0</R22></CoordinateFrame><Vector3 name="size"><X>2.0</X><Y>2.0</Y><Z>1.0</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.5</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX14B2422A5C844863995D600541AD8C2F"><Properties><string name="Name">RevealCam</string><CoordinateFrame name="CFrame"><X>14.0</X><Y>9.0</Y><Z>-66.5</Z><R00>0.365652</R00><R01>-0.134699</R01><R02>0.920953</R02><R10>0.0</R10><R11>0.989472</R11><R12>0.144721</R12><R20>-0.930751</R20><R21>-0.052918</R21><R22>0.361803</R22></CoordinateFrame><Vector3 name="size"><X>1.0</X><Y>1.0</Y><Z>2.0</Z></Vector3><Color3uint8 name="Color3uint8">4283474175</Color3uint8><token name="Material">288</token><float name="Transparency">0.5</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX38213B938CEA4542806DE30F7BA37F92"><Properties><string name="Name">SpectateCam</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>34.0</Y><Z>-38.0</Z><R00>1.0</R00><R01>0.0</R01><R02>-0.0</R02><R10>-0.0</R10><R11>0.670286</R11><R12>0.742103</R12><R20>0.0</R20><R21>-0.742103</R21><R22>0.670286</R22></CoordinateFrame><Vector3 name="size"><X>1.0</X><Y>1.0</Y><Z>2.0</Z></Vector3><Color3uint8 name="Color3uint8">4283474175</Color3uint8><token name="Material">288</token><float name="Transparency">0.5</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item></Item><Item class="Folder" referent="RBX92D7A1BEBF83469495576AA84E35F00C"><Properties><string name="Name">Screens</string></Properties><Item class="Part" referent="RBXDD8712B54B924764BA7BB11E45279BFE"><Properties><string name="Name">PhaseScreen</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>11.0</Y><Z>-85.65</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>29.0</X><Y>12.0</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4278716428</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBX268CF84FA40F4A61A2BF6089FFD80657"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">40.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBX69BA1E233B3646579CFB93A010DB1652"><Properties><string name="Name">Title</string><string name="Text">WHO SLAPPED ME?</string><UDim2 name="Position"><XS>0.04</XS><XO>0</XO><YS>0.08</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.92</XS><XO>0</XO><YS>0.38</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>1.0</R><G>0.235294</G><B>0.54902</B></Color3><float name="TextStrokeTransparency">0.6</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item><Item class="TextLabel" referent="RBX62EEC3349880499D9162F51A8D7CD075"><Properties><string name="Name">Sub</string><string name="Text">Step on the glowing pad to play</string><UDim2 name="Position"><XS>0.04</XS><XO>0</XO><YS>0.5</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.92</XS><XO>0</XO><YS>0.22</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>1.0</R><G>1.0</G><B>1.0</B></Color3><float name="TextStrokeTransparency">1.0</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>700</Weight><Style>Normal</Style></Font></Properties></Item><Item class="TextLabel" referent="RBXC212D9178B6540B1A334879BBF7F4033"><Properties><string name="Name">Info</string><string name="Text" /><UDim2 name="Position"><XS>0.04</XS><XO>0</XO><YS>0.76</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.92</XS><XO>0</XO><YS>0.18</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.921569</R><G>0.72549</G><B>0.235294</B></Color3><float name="TextStrokeTransparency">1.0</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>700</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item><Item class="Model" referent="RBX8F14B3E9719D454E8D659C5E5C1C1CDD"><Properties><string name="Name">JoinPad</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>0.0</X><Y>0.2</Y><Z>-20.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBX63736C6B4BFE4BD68AB5F2A28480FDE2"><Properties><string name="Name">Zone</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>0.2</Y><Z>-20.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>12.0</X><Y>0.3</Y><Z>12.0</Z></Vector3><Color3uint8 name="Color3uint8">4280558640</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXAE852C1A5F504770BBB39634C12BEC80"><Properties><string name="Name">Glow</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>0.3</Y><Z>-26.15</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>12.8</X><Y>0.4</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX6F12173E04EA4F25A0EBB4158C84F36D"><Properties><string name="Name">Glow</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>0.3</Y><Z>-13.85</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>12.8</X><Y>0.4</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX9180170D966441F2B9C30C928701DA42"><Properties><string name="Name">Glow</string><CoordinateFrame name="CFrame"><X>-6.15</X><Y>0.3</Y><Z>-20.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.5</X><Y>0.4</Y><Z>12.8</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXF912420975694A95B57834933CB1CDBF"><Properties><string name="Name">Glow</string><CoordinateFrame name="CFrame"><X>6.15</X><Y>0.3</Y><Z>-20.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.5</X><Y>0.4</Y><Z>12.8</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXF83CBE1A5F2D40519704D1BED12389CE"><Properties><string name="Name">Sign</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>9.0</Y><Z>-20.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.4</X><Y>0.4</Y><Z>0.4</Z></Vector3><Color3uint8 name="Color3uint8">4294967295</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="BillboardGui" referent="RBX29C31BF9B2184AFB876909B4B195EF6F"><Properties><string name="Name">Board</string><UDim2 name="Size"><XS>16</XS><XO>0</XO><YS>6</YS><YO>0</YO></UDim2><float name="MaxDistance">160.0</float><float name="LightInfluence">0.0</float><bool name="AlwaysOnTop">false</bool></Properties><Item class="TextLabel" referent="RBXD0837BCBA0C147A4A4F0BDF317E072AE"><Properties><string name="Name">Title</string><string name="Text">STAND HERE TO JOIN</string><UDim2 name="Position"><XS>0</XS><XO>0</XO><YS>0</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>1</XS><XO>0</XO><YS>0.42</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.313725</R><G>0.862745</G><B>0.470588</B></Color3><float name="TextStrokeTransparency">0.2</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item><Item class="TextLabel" referent="RBX81D0AD4792EE4919B870BCF6E0C7D6E2"><Properties><string name="Name">Count</string><string name="Text">0/6</string><UDim2 name="Position"><XS>0</XS><XO>0</XO><YS>0.42</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>1</XS><XO>0</XO><YS>0.3</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>1.0</R><G>1.0</G><B>1.0</B></Color3><float name="TextStrokeTransparency">0.2</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item><Item class="TextLabel" referent="RBX63B6A2A774DE4BE6A9F73C22EAB80D09"><Properties><string name="Name">Info</string><string name="Text">Needs 3 players</string><UDim2 name="Position"><XS>0</XS><XO>0</XO><YS>0.72</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>1</XS><XO>0</XO><YS>0.28</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.921569</R><G>0.72549</G><B>0.235294</B></Color3><float name="TextStrokeTransparency">0.2</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>700</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item></Item></Item></Item></roblox>
