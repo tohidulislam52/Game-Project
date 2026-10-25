@@ -1,4 +1,4 @@
-<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4"><Meta name="ExplicitAutoJoints">true</Meta><External>null</External><External>nil</External><Item class="Folder" referent="RBXBT14221814AE7D4B1A8B8A0731242388EC"><Properties><string name="Name">BTToolsEvents</string></Properties><Item class="ModuleScript" referent="RBXBTC4337641B9484B7E976E892135FF20E1"><Properties><string name="Name">README</string><ProtectedString name="Source">--[[
+<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4"><Meta name="ExplicitAutoJoints">true</Meta><External>null</External><External>nil</External><Item class="Folder" referent="RBXBT14933388BBF640B0996FD2A566EDA665"><Properties><string name="Name">BTToolsEvents</string></Properties><Item class="ModuleScript" referent="RBXBT48BB8A222E164EC2AB100DD0691871D7"><Properties><string name="Name">README</string><ProtectedString name="Source">--[[
 	🎁 BT Tools Event: কোথায় কী রাখবেন
 
 	এই ফোল্ডারের ভেতরের প্রতিটা ফোল্ডারের নাম হল Roblox এর যে সার্ভিসে রাখতে হবে।
@@ -21,7 +21,7 @@
 	না হলে টুল সেভ হবে না।
 ]]
 return nil
-</ProtectedString></Properties></Item><Item class="Folder" referent="RBXBT29A798D6F81445D6804A528288899A66"><Properties><string name="Name">ReplicatedStorage</string></Properties><Item class="Folder" referent="RBXBTE31839A5B2E64FB79130BDEC811F0D12"><Properties><string name="Name">BTToolsEvents</string></Properties><Item class="ModuleScript" referent="RBXBTF37C1DFA862D48DDA06E294CE3DD4103"><Properties><string name="Name">Config</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="Folder" referent="RBXBTA7FA147E3C894380847E3428DE804F9A"><Properties><string name="Name">ReplicatedStorage</string></Properties><Item class="Folder" referent="RBXBTCD6C9E297DDA49878E055FA025FF6EEB"><Properties><string name="Name">BTToolsEvents</string></Properties><Item class="ModuleScript" referent="RBXBT3E0BE98D091648B398D5EA9390AEC349"><Properties><string name="Name">Config</string><ProtectedString name="Source">--[[
 	BT Tools Event: Config (ModuleScript)
 	জায়গা: ReplicatedStorage &gt; BTToolsEvents &gt; Config
 
@@ -242,7 +242,7 @@ function Config.IsSoundSet(id: string?): boolean
 end
 
 return Config
-</ProtectedString></Properties></Item><Item class="Folder" referent="RBXBTC1C288B6424845D29EE83E2B77276E28"><Properties><string name="Name">Remotes</string></Properties><Item class="RemoteFunction" referent="RBXBTA76F9A5A16FD4D23B44BFA4518B26479"><Properties><string name="Name">AdminRequest</string></Properties></Item><Item class="RemoteEvent" referent="RBXBT4E7B6E7A1C154FA196BA664CE024CFE9"><Properties><string name="Name">OpenBox</string></Properties></Item><Item class="RemoteEvent" referent="RBXBT10FD75CC98BA4095BAE9D6FADC862AE1"><Properties><string name="Name">Notify</string></Properties></Item><Item class="RemoteEvent" referent="RBXBT4C9928519BC84808AEC855B340B26F70"><Properties><string name="Name">Announce</string></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBXBT2C462BA82B6647A9902650926913E80A"><Properties><string name="Name">ServerScriptService</string></Properties><Item class="Folder" referent="RBXBT2220646ACCF9410991C7862206FD62CE"><Properties><string name="Name">BTToolsEvents</string></Properties><Item class="Script" referent="RBXBT206C81FA20DC4A4B842FE1EADE84898D"><Properties><string name="Name">Main</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="Folder" referent="RBXBTB01B248196E74708A3E9358D7EC3A01A"><Properties><string name="Name">Remotes</string></Properties><Item class="RemoteFunction" referent="RBXBT4852628031324B4CB2900D66F4ADF5F3"><Properties><string name="Name">AdminRequest</string></Properties></Item><Item class="RemoteEvent" referent="RBXBT327CA6004B45455C83193D532292F1B8"><Properties><string name="Name">OpenBox</string></Properties></Item><Item class="RemoteEvent" referent="RBXBT4C5EDD2D9B1C41A0B7D95D0B8CBCC338"><Properties><string name="Name">Notify</string></Properties></Item><Item class="RemoteEvent" referent="RBXBT54E789FA5AA04738AAEFA64555664505"><Properties><string name="Name">Announce</string></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBXBT601045BC410445E4B060C30F64BAC36F"><Properties><string name="Name">ServerScriptService</string></Properties><Item class="Folder" referent="RBXBTA72F058895E4496F9DC5ACAA555D580A"><Properties><string name="Name">BTToolsEvents</string></Properties><Item class="Script" referent="RBXBTA98E4E7EBBA84F2697A51BC2762ECBE2"><Properties><string name="Name">Main</string><ProtectedString name="Source">--[[
 	BT Tools Event: Main (Script, সার্ভার)
 	জায়গা: ServerScriptService &gt; BTToolsEvents &gt; Main
 
@@ -268,7 +268,7 @@ BoxSpawner.Init()
 Showcase.Init()
 EventManager.Init()
 AdminService.Init()
-</ProtectedString><bool name="Disabled">false</bool></Properties></Item><Item class="Folder" referent="RBXBT52086D862F254EE5AA9A9E71757A1D2F"><Properties><string name="Name">Modules</string></Properties><Item class="ModuleScript" referent="RBXBT81B3A807A96B4D83BD41843226D91A6C"><Properties><string name="Name">AdminService</string><ProtectedString name="Source">--[[
+</ProtectedString><bool name="Disabled">false</bool></Properties></Item><Item class="Folder" referent="RBXBT4704A5753F2C4E71ABA64DBC7F1EF0B6"><Properties><string name="Name">Modules</string></Properties><Item class="ModuleScript" referent="RBXBT44227F9ECEDF4C35B629372ED011F3FB"><Properties><string name="Name">AdminService</string><ProtectedString name="Source">--[[
 	BT Tools Event: AdminService (ModuleScript, সার্ভার)
 
 	অ্যাডমিন প্যানেলের সব অনুরোধ এখানে আসে (RemoteFunction: AdminRequest)।
@@ -470,7 +470,7 @@ function AdminService.Init()
 end
 
 return AdminService
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT633E711ED73C4112ACB4276695808944"><Properties><string name="Name">BoxSpawner</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT24C196681EA247539C6918CBA395DF3B"><Properties><string name="Name">BoxSpawner</string><ProtectedString name="Source">--[[
 	BT Tools Event: BoxSpawner (ModuleScript, সার্ভার)
 
 	বক্স কোথায় পড়বে সেটা খুঁজে বের করে।
@@ -648,7 +648,7 @@ function BoxSpawner.FindPositions(
 end
 
 return BoxSpawner
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT0CA1D03AB0D44174971BDF4A09175BA4"><Properties><string name="Name">EventManager</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT1A9500928A014D5FA52FBC707E451C2E"><Properties><string name="Name">EventManager</string><ProtectedString name="Source">--[[
 	BT Tools Event: EventManager (ModuleScript, সার্ভার)
 
 	ইভেন্টের পুরো কাজ: বক্স স্পন, তোলা, খোলা, টাইমার আর শেষ।
@@ -685,6 +685,20 @@ local Showcase = require(Modules:WaitForChild("Showcase"))
 
 local BOX_ATTRIBUTE = "BTBoxId"
 
+-- 🎨 বক্সের রং: প্রতিটা বক্স এখান থেকে random একটা জোড়া পায়।
+-- Box = মূল বক্স (Handle), Ribbon = ওপরের ফিতা (নামে "Ribbon" বা "Bow" আছে এমন পার্ট)।
+-- নতুন রং যোগ করতে একই রকম একটা লাইন লিখে দিন।
+local BOX_COLOR_THEMES = {
+	{ Box = Color3.fromRGB(170, 25, 35), Ribbon = Color3.fromRGB(255, 205, 60) }, -- লাল + সোনালি
+	{ Box = Color3.fromRGB(28, 48, 125), Ribbon = Color3.fromRGB(235, 240, 255) }, -- নীল + সাদা
+	{ Box = Color3.fromRGB(18, 105, 58), Ribbon = Color3.fromRGB(255, 205, 60) }, -- সবুজ + সোনালি
+	{ Box = Color3.fromRGB(95, 30, 140), Ribbon = Color3.fromRGB(255, 180, 220) }, -- বেগুনি + গোলাপি
+	{ Box = Color3.fromRGB(28, 30, 38), Ribbon = Color3.fromRGB(255, 205, 60) }, -- কালো + সোনালি
+	{ Box = Color3.fromRGB(225, 105, 30), Ribbon = Color3.fromRGB(255, 245, 210) }, -- কমলা + ক্রিম
+	{ Box = Color3.fromRGB(235, 120, 170), Ribbon = Color3.fromRGB(255, 255, 255) }, -- গোলাপি + সাদা
+	{ Box = Color3.fromRGB(25, 150, 170), Ribbon = Color3.fromRGB(255, 225, 90) }, -- ফিরোজা + হলুদ
+}
+
 type BoxRecord = {
 	id: number,
 	state: "ground" | "held" | "opened",
@@ -693,6 +707,7 @@ type BoxRecord = {
 	holder: Player?,
 	tool: Tool?,
 	heldSince: number,
+	colors: { Box: Color3, Ribbon: Color3 },
 	connections: { RBXScriptConnection },
 }
 
@@ -763,6 +778,22 @@ local function stripScripts(root: Instance)
 end
 
 -- টেমপ্লেট না থাকলে সাধারণ একটা লাল-সোনালি বক্স।
+-- Handle পায় Box রং, নামে "ribbon" বা "bow" থাকা পার্ট পায় Ribbon রং।
+local function applyBoxColors(root: Instance, colors: { Box: Color3, Ribbon: Color3 })
+	for _, d in root:GetDescendants() do
+		if d:IsA("BasePart") then
+			local lower = string.lower(d.Name)
+			if string.find(lower, "ribbon", 1, true) or string.find(lower, "bow", 1, true) then
+				d.Color = colors.Ribbon
+				d.Material = Enum.Material.SmoothPlastic
+			elseif d.Name == "Handle" then
+				d.Color = colors.Box
+				d.Material = Enum.Material.SmoothPlastic
+			end
+		end
+	end
+end
+
 local function makeFallbackVisual(): Model
 	local visual = Instance.new("Model")
 	local box = Instance.new("Part")
@@ -815,14 +846,14 @@ local function buildGroundModel(record: BoxRecord): Model
 	prompt.Parent = attachment
 
 	local light = Instance.new("PointLight")
-	light.Color = Color3.fromRGB(255, 215, 120)
+	light.Color = record.colors.Ribbon
 	light.Brightness = 1.5
 	light.Range = 12
 	light.Parent = root
 
 	local sparkle = Instance.new("ParticleEmitter")
 	sparkle.Texture = "rbxasset://textures/particles/sparkles_main.dds"
-	sparkle.Color = ColorSequence.new(Color3.fromRGB(255, 235, 150))
+	sparkle.Color = ColorSequence.new(record.colors.Ribbon)
 	sparkle.Size = NumberSequence.new(0.35, 0)
 	sparkle.Lifetime = NumberRange.new(0.8, 1.4)
 	sparkle.Rate = 4
@@ -850,6 +881,7 @@ local function buildGroundModel(record: BoxRecord): Model
 		visual = makeFallbackVisual()
 	end
 	visual.Name = "Visual"
+	applyBoxColors(visual, record.colors)
 	for _, d in visual:GetDescendants() do
 		if d:IsA("BasePart") then
 			d.Anchored = true
@@ -892,6 +924,8 @@ local function makeBoxTool(record: BoxRecord): Tool
 		visual:Destroy()
 	end
 	tool.Name = "🎁 Gift Box"
+	-- হাতে নেওয়ার পরেও মাটির বক্সের রং-ই থাকবে।
+	applyBoxColors(tool, record.colors)
 	tool.ToolTip = "খুলতে ক্লিক করুন"
 	tool.CanBeDropped = false
 	tool.RequiresHandle = true
@@ -1250,6 +1284,7 @@ function EventManager.Start(admin: Player, params: StartParams): (boolean, strin
 			tool = nil,
 			heldSince = 0,
 			connections = {},
+			colors = BOX_COLOR_THEMES[rng:NextInteger(1, #BOX_COLOR_THEMES)],
 		}
 		ev.boxes[record.id] = record
 		record.model = buildGroundModel(record)
@@ -1323,7 +1358,7 @@ function EventManager.Init()
 end
 
 return EventManager
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT2B0C3405E3C746AF8780F66879F46E13"><Properties><string name="Name">Showcase</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT806F9760AA464717A4A270AB14159988"><Properties><string name="Name">Showcase</string><ProtectedString name="Source">--[[
 	BT Tools Event: Showcase (ModuleScript, সার্ভার)
 
 	বিজয়ীর বড় অবতার যেটা নাচে আর হাতে জেতা টুল ধরে থাকে (R13)।
@@ -1940,7 +1975,7 @@ function Showcase.Init()
 end
 
 return Showcase
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBTD176CEDE01A14A3B956F453C506AE22B"><Properties><string name="Name">ToolData</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBTDBB3E78D0BAE4C6E99DC3E0BA8839634"><Properties><string name="Name">ToolData</string><ProtectedString name="Source">--[[
 	BT Tools Event: ToolData (ModuleScript, সার্ভার)
 
 	কে কোন টুল পার্মানেন্ট পেয়েছে সেটা ডেটাস্টোরে রাখে, আর প্লেয়ারকে টুল দেয়।
@@ -2492,7 +2527,7 @@ function ToolData.Init()
 end
 
 return ToolData
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBTB2A325B0F15744C598E1312346421329"><Properties><string name="Name">Util</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBTCB545EFFBA104322A21FB838E818BDF7"><Properties><string name="Name">Util</string><ProtectedString name="Source">--[[
 	BT Tools Event: Util (ModuleScript, সার্ভার)
 	ছোট ছোট সাহায্যকারী ফাংশন: retry, rate limit, ক্যারেক্টার খোঁজা।
 ]]
@@ -2560,7 +2595,7 @@ function Util.IsInteger(value: any, minValue: number, maxValue: number): boolean
 end
 
 return Util
-</ProtectedString></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBXBT4DCEE6FCBF1B4210897323427D84C21A"><Properties><string name="Name">StarterPlayerScripts</string></Properties><Item class="Folder" referent="RBXBT837DB230D12F46B28BDC94058C5499C0"><Properties><string name="Name">BTToolsEvents</string></Properties><Item class="LocalScript" referent="RBXBTE52AF82C717F4D2DBA0591455A1E1B5C"><Properties><string name="Name">ClientMain</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBXBT7141BCC50B92494187B03097BD82F067"><Properties><string name="Name">StarterPlayerScripts</string></Properties><Item class="Folder" referent="RBXBTC204862C73E9467FB1F404748B3C2AC9"><Properties><string name="Name">BTToolsEvents</string></Properties><Item class="LocalScript" referent="RBXBTBFEA2377F3434E75B9D01D515B0A9D38"><Properties><string name="Name">ClientMain</string><ProtectedString name="Source">--[[
 	BT Tools Event: ClientMain (LocalScript, ক্লায়েন্ট)
 	জায়গা: StarterPlayer &gt; StarterPlayerScripts &gt; BTToolsEvents &gt; ClientMain
 
@@ -2582,7 +2617,7 @@ Minigame.Init()
 BoxVisuals.Init()
 WinnerTags.Init()
 AdminPanel.Init()
-</ProtectedString><bool name="Disabled">false</bool></Properties></Item><Item class="Folder" referent="RBXBT65404CEA926042DEB80FC585EABD4430"><Properties><string name="Name">Modules</string></Properties><Item class="ModuleScript" referent="RBXBT5A0C8DAA58B74279A6685B6F75869465"><Properties><string name="Name">AdminPanel</string><ProtectedString name="Source">--[[
+</ProtectedString><bool name="Disabled">false</bool></Properties></Item><Item class="Folder" referent="RBXBTB9BDE18E2DF44229B6633981320C8CC9"><Properties><string name="Name">Modules</string></Properties><Item class="ModuleScript" referent="RBXBTAAB473798B124C449AF72E157C9D6E45"><Properties><string name="Name">AdminPanel</string><ProtectedString name="Source">--[[
 	BT Tools Event: AdminPanel (ModuleScript, ক্লায়েন্ট)
 
 	গেম শুরুতে অ্যাডমিন বাটন লুকানো থাকে। চ্যাটে Config.ADMIN_COMMAND (/bttools) লিখলে
@@ -3445,7 +3480,7 @@ function AdminPanel.Init()
 end
 
 return AdminPanel
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT822F8330223D49AE833E5FB0D86B1898"><Properties><string name="Name">BoxVisuals</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBTE196140AB2614A82A663E4F6364A7A91"><Properties><string name="Name">BoxVisuals</string><ProtectedString name="Source">--[[
 	BT Tools Event: BoxVisuals (ModuleScript, ক্লায়েন্ট)
 	মাটির বক্সগুলো ঘোরায় আর হালকা ভাসায়। শুধু নিজের স্ক্রিনে চলে, তাই সার্ভারে কোনো ল্যাগ নেই (I15)।
 	সার্ভার শুধু স্থির Root আর Prompt রাখে, এখানে শুধু "Visual" অংশটা নড়ে।
@@ -3506,7 +3541,7 @@ function BoxVisuals.Init()
 end
 
 return BoxVisuals
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBTD553B666B7614473B32ADA5A673D2009"><Properties><string name="Name">HUD</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT025D02554E84407AA4EA7A37F19B69B0"><Properties><string name="Name">HUD</string><ProtectedString name="Source">--[[
 	BT Tools Event: HUD (ModuleScript, ক্লায়েন্ট)
 
 	- ওপরে ছোট কাচের কাউন্টার: [ 17/20 খোলা | 4:32 বাকি ] (R12)। ইভেন্ট না চললে লুকানো।
@@ -3934,7 +3969,7 @@ function HUD.Init()
 end
 
 return HUD
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT1F8A963D0EC34D1DB97B2FACEBF0AA89"><Properties><string name="Name">Minigame</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBTBFD42675341F4FCF84B528CDE57B06DD"><Properties><string name="Name">Minigame</string><ProtectedString name="Source">--[[
 	BT Tools Event: Minigame (ModuleScript, ক্লায়েন্ট)
 
 	বক্স খোলার টাইমিং বার (R10, Option A):
@@ -4340,7 +4375,7 @@ function Minigame.Init()
 end
 
 return Minigame
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT446AC8AB47A94AE2B6C67EB8A1A5D4A6"><Properties><string name="Name">Sounds</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT3B34E227FB42479AADB4AC9A34559C1C"><Properties><string name="Name">Sounds</string><ProtectedString name="Source">--[[
 	BT Tools Event: Sounds (ModuleScript, ক্লায়েন্ট)
 	Config.SOUND_IDS থেকে সাউন্ড বাজায়। ID 0 বা খালি হলে চুপচাপ কিছু করে না।
 ]]
@@ -4398,7 +4433,7 @@ function Sounds.Play(name: string, pitch: number?)
 end
 
 return Sounds
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT6268AB0E90404EA68D1861C1518DF651"><Properties><string name="Name">UI</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT193C4ED5C179490E8E32B27DD24A62FA"><Properties><string name="Name">UI</string><ProtectedString name="Source">--[[
 	BT Tools Event: UI (ModuleScript, ক্লায়েন্ট)
 
 	সব UI এর ডিজাইনের ভিত্তি: থিম, ফন্ট, আর ছোট সাহায্যকারী ফাংশন।
@@ -4709,7 +4744,7 @@ function UI.ScreenGui(name: string, displayOrder: number): ScreenGui
 end
 
 return UI
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT17D39CCE51E541CCABF635459BEEA23C"><Properties><string name="Name">WinnerTags</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT205A10AE42834AE98F6C3F5C9CD4898A"><Properties><string name="Name">WinnerTags</string><ProtectedString name="Source">--[[
 	BT Tools Event: WinnerTags (ModuleScript, ক্লায়েন্ট)
 	বিজয়ীর "👑 WINNER" ট্যাগে countdown বার আর সোনালি ঝিলিক চালায়।
 	ট্যাগগুলো সার্ভার বানায় (Showcase), এখানে শুধু নিজের স্ক্রিনে নড়াচড়া।
@@ -4786,7 +4821,7 @@ function WinnerTags.Init()
 end
 
 return WinnerTags
-</ProtectedString></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBXBT229ECE8DFE834CDB84A0F831B5664898"><Properties><string name="Name">ServerStorage</string></Properties><Item class="Folder" referent="RBXBTA2D5FD7E08474EA580B42C6145616B28"><Properties><string name="Name">BTToolsEvents</string></Properties><Item class="Tool" referent="RBX94565139F8D34484B684BD035DC62B82">
+</ProtectedString></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBXBT576BADB3917D4CEA8F357FD69EFB5BDF"><Properties><string name="Name">ServerStorage</string></Properties><Item class="Folder" referent="RBXBT9D698FF2AFF440C79C5A5DBE74DCE14F"><Properties><string name="Name">BTToolsEvents</string></Properties><Item class="Tool" referent="RBX94565139F8D34484B684BD035DC62B82">
 				<Properties>
 					<bool name="CanBeDropped">true</bool>
 					<bool name="Enabled">true</bool>
@@ -5159,7 +5194,7 @@ return WinnerTags
 					</Properties>
 				</Item>
 			</Item>
-		</Item><Item class="Folder" referent="RBXBTAE21FDFFBFEE4AC09C2EB475E6F2FB93"><Properties><string name="Name">Tools</string></Properties><Item class="Tool" referent="RBX9ABE287ADEBA4BD3B6DF4F886074905F">
+		</Item><Item class="Folder" referent="RBXBTA561378804994B6585F25F2409518963"><Properties><string name="Name">Tools</string></Properties><Item class="Tool" referent="RBX9ABE287ADEBA4BD3B6DF4F886074905F">
 					<Properties>
 						<bool name="CanBeDropped">true</bool>
 						<bool name="Enabled">true</bool>
@@ -12540,7 +12575,7 @@ WeldToolParts()</ProtectedString>
 						</Item>
 					</Item>
 				</Item>
-			</Item></Item><Item class="Folder" referent="RBXBT8C1DAEA0478A4663B23C57BDE8CF6113"><Properties><string name="Name">Workspace</string></Properties><Item class="Folder" referent="RBXBT125435B1508240A794D2A72C88565CD4"><Properties><string name="Name">HuntSpawnZones</string></Properties><Item class="Part" referent="RBXBT15244D3033BA4E3C872F0BD45EEE819E"><Properties><string name="Name">Zone1</string><CoordinateFrame name="CFrame"><X>0</X><Y>5</Y><Z>0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>120</X><Y>12</Y><Z>120</Z></Vector3><Color3uint8 name="Color3uint8">4283484415</Color3uint8><float name="Transparency">0.75</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="Material">288</token></Properties></Item></Item><Item class="Part" referent="RBXBT5F8CB9983E534D069EAE89394030E325"><Properties><string name="Name">WinnerShowcase</string><CoordinateFrame name="CFrame"><X>0</X><Y>1</Y><Z>-40</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>36</X><Y>2</Y><Z>10</Z></Vector3><Color3uint8 name="Color3uint8">4294954300</Color3uint8><float name="Transparency">0.4</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="Material">288</token></Properties></Item></Item></Item><SharedStrings>
+			</Item></Item><Item class="Folder" referent="RBXBT943A8A11DF4641C19AAA3066FEC0FD97"><Properties><string name="Name">Workspace</string></Properties><Item class="Folder" referent="RBXBT695157BA89EE4707B766A3AEA1BAD50B"><Properties><string name="Name">HuntSpawnZones</string></Properties><Item class="Part" referent="RBXBTF6D77B59E5854033923C339681EE0955"><Properties><string name="Name">Zone1</string><CoordinateFrame name="CFrame"><X>0</X><Y>5</Y><Z>0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>120</X><Y>12</Y><Z>120</Z></Vector3><Color3uint8 name="Color3uint8">4283484415</Color3uint8><float name="Transparency">0.75</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="Material">288</token></Properties></Item></Item><Item class="Part" referent="RBXBT0311FC26D803467284DC18F73F501C23"><Properties><string name="Name">WinnerShowcase</string><CoordinateFrame name="CFrame"><X>0</X><Y>1</Y><Z>-40</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>36</X><Y>2</Y><Z>10</Z></Vector3><Color3uint8 name="Color3uint8">4294954300</Color3uint8><float name="Transparency">0.4</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="Material">288</token></Properties></Item></Item></Item><SharedStrings>
 		<SharedString md5="AkvqKo47oeLEz+OSuo64Fw==">Q1NHUEhTCAAAAAIAKLUv/WAwAZUHAFQIAQAAACgAAABMlxTgAQAARBNTwNGAcMFORBNTQNGA
 cEFOVgEoFApw2oTXvU2gz9d1Xa/rOgDEVII/FbRIwAAAAADDdMN0QKcZ+KC+KsHBugi/ughT
 wMDAmL4qQLIZ+L8MtEjKVIK/RBNTP8HBwb+/xFSCv7+YvirADLRIwD8/QEFBwL+/wD+owdmh
