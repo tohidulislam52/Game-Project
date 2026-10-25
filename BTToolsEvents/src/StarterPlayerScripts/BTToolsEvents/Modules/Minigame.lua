@@ -2,13 +2,13 @@
 	BT Tools Event: Minigame (ModuleScript, ক্লায়েন্ট)
 
 	বক্স খোলার টাইমিং বার (R10, Option A):
-	  🔒 🔒 🔒
-	  [░░░░░▓▓▓░░░░░░]   ← কাঁটা এদিক-ওদিক চলে, সোনালি জোনে থাকলে ক্লিক বা TAP।
-	- সঠিক ক্লিক (HIT): একটা তালা খোলে, Hit সাউন্ড (প্রতিবার সুর একটু উঁচু),
+	  বক্স খুলুন                     ● ● ○
+	  [━━━━━━━▇▇▇━━━━━━━━━━]   ← কাঁটা এদিক-ওদিক চলে, হাইলাইট অংশে এলে ক্লিক বা TAP।
+	- সঠিক ক্লিক (HIT): একটা বিন্দু ভরে যায়, Hit সাউন্ড (প্রতিবার সুর একটু উঁচু),
 	  পরের রাউন্ডে জোন ছোট হয় আর কাঁটা দ্রুত চলে।
 	- ভুল ক্লিক (MISS): বার লাল হয়ে কাঁপে, Miss সাউন্ড, MISS_STUN সেকেন্ড অপেক্ষা।
-	  খোলা তালা আবার বন্ধ হয় না।
-	- সব তালা খুললে সার্ভারকে বক্স খুলতে বলা হয়। কী পাবেন সেটা সার্ভার ঠিক করে।
+	  ভরা বিন্দু আবার খালি হয় না।
+	- সব বিন্দু ভরলে সার্ভারকে বক্স খুলতে বলা হয়। কী পাবেন সেটা সার্ভার ঠিক করে।
 	- বক্স হাত থেকে নামালে মিনি-গেম বন্ধ হয়ে শূন্য থেকে শুরু হয়।
 ]]
 
@@ -27,11 +27,12 @@ local Modules = script.Parent
 local UI = require(Modules:WaitForChild("UI"))
 local Sounds = require(Modules:WaitForChild("Sounds"))
 
-local C = UI.Colors
+local R = UI.Role
 local M = Config.Minigame
 local BOX_ATTRIBUTE = "BTBoxId"
 local TOLERANCE = 0.012
-local CONTAINER_POSITION = UDim2.new(0.5, 0, 1, -110)
+local CONTAINER_POSITION = UDim2.new(0.5, 0, 1, -104)
+local HINT_TEXT = "কাঁটা হাইলাইট করা অংশে এলে ক্লিক বা TAP করুন"
 
 type Session = {
 	tool: Tool,
@@ -54,10 +55,10 @@ local pickupTimes: { [number]: number } = {}
 
 local gui: ScreenGui
 local container: Frame
-local title: TextLabel
-local locks: { TextLabel } = {}
-local bar: Frame
-local barStroke: UIStroke
+local hint: TextLabel
+local pips: { Frame } = {}
+local track: Frame
+local trackStroke: UIStroke
 local zone: Frame
 local needle: Frame
 
@@ -66,133 +67,155 @@ local needle: Frame
 ----------------------------------------------------------------------
 local function buildUI()
 	gui = UI.ScreenGui("BTBoxMinigame", 6)
-	container = UI.New("Frame", {
+	container = UI.Card({
 		Name = "Container",
 		AnchorPoint = Vector2.new(0.5, 1),
 		Position = CONTAINER_POSITION,
-		Size = UDim2.new(0.92, 0, 0, 160),
-		BackgroundColor3 = C.Panel,
-		BackgroundTransparency = 0.08,
+		Size = UDim2.new(0.92, 0, 0, 150),
 		Visible = false,
 		Parent = gui,
 	}, {
-		UI.Corner(16),
-		UI.Stroke(C.Gold, 2),
-		UI.New("UISizeConstraint", { MaxSize = Vector2.new(460, 160) }),
+		UI.New("UISizeConstraint", { MaxSize = Vector2.new(400, 150) }),
 	})
 
-	title = UI.Label({
+	UI.Label({
 		Name = "Title",
-		Position = UDim2.new(0, 12, 0, 6),
-		Size = UDim2.new(1, -24, 0, 22),
-		Font = UI.Fonts.Bold,
-		TextScaled = true,
-		Text = "🎁 কাঁটা সোনালি জায়গায় এলে ক্লিক করুন!",
+		Position = UDim2.new(0, 18, 0, 14),
+		Size = UDim2.new(1, -120, 0, 22),
+		Font = UI.Fonts.Display,
+		TextSize = 19,
+		TextWrapped = false,
+		Text = "🎁 বক্স খুলুন",
 		Parent = container,
 	})
 
-	local lockRow = UI.New("Frame", {
-		Name = "Locks",
+	local pipRow = UI.New("Frame", {
+		Name = "Pips",
+		AnchorPoint = Vector2.new(1, 0),
+		Position = UDim2.new(1, -18, 0, 18),
+		Size = UDim2.fromOffset(90, 14),
 		BackgroundTransparency = 1,
-		Position = UDim2.new(0, 0, 0, 30),
-		Size = UDim2.new(1, 0, 0, 34),
 		Parent = container,
 	}, {
 		UI.New("UIListLayout", {
 			FillDirection = Enum.FillDirection.Horizontal,
-			HorizontalAlignment = Enum.HorizontalAlignment.Center,
+			HorizontalAlignment = Enum.HorizontalAlignment.Right,
 			VerticalAlignment = Enum.VerticalAlignment.Center,
-			Padding = UDim.new(0, 12),
+			Padding = UDim.new(0, 8),
+			SortOrder = Enum.SortOrder.LayoutOrder,
 		}),
 	})
 	for i = 1, M.HITS_REQUIRED do
-		local lock = UI.Label({
-			Name = "Lock" .. i,
+		local pip = UI.New("Frame", {
+			Name = "Pip" .. i,
 			LayoutOrder = i,
-			Size = UDim2.fromOffset(34, 34),
-			TextSize = 28,
-			Text = "🔒",
-			Parent = lockRow,
+			Size = UDim2.fromOffset(12, 12),
+			BackgroundColor3 = R("Surface"),
+			BorderSizePixel = 0,
+			Parent = pipRow,
+		}, {
+			UI.New("UICorner", { CornerRadius = UDim.new(1, 0) }),
+			UI.Stroke("Accent", 0.3),
 		})
-		UI.New("UIScale", { Parent = lock })
-		table.insert(locks, lock)
+		UI.New("UIScale", { Parent = pip })
+		table.insert(pips, pip)
 	end
 
-	bar = UI.New("Frame", {
-		Name = "Bar",
-		AnchorPoint = Vector2.new(0.5, 0),
-		Position = UDim2.new(0.5, 0, 0, 72),
-		Size = UDim2.new(1, -32, 0, 26),
-		BackgroundColor3 = Color3.fromRGB(40, 44, 62),
-		ClipsDescendants = false,
+	hint = UI.Label({
+		Name = "Hint",
+		Position = UDim2.new(0, 18, 0, 38),
+		Size = UDim2.new(1, -36, 0, 18),
+		TextSize = 13,
+		TextColor3 = R("SubText"),
+		TextTruncate = Enum.TextTruncate.AtEnd,
+		TextWrapped = false,
+		Text = HINT_TEXT,
 		Parent = container,
-	}, { UI.Corner(8) })
-	barStroke = UI.Stroke(C.Stroke, 2)
-	barStroke.Parent = bar
+	})
+
+	track = UI.New("Frame", {
+		Name = "Track",
+		AnchorPoint = Vector2.new(0.5, 0),
+		Position = UDim2.new(0.5, 0, 0, 68),
+		Size = UDim2.new(1, -36, 0, 12),
+		BackgroundColor3 = R("Surface"),
+		BorderSizePixel = 0,
+		Parent = container,
+	}, { UI.New("UICorner", { CornerRadius = UDim.new(1, 0) }) })
+	trackStroke = UI.Stroke()
+	trackStroke.Parent = track
 
 	zone = UI.New("Frame", {
 		Name = "Zone",
 		BackgroundColor3 = Color3.new(1, 1, 1),
 		BorderSizePixel = 0,
 		Size = UDim2.fromScale(0.2, 1),
-		Parent = bar,
-	}, { UI.Corner(6), UI.GoldGradient(0) })
+		Parent = track,
+	}, { UI.New("UICorner", { CornerRadius = UDim.new(1, 0) }), UI.AccentGradient(0) })
 
 	needle = UI.New("Frame", {
 		Name = "Needle",
 		AnchorPoint = Vector2.new(0.5, 0.5),
 		Position = UDim2.fromScale(0, 0.5),
-		Size = UDim2.new(0, 5, 1, 14),
-		BackgroundColor3 = Color3.new(1, 1, 1),
+		Size = UDim2.new(0, 4, 1, 16),
+		BackgroundColor3 = R("Text"),
 		BorderSizePixel = 0,
 		ZIndex = 3,
-		Parent = bar,
-	}, { UI.Corner(3), UI.Stroke(Color3.new(0, 0, 0), 1) })
+		Parent = track,
+	}, { UI.New("UICorner", { CornerRadius = UDim.new(1, 0) }) })
 
 	local tap = UI.Button({
 		Name = "Tap",
 		AnchorPoint = Vector2.new(0.5, 0),
-		Position = UDim2.new(0.5, 0, 0, 110),
-		Size = UDim2.fromOffset(170, 40),
-		BackgroundColor3 = C.Gold,
-		TextColor3 = Color3.fromRGB(30, 22, 5),
-		Font = UI.Fonts.Title,
-		TextSize = 22,
-		Text = "👆 TAP!",
+		Position = UDim2.new(0.5, 0, 0, 96),
+		Size = UDim2.new(1, -36, 0, 40),
+		Font = UI.Fonts.Display,
+		TextSize = 18,
+		Text = "TAP",
 		Parent = container,
-	})
+	}, "primary")
 	tap.Activated:Connect(function()
 		Minigame._Attempt()
 	end)
 end
 
-local function setLocks(hits: number)
-	for i, lock in locks do
-		lock.Text = if i <= hits then "🔓" else "🔒"
+local function setPips(hits: number)
+	for i, pip in pips do
+		UI.Apply(pip, { BackgroundColor3 = R(if i <= hits then "Accent" else "Surface") })
 	end
 end
 
-local function popLock(index: number)
-	local lock = locks[index]
-	local scale = lock and lock:FindFirstChildOfClass("UIScale")
+local function popPip(index: number)
+	local pip = pips[index]
+	local scale = pip and pip:FindFirstChildOfClass("UIScale")
 	if scale then
-		scale.Scale = 1.6
+		scale.Scale = 1.7
 		TweenService:Create(scale, TweenInfo.new(0.35, Enum.EasingStyle.Back, Enum.EasingDirection.Out), { Scale = 1 }):Play()
 	end
 end
 
-local function flashBar(color: Color3)
-	barStroke.Color = color
-	bar.BackgroundColor3 = color:Lerp(Color3.fromRGB(40, 44, 62), 0.6)
+local function flashTrack(role: string)
+	UI.Apply(trackStroke, { Color = R(role), Transparency = 0 })
+	trackStroke.Thickness = 2
 	task.delay(0.25, function()
-		barStroke.Color = C.Stroke
-		bar.BackgroundColor3 = Color3.fromRGB(40, 44, 62)
+		UI.Apply(trackStroke, {
+			Color = R("Stroke"),
+			Transparency = UI.Fn(function(theme)
+				return theme.StrokeTransparency
+			end),
+		})
+		trackStroke.Thickness = 1
 	end)
+end
+
+local function setHint(text: string, role: string)
+	hint.Text = text
+	UI.Apply(hint, { TextColor3 = R(role) })
 end
 
 local function shake()
 	task.spawn(function()
-		for _, dx in { -10, 10, -7, 7, -3, 0 } do
+		for _, dx in { -9, 9, -6, 6, -3, 0 } do
 			container.Position = CONTAINER_POSITION + UDim2.fromOffset(dx, 0)
 			task.wait(0.03)
 		end
@@ -232,16 +255,14 @@ local function resetRound(s: Session)
 	s.zoneSize = M.ZONE_SIZE_START
 	s.speed = M.NEEDLE_SPEED_START
 	s.state = "play"
-	setLocks(0)
-	title.Text = "🎁 কাঁটা সোনালি জায়গায় এলে ক্লিক করুন!"
-	title.TextColor3 = C.Text
+	setPips(0)
+	setHint(HINT_TEXT, "SubText")
 	placeZone(s)
 end
 
 local function sendOpen(s: Session)
 	s.state = "sending"
-	title.Text = "✨ বক্স খুলছে..."
-	title.TextColor3 = C.Gold
+	setHint("বক্স খুলছে…", "Accent")
 	-- সার্ভার MIN_OPEN_TIME এর আগে বক্স খোলে না, তাই দরকার হলে একটু অপেক্ষা।
 	local pickedAt = pickupTimes[s.boxId] or 0
 	local waitLeft = pickedAt + Config.MIN_OPEN_TIME + 0.15 - os.clock()
@@ -266,9 +287,9 @@ function Minigame._Attempt()
 	end
 	if s.pos >= s.zoneStart - TOLERANCE and s.pos <= s.zoneStart + s.zoneSize + TOLERANCE then
 		s.hits += 1
-		setLocks(s.hits)
-		popLock(s.hits)
-		flashBar(C.Gold)
+		setPips(s.hits)
+		popPip(s.hits)
+		flashTrack("Accent")
 		Sounds.Play("Hit", 1 + 0.2 * (s.hits - 1))
 		if s.hits >= M.HITS_REQUIRED then
 			sendOpen(s)
@@ -278,18 +299,16 @@ function Minigame._Attempt()
 		s.speed = M.NEEDLE_SPEED_START + M.NEEDLE_SPEED_UP * s.hits
 		placeZone(s)
 	else
-		-- MISS: অপেক্ষা, কিন্তু খোলা তালা বন্ধ হবে না।
+		-- MISS: অপেক্ষা, কিন্তু ভরা বিন্দু খালি হবে না।
 		s.state = "stun"
-		flashBar(C.Red)
+		flashTrack("Danger")
 		shake()
 		Sounds.Play("Miss")
-		title.Text = "❌ মিস! একটু অপেক্ষা..."
-		title.TextColor3 = C.Red
+		setHint("মিস! একটু অপেক্ষা…", "Danger")
 		task.delay(M.MISS_STUN, function()
 			if session == s and s.state == "stun" then
 				s.state = "play"
-				title.Text = "🎁 কাঁটা সোনালি জায়গায় এলে ক্লিক করুন!"
-				title.TextColor3 = C.Text
+				setHint(HINT_TEXT, "SubText")
 			end
 		end)
 	end

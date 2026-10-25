@@ -330,9 +330,71 @@ function ToolData.GetSavedTools(userId: number): { string }?
 end
 
 ----------------------------------------------------------------------
--- জেতার ইতিহাস
+-- ইতিহাস (R16): একটা key, ভেতরে UserId অনুযায়ী ভাগ করা, তাই একজনের সব তথ্য এক জায়গায়।
+-- { Version = 2, Users = { ["<UserId>"] = { n = নাম, last = সময়, r = { { t, k, at, by } } } } }
+-- k: "win" (ইভেন্টে জেতা) | "gift" (অ্যাডমিন দিয়েছেন) | "remove" (অ্যাডমিন সরিয়েছেন)
 ----------------------------------------------------------------------
-function ToolData.AppendHistory(userId: number, playerName: string, toolName: string)
+export type HistoryKind = "win" | "gift" | "remove"
+
+local HISTORY_VERSION = 2
+
+-- পুরনো লাইন-লাইন ফরম্যাট ({ {u, n, t, at}, ... }) থাকলে নতুন ফরম্যাটে নিয়ে নেয়, কিছু হারায় না।
+local function normalizeHistory(old: any): { Version: number, Users: { [string]: any } }
+	if type(old) == "table" and old.Version == HISTORY_VERSION and type(old.Users) == "table" then
+		return old
+	end
+	local users: { [string]: any } = {}
+	if type(old) == "table" then
+		for _, entry in ipairs(old) do
+			if type(entry) == "table" and type(entry.u) == "number" then
+				local key = tostring(entry.u)
+				local user = users[key] or { n = entry.n, last = 0, r = {} }
+				users[key] = user
+				table.insert(user.r, { t = entry.t, k = "win", at = entry.at })
+				user.last = math.max(user.last, tonumber(entry.at) or 0)
+				user.n = entry.n or user.n
+			end
+		end
+	end
+	return { Version = HISTORY_VERSION, Users = users }
+end
+
+local function addHistoryRecord(old: any, userId: number, playerName: string?, toolName: string, kind: HistoryKind, by: string?): any
+	local data = normalizeHistory(old)
+	local key = tostring(userId)
+	local now = os.time()
+	local user = data.Users[key] or { n = playerName, last = now, r = {} }
+	data.Users[key] = user
+	user.n = playerName or user.n
+	user.last = now
+	table.insert(user.r, { t = toolName, k = kind, at = now, by = by })
+	while #user.r > Config.HISTORY_MAX_RECORDS_PER_USER do
+		table.remove(user.r, 1)
+	end
+
+	-- সীমার বেশি প্লেয়ার হলে যার শেষ রেকর্ড সবচেয়ে পুরনো সে বাদ।
+	local count = 0
+	for _ in data.Users do
+		count += 1
+	end
+	while count > Config.HISTORY_MAX_USERS do
+		local oldestKey, oldestTime = nil, math.huge
+		for userKey, info in data.Users do
+			local last = tonumber(info.last) or 0
+			if last < oldestTime then
+				oldestKey, oldestTime = userKey, last
+			end
+		end
+		if not oldestKey then
+			break
+		end
+		data.Users[oldestKey] = nil
+		count -= 1
+	end
+	return data
+end
+
+function ToolData.AppendHistory(userId: number, playerName: string?, toolName: string, kind: HistoryKind, by: string?)
 	if dataStoreDisabled or not historyStore then
 		return
 	end
@@ -340,33 +402,44 @@ function ToolData.AppendHistory(userId: number, playerName: string, toolName: st
 	task.spawn(function()
 		Util.Retry("ইতিহাস সেভ", 3, function()
 			activeStore:UpdateAsync(HISTORY_KEY, function(old)
-				local list = if type(old) == "table" then old else {}
-				table.insert(list, { u = userId, n = playerName, t = toolName, at = os.time() })
-				while #list > Config.HISTORY_MAX_ENTRIES do
-					table.remove(list, 1)
-				end
-				return list
+				return addHistoryRecord(old, userId, playerName, toolName, kind, by)
 			end)
 		end, isFatalStoreError)
 	end)
 end
 
-function ToolData.GetHistory(limit: number): { any }?
+-- সবচেয়ে সাম্প্রতিক limit জন প্লেয়ার। onlyUserId দিলে শুধু সেই প্লেয়ার।
+-- ফেরত: { { u = UserId, n = নাম, last = সময়, r = রেকর্ড (নতুনটা আগে) } }
+function ToolData.GetHistory(limit: number, onlyUserId: number?): { any }?
 	if dataStoreDisabled or not historyStore then
 		return nil
 	end
 	local activeStore = historyStore
-	local ok, list = Util.Retry("ইতিহাস লোড", 3, function()
+	local ok, raw = Util.Retry("ইতিহাস লোড", 3, function()
 		return activeStore:GetAsync(HISTORY_KEY)
 	end, isFatalStoreError)
 	if not ok then
 		return nil
 	end
+	local data = normalizeHistory(raw)
 	local result = {}
-	if type(list) == "table" then
-		for i = #list, math.max(1, #list - limit + 1), -1 do
-			table.insert(result, list[i])
+	for key, info in data.Users do
+		local userId = tonumber(key)
+		if userId and (not onlyUserId or onlyUserId == userId) and type(info) == "table" then
+			local records = {}
+			if type(info.r) == "table" then
+				for i = #info.r, 1, -1 do
+					table.insert(records, info.r[i])
+				end
+			end
+			table.insert(result, { u = userId, n = info.n, last = tonumber(info.last) or 0, r = records })
 		end
+	end
+	table.sort(result, function(a, b)
+		return a.last > b.last
+	end)
+	while #result > limit do
+		table.remove(result)
 	end
 	return result
 end

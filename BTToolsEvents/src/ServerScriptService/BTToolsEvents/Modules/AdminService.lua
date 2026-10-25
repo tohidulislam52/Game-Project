@@ -6,6 +6,7 @@
 	আর ক্লায়েন্টের পাঠানো প্রতিটা মান যাচাই করে। ক্লায়েন্টের কথা বিশ্বাস করা হয় না।
 ]]
 
+local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Shared = ReplicatedStorage:WaitForChild("BTToolsEvents")
@@ -121,6 +122,18 @@ local function readUserAndTool(payload: any, needTool: boolean): (number?, strin
 	return userId, toolName, nil
 end
 
+-- অফলাইন প্লেয়ারের নামও ইতিহাসে রাখার জন্য।
+local function lookupName(userId: number): string?
+	local online = Players:GetPlayerByUserId(userId)
+	if online then
+		return online.Name
+	end
+	local ok, name = pcall(function()
+		return Players:GetNameFromUserIdAsync(userId)
+	end)
+	return if ok then name else nil
+end
+
 local function handle(player: Player, action: any, payload: any): Response
 	if not Config.IsAdmin(player) then
 		return fail("অনুমতি নেই, আপনি অ্যাডমিন নন।")
@@ -145,6 +158,7 @@ local function handle(player: Player, action: any, payload: any): Response
 		end
 		local owned = action == "GiveTool"
 		local saved, message = ToolData.AdminSetOwned(userId, toolName, owned)
+		ToolData.AppendHistory(userId, lookupName(userId), toolName, if owned then "gift" else "remove", player.Name)
 		local verb = if owned then "দেওয়া" else "সরানো"
 		return { ok = saved, message = `{toolName} {verb} হয়েছে: {message}` }
 	elseif action == "GetPlayerTools" then
@@ -158,7 +172,14 @@ local function handle(player: Player, action: any, payload: any): Response
 		end
 		return { ok = true, data = tools }
 	elseif action == "GetHistory" then
-		local history = ToolData.GetHistory(30)
+		local onlyUserId: number? = nil
+		if type(payload) == "table" and payload.userId ~= nil then
+			if not Util.IsInteger(payload.userId, 1, 2 ^ 53) then
+				return fail("সঠিক UserId দিন।")
+			end
+			onlyUserId = payload.userId
+		end
+		local history = ToolData.GetHistory(30, onlyUserId)
 		if not history then
 			return fail("ইতিহাস পড়া যায়নি।")
 		end

@@ -1,15 +1,20 @@
 --[[
 	BT Tools Event: AdminPanel (ModuleScript, ক্লায়েন্ট)
 
-	শুধু অ্যাডমিনের স্ক্রিনে বাঁ পাশে একটা 🎁 বাটন দেখায়। চাপলে প্যানেল খোলে, তিনটা ট্যাব:
-	- 🎁 ইভেন্ট: মোট বক্স, সময়, টুল আর কয়টা বক্সে দেবেন, শুরুর নিরাপদ %, ফাঁক → START / STOP
-	- 👤 প্লেয়ার: UserId দিয়ে টুল দেওয়া, সরানো, সেভ করা টুল দেখা (অফলাইন প্লেয়ারও)
-	- 📜 ইতিহাস: শেষ ৩০ জন বিজয়ী
-	এই বাটন লুকানো থাকলেও আসল নিরাপত্তা সার্ভারে, অ্যাডমিন না হলে সার্ভার কিছুই করবে না।
+	- গেম শুরুতে অ্যাডমিন বাটন লুকানো থাকে। চ্যাটে Config.ADMIN_COMMAND (/bttools) লিখলে
+	  বাঁ পাশে 🎁 বাটন আসে, আবার লিখলে চলে যায় (R15)।
+	- প্যানেলে চারটা ট্যাব:
+	  ইভেন্ট   মোট বক্স, সময়, কোন টুল কয়টা বক্সে, শুরুর নিরাপদ %, ফাঁক → START / STOP
+	  প্লেয়ার  UserId দিয়ে টুল দেওয়া, সরানো, সেভ করা টুল দেখা (অফলাইন প্লেয়ারও)
+	  ইতিহাস  প্লেয়ার অনুযায়ী জেতা / গিফট / সরানো, UserId দিয়ে খোঁজা (R16)
+	  থিম     তিনটা থিম নিজের স্ক্রিনে আগে দেখে নেওয়া
+	বাটন লুকানো থাকলেও আসল নিরাপত্তা সার্ভারে। অ্যাডমিন না হলে সার্ভার কিছুই করবে না।
 ]]
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TextChatService = game:GetService("TextChatService")
+local TweenService = game:GetService("TweenService")
 
 local Shared = ReplicatedStorage:WaitForChild("BTToolsEvents")
 local Config = require(Shared:WaitForChild("Config"))
@@ -17,16 +22,30 @@ local AdminRemote = Shared:WaitForChild("Remotes"):WaitForChild("AdminRequest") 
 
 local Modules = script.Parent
 local UI = require(Modules:WaitForChild("UI"))
+local HUD = require(Modules:WaitForChild("HUD"))
 
-local C = UI.Colors
+local R = UI.Role
 local player = Players.LocalPlayer
+
+local THEME_DESCRIPTIONS = {
+	Midnight = "গাঢ় নীল কাচ, সোনালি রং",
+	Frost = "হালকা সাদা কাচ, নীল রং",
+	Ember = "কয়লা-কালো কাচ, কমলা রং",
+}
+
+local KIND_INFO = {
+	win = { text = "জিতেছে", role = "Accent" },
+	gift = { text = "গিফট", role = "Info" },
+	remove = { text = "সরানো", role = "Danger" },
+}
 
 local AdminPanel = {}
 
-local panel: Frame
+local panel: Frame? = nil
 local pages: { [string]: ScrollingFrame } = {}
 local tabButtons: { [string]: TextButton } = {}
 local info: any = nil
+local refreshEventStatus: (() -> ())? = nil
 
 local function call(action: string, payload: any?): { ok: boolean, message: string?, data: any? }
 	local ok, result = pcall(function()
@@ -41,92 +60,103 @@ end
 ----------------------------------------------------------------------
 -- ছোট UI অংশ
 ----------------------------------------------------------------------
-local function page(name: string): ScrollingFrame
-	local scroll = UI.New("ScrollingFrame", {
-		Name = name,
-		Position = UDim2.new(0, 0, 0, 92),
-		Size = UDim2.new(1, 0, 1, -92),
-		BackgroundTransparency = 1,
-		BorderSizePixel = 0,
-		ScrollBarThickness = 5,
-		ScrollBarImageColor3 = C.Gold,
-		CanvasSize = UDim2.new(),
-		AutomaticCanvasSize = Enum.AutomaticSize.Y,
-		Visible = false,
-		Parent = panel,
-	}, {
-		UI.New("UIListLayout", { Padding = UDim.new(0, 8), SortOrder = Enum.SortOrder.LayoutOrder }),
-		UI.New("UIPadding", {
-			PaddingLeft = UDim.new(0, 14),
-			PaddingRight = UDim.new(0, 14),
-			PaddingTop = UDim.new(0, 6),
-			PaddingBottom = UDim.new(0, 14),
-		}),
-	})
-	pages[name] = scroll
-	return scroll
-end
-
 local order = 0
 local function nextOrder(): number
 	order += 1
 	return order
 end
 
-local function section(parent: Instance, text: string): TextLabel
-	return UI.Label({
+local function page(parent: Frame, name: string): ScrollingFrame
+	local scroll = UI.New("ScrollingFrame", {
+		Name = name,
+		Position = UDim2.new(0, 0, 0, 104),
+		Size = UDim2.new(1, 0, 1, -104),
+		BackgroundTransparency = 1,
+		BorderSizePixel = 0,
+		ScrollBarThickness = 3,
+		ScrollBarImageColor3 = R("SubText"),
+		CanvasSize = UDim2.new(),
+		AutomaticCanvasSize = Enum.AutomaticSize.Y,
+		Visible = false,
+		Parent = parent,
+	}, {
+		UI.List(Enum.FillDirection.Vertical, 8),
+		UI.New("UIPadding", {
+			PaddingLeft = UDim.new(0, 18),
+			PaddingRight = UDim.new(0, 18),
+			PaddingTop = UDim.new(0, 4),
+			PaddingBottom = UDim.new(0, 18),
+		}),
+	})
+	pages[name] = scroll
+	return scroll
+end
+
+local function caption(parent: Instance, text: string)
+	UI.Caption({
 		LayoutOrder = nextOrder(),
-		Size = UDim2.new(1, 0, 0, 22),
-		Font = UI.Fonts.Bold,
-		TextSize = 15,
-		TextColor3 = C.Gold,
-		TextXAlignment = Enum.TextXAlignment.Left,
+		Size = UDim2.new(1, 0, 0, 26),
+		TextYAlignment = Enum.TextYAlignment.Bottom,
 		Text = text,
 		Parent = parent,
 	})
 end
 
-local function note(parent: Instance, text: string): TextLabel
+local function note(parent: Instance, text: string, role: string?): TextLabel
 	return UI.Label({
 		LayoutOrder = nextOrder(),
 		Size = UDim2.new(1, 0, 0, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
-		TextSize = 14,
-		TextColor3 = C.SubText,
-		TextXAlignment = Enum.TextXAlignment.Left,
+		TextSize = 13,
+		TextColor3 = R(role or "SubText"),
 		Text = text,
 		Parent = parent,
 	})
 end
 
-local function input(parent: Instance, labelText: string, default: string): TextBox
-	local row = UI.New("Frame", {
+local function row(parent: Instance, height: number?): Frame
+	return UI.New("Frame", {
 		LayoutOrder = nextOrder(),
-		Size = UDim2.new(1, 0, 0, 38),
-		BackgroundColor3 = C.Row,
+		Size = UDim2.new(1, 0, 0, height or 42),
+		BackgroundColor3 = R("Surface"),
+		BorderSizePixel = 0,
 		Parent = parent,
-	}, { UI.Corner(8) })
-	UI.Label({
-		Position = UDim2.new(0, 12, 0, 0),
-		Size = UDim2.new(0.62, -12, 1, 0),
-		TextXAlignment = Enum.TextXAlignment.Left,
-		Text = labelText,
-		Parent = row,
-	})
-	local box = UI.New("TextBox", {
-		AnchorPoint = Vector2.new(1, 0.5),
-		Position = UDim2.new(1, -8, 0.5, 0),
-		Size = UDim2.new(0.38, -8, 0, 28),
-		BackgroundColor3 = C.Panel,
+	}, { UI.Corner(10) })
+end
+
+local function textBox(props: { [string]: any }): TextBox
+	local defaults: { [string]: any } = {
+		BackgroundColor3 = R("Background"),
+		BorderSizePixel = 0,
 		ClearTextOnFocus = false,
 		Font = UI.Fonts.Bold,
-		TextSize = 16,
-		TextColor3 = C.Text,
-		PlaceholderColor3 = C.SubText,
+		TextSize = 15,
+		TextColor3 = R("Text"),
+		PlaceholderColor3 = R("SubText"),
+	}
+	for key, value in props do
+		defaults[key] = value
+	end
+	return UI.New("TextBox", defaults, { UI.Corner(8), UI.Stroke() })
+end
+
+local function input(parent: Instance, labelText: string, default: string, placeholder: string?): TextBox
+	local r = row(parent)
+	UI.Label({
+		Position = UDim2.new(0, 14, 0, 0),
+		Size = UDim2.new(0.62, -14, 1, 0),
+		TextSize = 14,
+		Text = labelText,
+		Parent = r,
+	})
+	return textBox({
+		AnchorPoint = Vector2.new(1, 0.5),
+		Position = UDim2.new(1, -7, 0.5, 0),
+		Size = UDim2.new(0.38, -7, 0, 30),
 		Text = default,
-		Parent = row,
-	}, { UI.Corner(6), UI.Stroke(C.Stroke, 1) })
-	return box
+		PlaceholderText = placeholder or "",
+		Parent = r,
+	})
 end
 
 local function readInt(box: TextBox): number?
@@ -137,86 +167,125 @@ local function readInt(box: TextBox): number?
 	return nil
 end
 
-local function setStatus(label: TextLabel, text: string, ok: boolean?)
-	label.Text = text
-	label.TextColor3 = if ok == nil then C.SubText elseif ok then C.Green else C.Red
+-- রঙিন বিন্দুসহ অবস্থা-লাইন।
+local function statusLine(parent: Instance): (string, string?) -> ()
+	local holder = UI.New("Frame", {
+		LayoutOrder = nextOrder(),
+		Size = UDim2.new(1, 0, 0, 0),
+		AutomaticSize = Enum.AutomaticSize.Y,
+		BackgroundTransparency = 1,
+		Parent = parent,
+	})
+	local dot = UI.New("Frame", {
+		Position = UDim2.new(0, 2, 0, 5),
+		Size = UDim2.fromOffset(8, 8),
+		BackgroundColor3 = R("SubText"),
+		BorderSizePixel = 0,
+		Parent = holder,
+	}, { UI.New("UICorner", { CornerRadius = UDim.new(1, 0) }) })
+	local label = UI.Label({
+		Position = UDim2.new(0, 18, 0, 0),
+		Size = UDim2.new(1, -18, 0, 0),
+		AutomaticSize = Enum.AutomaticSize.Y,
+		TextSize = 14,
+		Parent = holder,
+	})
+	return function(text: string, role: string?)
+		label.Text = text
+		UI.Apply(dot, { BackgroundColor3 = R(role or "SubText") })
+		UI.Apply(label, { TextColor3 = R(if role then role else "SubText") })
+	end
+end
+
+local function buttonRow(parent: Instance, height: number): Frame
+	return UI.New("Frame", {
+		LayoutOrder = nextOrder(),
+		Size = UDim2.new(1, 0, 0, height),
+		BackgroundTransparency = 1,
+		Parent = parent,
+	}, { UI.List(Enum.FillDirection.Horizontal, 8) })
 end
 
 ----------------------------------------------------------------------
--- 🎁 ইভেন্ট ট্যাব
+-- ইভেন্ট ট্যাব
 ----------------------------------------------------------------------
 local toolCounts: { [string]: number } = {}
 
-local function buildEventPage()
-	local p = page("Event")
+local function buildEventPage(root: Frame)
+	local p = page(root, "Event")
 	local defaults = info.defaults
-	local infoLabel = note(p, "")
-	local zoneText = if info.zoneCount > 0
-		then `📍 স্পন জোন: {info.zoneCount} টা পার্ট পাওয়া গেছে।`
-		else "📍 কোনো স্পন জোন নেই, আপনার চারপাশে radius এর মধ্যে বক্স পড়বে।"
-	local showcaseText = if info.hasShowcase then "🏆 শোকেস পার্ট পাওয়া গেছে।" else "⚠️ WinnerShowcase পার্ট নেই, শোকেস দেখাবে না।"
-	infoLabel.Text = zoneText .. "\n" .. showcaseText
 
-	section(p, "⚙️ ইভেন্টের সেটিং")
+	local infoRow = row(p, 0)
+	infoRow.AutomaticSize = Enum.AutomaticSize.Y
+	UI.Padding(14, 10).Parent = infoRow
+	UI.List(Enum.FillDirection.Vertical, 4).Parent = infoRow
+	local setZone = statusLine(infoRow)
+	local setShowcase = statusLine(infoRow)
+	if info.zoneCount > 0 then
+		setZone(`স্পন জোন: {info.zoneCount} টা পার্ট পাওয়া গেছে`, "Success")
+	else
+		setZone("কোনো স্পন জোন নেই, আপনার চারপাশে radius এর মধ্যে বক্স পড়বে", "Accent")
+	end
+	if info.hasShowcase then
+		setShowcase("শোকেস পার্ট পাওয়া গেছে", "Success")
+	else
+		setShowcase("WinnerShowcase পার্ট নেই, শোকেস দেখাবে না", "Danger")
+	end
+
+	caption(p, "ইভেন্টের সেটিং")
 	local totalBox = input(p, "মোট বক্স", tostring(defaults.totalBoxes))
 	local minutesBox = input(p, "সময় (মিনিট)", tostring(defaults.minutes))
 	local safeBox = input(p, "শুরুতে টুল নেই (%)", tostring(defaults.safePercent))
-	local gapBox = input(p, "দুই টুলের মাঝে ফাঁক (বক্স)", tostring(defaults.gap))
+	local gapBox = input(p, "দুই টুলের মাঝে ফাঁক", tostring(defaults.gap))
 	local radiusBox = input(p, "Radius (জোন না থাকলে)", tostring(defaults.radius))
 
-	section(p, "🧰 কোন টুল কয়টা বক্সে দেবেন")
+	caption(p, "কোন টুল কয়টা বক্সে")
 	if #info.tools == 0 then
-		note(p, "ServerStorage > Tools ফোল্ডারে কোনো টুল নেই।")
+		note(p, "ServerStorage > Tools ফোল্ডারে কোনো টুল নেই।", "Danger")
 	end
 	for _, toolName in info.tools do
 		toolCounts[toolName] = toolCounts[toolName] or 0
-		local row = UI.New("Frame", {
-			LayoutOrder = nextOrder(),
-			Size = UDim2.new(1, 0, 0, 38),
-			BackgroundColor3 = C.Row,
-			Parent = p,
-		}, { UI.Corner(8) })
+		local r = row(p)
 		UI.Label({
-			Position = UDim2.new(0, 12, 0, 0),
+			Position = UDim2.new(0, 14, 0, 0),
 			Size = UDim2.new(1, -140, 1, 0),
-			TextXAlignment = Enum.TextXAlignment.Left,
+			TextSize = 14,
 			TextTruncate = Enum.TextTruncate.AtEnd,
 			TextWrapped = false,
 			Text = toolName,
-			Parent = row,
+			Parent = r,
 		})
 		local countLabel = UI.Label({
 			AnchorPoint = Vector2.new(1, 0.5),
 			Position = UDim2.new(1, -44, 0.5, 0),
-			Size = UDim2.fromOffset(44, 28),
-			Font = UI.Fonts.Bold,
-			TextSize = 18,
-			Text = tostring(toolCounts[toolName]),
-			Parent = row,
+			Size = UDim2.fromOffset(40, 28),
+			Font = UI.Fonts.Display,
+			TextSize = 17,
+			TextXAlignment = Enum.TextXAlignment.Center,
+			Parent = r,
 		})
 		local function refresh()
 			local count = toolCounts[toolName]
 			countLabel.Text = tostring(count)
-			countLabel.TextColor3 = if count > 0 then C.Gold else C.SubText
-			row.BackgroundColor3 = if count > 0 then C.Row:Lerp(C.Gold, 0.15) else C.Row
+			UI.Apply(countLabel, { TextColor3 = R(if count > 0 then "Accent" else "SubText") })
 		end
 		local minus = UI.Button({
 			AnchorPoint = Vector2.new(1, 0.5),
-			Position = UDim2.new(1, -92, 0.5, 0),
-			Size = UDim2.fromOffset(32, 28),
-			BackgroundColor3 = C.Panel,
+			Position = UDim2.new(1, -86, 0.5, 0),
+			Size = UDim2.fromOffset(30, 28),
+			BackgroundColor3 = R("Background"),
 			Text = "−",
-			TextSize = 20,
-			Parent = row,
+			TextSize = 18,
+			Parent = r,
 		})
 		local plus = UI.Button({
 			AnchorPoint = Vector2.new(1, 0.5),
 			Position = UDim2.new(1, -8, 0.5, 0),
-			Size = UDim2.fromOffset(32, 28),
-			BackgroundColor3 = C.Panel,
+			Size = UDim2.fromOffset(30, 28),
+			BackgroundColor3 = R("Background"),
 			Text = "+",
-			TextSize = 20,
-			Parent = row,
+			TextSize = 18,
+			Parent = r,
 		})
 		minus.Activated:Connect(function()
 			toolCounts[toolName] = math.max(0, toolCounts[toolName] - 1)
@@ -229,33 +298,37 @@ local function buildEventPage()
 		refresh()
 	end
 
-	local status = note(p, "")
-	setStatus(status, if info.active then "🟢 এখন একটা ইভেন্ট চলছে।" else "টুল বেছে নিয়ে START চাপুন।", nil)
+	caption(p, "")
+	local setStatus = statusLine(p)
+	refreshEventStatus = function()
+		task.spawn(function()
+			local response = call("GetInfo")
+			if response.ok and type(response.data) == "table" then
+				if response.data.active then
+					setStatus("এখন একটা ইভেন্ট চলছে", "Success")
+				else
+					setStatus("টুল বেছে নিয়ে START চাপুন", nil)
+				end
+			end
+		end)
+	end
+	setStatus(if info.active then "এখন একটা ইভেন্ট চলছে" else "টুল বেছে নিয়ে START চাপুন", if info.active then "Success" else nil)
 
-	local buttons = UI.New("Frame", {
-		LayoutOrder = nextOrder(),
-		Size = UDim2.new(1, 0, 0, 44),
-		BackgroundTransparency = 1,
-		Parent = p,
-	})
+	local buttons = buttonRow(p, 44)
 	local startButton = UI.Button({
-		Size = UDim2.new(0.62, -4, 1, 0),
-		BackgroundColor3 = C.Green,
-		TextColor3 = Color3.new(1, 1, 1),
-		TextSize = 18,
-		Text = "▶ START EVENT",
+		LayoutOrder = 1,
+		Size = UDim2.new(0.65, -4, 1, 0),
+		TextSize = 16,
+		Text = "START EVENT",
 		Parent = buttons,
-	})
+	}, "primary")
 	local stopButton = UI.Button({
-		AnchorPoint = Vector2.new(1, 0),
-		Position = UDim2.fromScale(1, 0),
-		Size = UDim2.new(0.38, -4, 1, 0),
-		BackgroundColor3 = C.Red,
-		TextColor3 = Color3.new(1, 1, 1),
-		TextSize = 18,
-		Text = "⏹ STOP",
+		LayoutOrder = 2,
+		Size = UDim2.new(0.35, -4, 1, 0),
+		TextSize = 16,
+		Text = "STOP",
 		Parent = buttons,
-	})
+	}, "danger")
 
 	local busy = false
 	startButton.Activated:Connect(function()
@@ -271,14 +344,14 @@ local function buildEventPage()
 			tools = toolCounts,
 		}
 		if not (payload.totalBoxes and payload.minutes and payload.radius and payload.safePercent and payload.gap) then
-			setStatus(status, "সব ঘরে পূর্ণ সংখ্যা লিখুন।", false)
+			setStatus("সব ঘরে পূর্ণ সংখ্যা লিখুন", "Danger")
 			return
 		end
 		busy = true
-		startButton.Text = "⏳ বক্স স্পন হচ্ছে..."
+		startButton.Text = "বক্স স্পন হচ্ছে…"
 		local response = call("Start", payload)
-		setStatus(status, response.message or (if response.ok then "শুরু হয়েছে।" else "ব্যর্থ।"), response.ok)
-		startButton.Text = "▶ START EVENT"
+		setStatus(response.message or (if response.ok then "শুরু হয়েছে" else "ব্যর্থ"), if response.ok then "Success" else "Danger")
+		startButton.Text = "START EVENT"
 		busy = false
 	end)
 	stopButton.Activated:Connect(function()
@@ -287,18 +360,18 @@ local function buildEventPage()
 		end
 		busy = true
 		local response = call("Stop")
-		setStatus(status, response.message or "", response.ok)
+		setStatus(response.message or "", if response.ok then "Success" else "Danger")
 		busy = false
 	end)
 end
 
 ----------------------------------------------------------------------
--- 👤 প্লেয়ার ট্যাব
+-- প্লেয়ার ট্যাব
 ----------------------------------------------------------------------
-local function buildPlayersPage()
-	local p = page("Players")
+local function buildPlayersPage(root: Frame)
+	local p = page(root, "Players")
 
-	section(p, "👥 অনলাইন প্লেয়ার (চাপলে UserId বসবে)")
+	caption(p, "অনলাইন প্লেয়ার · চাপলে UserId বসবে")
 	local onlineList = UI.New("Frame", {
 		LayoutOrder = nextOrder(),
 		Size = UDim2.new(1, 0, 0, 0),
@@ -307,15 +380,14 @@ local function buildPlayersPage()
 		Parent = p,
 	}, {
 		UI.New("UIGridLayout", {
-			CellSize = UDim2.new(0.5, -4, 0, 32),
-			CellPadding = UDim2.fromOffset(8, 6),
+			CellSize = UDim2.new(0.5, -4, 0, 34),
+			CellPadding = UDim2.fromOffset(8, 8),
 			SortOrder = Enum.SortOrder.Name,
 		}),
 	})
 
-	section(p, "🔢 UserId")
-	local userIdBox = input(p, "UserId", "")
-	userIdBox.PlaceholderText = "যেমন 7864126209"
+	caption(p, "প্লেয়ার")
+	local userIdBox = input(p, "UserId", "", "যেমন 7864126209")
 
 	local function refreshOnline()
 		for _, child in onlineList:GetChildren() do
@@ -326,6 +398,7 @@ local function buildPlayersPage()
 		for _, other in Players:GetPlayers() do
 			local button = UI.Button({
 				Name = other.Name,
+				Font = UI.Fonts.Medium,
 				TextSize = 13,
 				TextTruncate = Enum.TextTruncate.AtEnd,
 				Text = other.DisplayName,
@@ -342,13 +415,14 @@ local function buildPlayersPage()
 		task.defer(refreshOnline)
 	end)
 
-	section(p, "🧰 টুল")
+	caption(p, "টুল")
 	local selectedTool: string? = nil
 	local toolButtons: { TextButton } = {}
 	for _, toolName in info.tools do
 		local button = UI.Button({
 			LayoutOrder = nextOrder(),
-			Size = UDim2.new(1, 0, 0, 32),
+			Size = UDim2.new(1, 0, 0, 36),
+			Font = UI.Fonts.Medium,
 			TextSize = 14,
 			Text = toolName,
 			Parent = p,
@@ -356,45 +430,34 @@ local function buildPlayersPage()
 		button.Activated:Connect(function()
 			selectedTool = toolName
 			for _, other in toolButtons do
-				other.BackgroundColor3 = C.Row
-				other.TextColor3 = C.Text
+				UI.SetButtonStyle(other, "ghost")
 			end
-			button.BackgroundColor3 = C.Gold
-			button.TextColor3 = Color3.fromRGB(30, 22, 5)
+			UI.SetButtonStyle(button, "primary")
 		end)
 		table.insert(toolButtons, button)
 	end
 
-	local status = note(p, "")
-	local actions = UI.New("Frame", {
-		LayoutOrder = nextOrder(),
-		Size = UDim2.new(1, 0, 0, 40),
-		BackgroundTransparency = 1,
-		Parent = p,
-	}, {
-		UI.New("UIListLayout", {
-			FillDirection = Enum.FillDirection.Horizontal,
-			Padding = UDim.new(0, 6),
-		}),
-	})
-	local function actionButton(text: string, color: Color3): TextButton
+	caption(p, "")
+	local setStatus = statusLine(p)
+	setStatus("UserId আর টুল বেছে নিন", nil)
+	local actions = buttonRow(p, 42)
+	local function actionButton(order: number, text: string, style: string): TextButton
 		return UI.Button({
-			Size = UDim2.new(1 / 3, -4, 1, 0),
-			BackgroundColor3 = color,
-			TextColor3 = Color3.new(1, 1, 1),
+			LayoutOrder = order,
+			Size = UDim2.new(1 / 3, -6, 1, 0),
 			TextSize = 14,
 			Text = text,
 			Parent = actions,
-		})
+		}, style)
 	end
-	local giveButton = actionButton("✅ টুল দিন", C.Green)
-	local removeButton = actionButton("🗑 সরান", C.Red)
-	local viewButton = actionButton("📋 দেখুন", C.Blue)
+	local giveButton = actionButton(1, "টুল দিন", "success")
+	local removeButton = actionButton(2, "সরান", "danger")
+	local viewButton = actionButton(3, "দেখুন", "info")
 
 	local function readUserId(): number?
 		local userId = readInt(userIdBox)
 		if not userId or userId < 1 then
-			setStatus(status, "সঠিক UserId লিখুন।", false)
+			setStatus("সঠিক UserId লিখুন", "Danger")
 			return nil
 		end
 		return userId
@@ -410,33 +473,25 @@ local function buildPlayersPage()
 		busy = false
 	end
 
-	giveButton.Activated:Connect(function()
+	local function changeTool(action: string)
 		run(function()
 			local userId = readUserId()
 			if not userId then
 				return
 			end
 			if not selectedTool then
-				setStatus(status, "একটা টুল বেছে নিন।", false)
+				setStatus("একটা টুল বেছে নিন", "Danger")
 				return
 			end
-			local response = call("GiveTool", { userId = userId, tool = selectedTool })
-			setStatus(status, response.message or "", response.ok)
+			local response = call(action, { userId = userId, tool = selectedTool })
+			setStatus(response.message or "", if response.ok then "Success" else "Danger")
 		end)
+	end
+	giveButton.Activated:Connect(function()
+		changeTool("GiveTool")
 	end)
 	removeButton.Activated:Connect(function()
-		run(function()
-			local userId = readUserId()
-			if not userId then
-				return
-			end
-			if not selectedTool then
-				setStatus(status, "একটা টুল বেছে নিন।", false)
-				return
-			end
-			local response = call("RemoveTool", { userId = userId, tool = selectedTool })
-			setStatus(status, response.message or "", response.ok)
-		end)
+		changeTool("RemoveTool")
 	end)
 	viewButton.Activated:Connect(function()
 		run(function()
@@ -447,86 +502,243 @@ local function buildPlayersPage()
 			local response = call("GetPlayerTools", { userId = userId })
 			if response.ok and type(response.data) == "table" then
 				local list = if #response.data > 0 then table.concat(response.data, ", ") else "কোনো টুল নেই"
-				setStatus(status, `{userId} এর সেভ করা টুল: {list}`, true)
+				setStatus(`{userId} এর সেভ করা টুল: {list}`, "Info")
 			else
-				setStatus(status, response.message or "পড়া যায়নি।", false)
+				setStatus(response.message or "পড়া যায়নি", "Danger")
 			end
 		end)
 	end)
 end
 
 ----------------------------------------------------------------------
--- 📜 ইতিহাস ট্যাব
+-- ইতিহাস ট্যাব
 ----------------------------------------------------------------------
-local function buildHistoryPage()
-	local p = page("History")
-	local refreshButton = UI.Button({
-		LayoutOrder = nextOrder(),
-		Size = UDim2.new(1, 0, 0, 36),
-		BackgroundColor3 = C.Blue,
-		TextColor3 = Color3.new(1, 1, 1),
-		Text = "🔄 ইতিহাস লোড করুন",
-		Parent = p,
+local function historyCard(parent: Instance, index: number, entry: any)
+	local card = UI.New("Frame", {
+		LayoutOrder = index,
+		Size = UDim2.new(1, 0, 0, 0),
+		AutomaticSize = Enum.AutomaticSize.Y,
+		BackgroundColor3 = R("Surface"),
+		BorderSizePixel = 0,
+		Parent = parent,
+	}, {
+		UI.Corner(12),
+		UI.Padding(14, 12),
+		UI.List(Enum.FillDirection.Vertical, 6),
 	})
+	local header = UI.New("Frame", {
+		LayoutOrder = 0,
+		Size = UDim2.new(1, 0, 0, 20),
+		BackgroundTransparency = 1,
+		Parent = card,
+	})
+	UI.Label({
+		Size = UDim2.new(0.6, 0, 1, 0),
+		Font = UI.Fonts.Bold,
+		TextSize = 15,
+		TextTruncate = Enum.TextTruncate.AtEnd,
+		TextWrapped = false,
+		Text = tostring(entry.n or "?"),
+		Parent = header,
+	})
+	UI.Label({
+		AnchorPoint = Vector2.new(1, 0),
+		Position = UDim2.fromScale(1, 0),
+		Size = UDim2.new(0.4, 0, 1, 0),
+		TextSize = 12,
+		TextColor3 = R("SubText"),
+		TextXAlignment = Enum.TextXAlignment.Right,
+		TextWrapped = false,
+		Text = `UserId {entry.u}`,
+		Parent = header,
+	})
+	for i, record in entry.r or {} do
+		local kind = KIND_INFO[record.k] or KIND_INFO.win
+		local line = UI.New("Frame", {
+			LayoutOrder = i,
+			Size = UDim2.new(1, 0, 0, 22),
+			BackgroundTransparency = 1,
+			Parent = card,
+		})
+		local badge = UI.Label({
+			Size = UDim2.fromOffset(62, 20),
+			BackgroundColor3 = R(kind.role),
+			BackgroundTransparency = 0.82,
+			Font = UI.Fonts.Bold,
+			TextSize = 12,
+			TextColor3 = R(kind.role),
+			TextXAlignment = Enum.TextXAlignment.Center,
+			Text = kind.text,
+			Parent = line,
+		})
+		UI.Corner(6).Parent = badge
+		local when = if type(record.at) == "number" then os.date("%d/%m %H:%M", record.at) else "?"
+		local by = if type(record.by) == "string" then ` · {record.by}` else ""
+		UI.Label({
+			Position = UDim2.new(0, 72, 0, 0),
+			Size = UDim2.new(1, -72, 1, 0),
+			TextSize = 14,
+			TextTruncate = Enum.TextTruncate.AtEnd,
+			TextWrapped = false,
+			RichText = true,
+			Text = `{record.t}  <font transparency="0.45">{when}{by}</font>`,
+			Parent = line,
+		})
+	end
+end
+
+local function buildHistoryPage(root: Frame)
+	local p = page(root, "History")
+
+	caption(p, "খুঁজুন")
+	local search = row(p, 44)
+	local searchBox = textBox({
+		Position = UDim2.new(0, 6, 0.5, 0),
+		AnchorPoint = Vector2.new(0, 0.5),
+		Size = UDim2.new(1, -150, 0, 32),
+		PlaceholderText = "UserId (খালি = সবাই)",
+		Text = "",
+		Parent = search,
+	})
+	local findButton = UI.Button({
+		AnchorPoint = Vector2.new(1, 0.5),
+		Position = UDim2.new(1, -6, 0.5, 0),
+		Size = UDim2.fromOffset(132, 32),
+		TextSize = 14,
+		Text = "লোড করুন",
+		Parent = search,
+	}, "primary")
+
+	local setStatus = statusLine(p)
+	setStatus("সবচেয়ে সাম্প্রতিক প্লেয়ার আগে দেখাবে", nil)
+
 	local list = UI.New("Frame", {
 		LayoutOrder = nextOrder(),
 		Size = UDim2.new(1, 0, 0, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
 		BackgroundTransparency = 1,
 		Parent = p,
-	}, {
-		UI.New("UIListLayout", { Padding = UDim.new(0, 6), SortOrder = Enum.SortOrder.LayoutOrder }),
-	})
+	}, { UI.List(Enum.FillDirection.Vertical, 8) })
 
 	local busy = false
-	refreshButton.Activated:Connect(function()
+	findButton.Activated:Connect(function()
 		if busy then
 			return
 		end
+		local payload = nil
+		if searchBox.Text ~= "" then
+			local userId = readInt(searchBox)
+			if not userId or userId < 1 then
+				setStatus("সঠিক UserId লিখুন", "Danger")
+				return
+			end
+			payload = { userId = userId }
+		end
 		busy = true
-		refreshButton.Text = "⏳ লোড হচ্ছে..."
+		findButton.Text = "লোড হচ্ছে…"
 		for _, child in list:GetChildren() do
 			if child:IsA("GuiObject") then
 				child:Destroy()
 			end
 		end
-		local response = call("GetHistory")
+		local response = call("GetHistory", payload)
 		if response.ok and type(response.data) == "table" then
 			if #response.data == 0 then
-				note(list, "এখনো কেউ জেতেনি।")
+				setStatus(if payload then "এই UserId এর কোনো ইতিহাস নেই" else "এখনো কোনো ইতিহাস নেই", nil)
+			else
+				setStatus(`{#response.data} জন প্লেয়ার`, "Info")
 			end
 			for i, entry in response.data do
-				local when = if type(entry.at) == "number" then os.date("%d/%m/%Y %H:%M", entry.at) else "?"
-				local row = UI.New("Frame", {
-					LayoutOrder = i,
-					Size = UDim2.new(1, 0, 0, 46),
-					BackgroundColor3 = C.Row,
-					Parent = list,
-				}, { UI.Corner(8) })
-				UI.Label({
-					Position = UDim2.new(0, 10, 0, 4),
-					Size = UDim2.new(1, -20, 0, 20),
-					Font = UI.Fonts.Bold,
-					TextXAlignment = Enum.TextXAlignment.Left,
-					Text = `🏆 {entry.n} → {entry.t}`,
-					Parent = row,
-				})
-				UI.Label({
-					Position = UDim2.new(0, 10, 0, 24),
-					Size = UDim2.new(1, -20, 0, 18),
-					TextSize = 13,
-					TextColor3 = C.SubText,
-					TextXAlignment = Enum.TextXAlignment.Left,
-					Text = `UserId {entry.u} · {when}`,
-					Parent = row,
-				})
+				historyCard(list, i, entry)
 			end
 		else
-			note(list, response.message or "ইতিহাস পড়া যায়নি।")
+			setStatus(response.message or "ইতিহাস পড়া যায়নি", "Danger")
 		end
-		refreshButton.Text = "🔄 ইতিহাস লোড করুন"
+		findButton.Text = "লোড করুন"
 		busy = false
 	end)
+end
+
+----------------------------------------------------------------------
+-- থিম ট্যাব
+----------------------------------------------------------------------
+local function buildThemePage(root: Frame)
+	local p = page(root, "Theme")
+	note(
+		p,
+		"এখানে থিম বদলালে শুধু আপনার স্ক্রিনে দেখাবে। সবার জন্য রাখতে ReplicatedStorage > BTToolsEvents > Config এ THEME = \"নাম\" লিখুন।"
+	)
+	caption(p, "থিম")
+
+	local names = {}
+	for name in Config.THEMES do
+		table.insert(names, name)
+	end
+	table.sort(names)
+
+	local refreshers: { () -> () } = {}
+	for _, name in names do
+		local theme = Config.THEMES[name]
+		local r = row(p, 64)
+		local swatches = UI.New("Frame", {
+			Position = UDim2.new(0, 14, 0.5, 0),
+			AnchorPoint = Vector2.new(0, 0.5),
+			Size = UDim2.fromOffset(70, 26),
+			BackgroundTransparency = 1,
+			Parent = r,
+		}, { UI.List(Enum.FillDirection.Horizontal, -6) })
+		for i, colorKey in { "Background", "Surface", "Accent" } do
+			UI.New("Frame", {
+				LayoutOrder = i,
+				Size = UDim2.fromOffset(26, 26),
+				BackgroundColor3 = theme[colorKey],
+				BorderSizePixel = 0,
+				Parent = swatches,
+			}, {
+				UI.New("UICorner", { CornerRadius = UDim.new(1, 0) }),
+				UI.New("UIStroke", { Color = Color3.new(1, 1, 1), Transparency = 0.7, Thickness = 1.5 }),
+			})
+		end
+		UI.Label({
+			Position = UDim2.new(0, 96, 0, 12),
+			Size = UDim2.new(1, -200, 0, 20),
+			Font = UI.Fonts.Bold,
+			TextSize = 15,
+			TextWrapped = false,
+			Text = name,
+			Parent = r,
+		})
+		local sub = UI.Label({
+			Position = UDim2.new(0, 96, 0, 32),
+			Size = UDim2.new(1, -200, 0, 18),
+			TextSize = 12,
+			TextColor3 = R("SubText"),
+			TextTruncate = Enum.TextTruncate.AtEnd,
+			TextWrapped = false,
+			Parent = r,
+		})
+		local button = UI.Button({
+			AnchorPoint = Vector2.new(1, 0.5),
+			Position = UDim2.new(1, -12, 0.5, 0),
+			Size = UDim2.fromOffset(84, 32),
+			TextSize = 14,
+			Parent = r,
+		})
+		local function refresh()
+			local active = UI.ThemeName() == name
+			sub.Text = (THEME_DESCRIPTIONS[name] or "") .. (if name == Config.THEME then " · সবার জন্য চালু" else "")
+			button.Text = if active then "চলছে" else "দেখুন"
+			UI.SetButtonStyle(button, if active then "primary" else "ghost")
+		end
+		button.Activated:Connect(function()
+			UI.SetTheme(name)
+			for _, fn in refreshers do
+				fn()
+			end
+		end)
+		table.insert(refreshers, refresh)
+		refresh()
+	end
 end
 
 ----------------------------------------------------------------------
@@ -537,67 +749,64 @@ local function showTab(name: string)
 		scroll.Visible = tabName == name
 	end
 	for tabName, button in tabButtons do
-		local active = tabName == name
-		button.BackgroundColor3 = if active then C.Gold else C.Row
-		button.TextColor3 = if active then Color3.fromRGB(30, 22, 5) else C.Text
+		UI.SetButtonStyle(button, if tabName == name then "primary" else "ghost")
 	end
 end
 
 local function buildPanel(gui: ScreenGui): Frame
-	panel = UI.New("Frame", {
+	local root = UI.Card({
 		Name = "AdminPanel",
 		AnchorPoint = Vector2.new(0.5, 0.5),
 		Position = UDim2.fromScale(0.5, 0.5),
-		Size = UDim2.fromScale(0.94, 0.84),
-		BackgroundColor3 = C.Panel,
+		Size = UDim2.fromScale(0.94, 0.86),
 		Visible = false,
 		Parent = gui,
 	}, {
-		UI.Corner(16),
-		UI.Stroke(C.Gold, 2),
-		UI.New("UISizeConstraint", { MaxSize = Vector2.new(440, 580) }),
+		UI.New("UISizeConstraint", { MaxSize = Vector2.new(440, 600) }),
 	})
 
-	local titleLabel = UI.Label({
-		Position = UDim2.new(0, 16, 0, 10),
-		Size = UDim2.new(1, -70, 0, 32),
-		Font = UI.Fonts.Title,
-		TextSize = 24,
-		TextColor3 = Color3.new(1, 1, 1),
-		TextXAlignment = Enum.TextXAlignment.Left,
-		Text = "🎁 BT Tools Event",
-		Parent = panel,
+	UI.Label({
+		Position = UDim2.new(0, 18, 0, 14),
+		Size = UDim2.new(1, -80, 0, 26),
+		Font = UI.Fonts.Display,
+		TextSize = 22,
+		TextWrapped = false,
+		Text = "BT Tools Event",
+		Parent = root,
 	})
-	UI.GoldGradient(90).Parent = titleLabel
+	UI.Label({
+		Position = UDim2.new(0, 18, 0, 40),
+		Size = UDim2.new(1, -80, 0, 16),
+		TextSize = 13,
+		TextColor3 = R("SubText"),
+		TextWrapped = false,
+		Text = "অ্যাডমিন প্যানেল",
+		Parent = root,
+	})
 
 	local close = UI.Button({
 		AnchorPoint = Vector2.new(1, 0),
-		Position = UDim2.new(1, -12, 0, 10),
+		Position = UDim2.new(1, -14, 0, 14),
 		Size = UDim2.fromOffset(32, 32),
-		BackgroundColor3 = C.Row,
+		Font = UI.Fonts.Bold,
+		TextSize = 14,
 		Text = "✕",
-		Parent = panel,
+		Parent = root,
 	})
 	close.Activated:Connect(function()
-		panel.Visible = false
+		root.Visible = false
 	end)
 
 	local tabs = UI.New("Frame", {
-		Position = UDim2.new(0, 14, 0, 50),
-		Size = UDim2.new(1, -28, 0, 34),
+		Position = UDim2.new(0, 18, 0, 64),
+		Size = UDim2.new(1, -36, 0, 32),
 		BackgroundTransparency = 1,
-		Parent = panel,
-	}, {
-		UI.New("UIListLayout", {
-			FillDirection = Enum.FillDirection.Horizontal,
-			Padding = UDim.new(0, 6),
-			SortOrder = Enum.SortOrder.LayoutOrder,
-		}),
-	})
-	for i, tab in { { "Event", "🎁 ইভেন্ট" }, { "Players", "👤 প্লেয়ার" }, { "History", "📜 ইতিহাস" } } do
+		Parent = root,
+	}, { UI.List(Enum.FillDirection.Horizontal, 6) })
+	for i, tab in { { "Event", "ইভেন্ট" }, { "Players", "প্লেয়ার" }, { "History", "ইতিহাস" }, { "Theme", "থিম" } } do
 		local button = UI.Button({
 			LayoutOrder = i,
-			Size = UDim2.new(1 / 3, -4, 1, 0),
+			Size = UDim2.new(0.25, -5, 1, 0),
 			TextSize = 14,
 			Text = tab[2],
 			Parent = tabs,
@@ -608,11 +817,38 @@ local function buildPanel(gui: ScreenGui): Frame
 		tabButtons[tab[1]] = button
 	end
 
-	buildEventPage()
-	buildPlayersPage()
-	buildHistoryPage()
+	buildEventPage(root)
+	buildPlayersPage(root)
+	buildHistoryPage(root)
+	buildThemePage(root)
 	showTab("Event")
-	return panel
+	return root
+end
+
+----------------------------------------------------------------------
+-- চ্যাট কমান্ড
+----------------------------------------------------------------------
+local function listenForCommand(onCommand: () -> ())
+	local command = string.lower(Config.ADMIN_COMMAND)
+	if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+		-- এভাবে বানানো কমান্ড চ্যাটে অন্য কেউ দেখে না।
+		local chatCommand = Instance.new("TextChatCommand")
+		chatCommand.Name = "BTToolsAdminCommand"
+		chatCommand.PrimaryAlias = Config.ADMIN_COMMAND
+		chatCommand.Triggered:Connect(function(source: TextSource)
+			if source.UserId == player.UserId then
+				onCommand()
+			end
+		end)
+		chatCommand.Parent = TextChatService
+	else
+		player.Chatted:Connect(function(message)
+			local trimmed = string.gsub(message, "^%s*(.-)%s*$", "%1")
+			if string.lower(trimmed) == command then
+				onCommand()
+			end
+		end)
+	end
 end
 
 function AdminPanel.Init()
@@ -624,24 +860,26 @@ function AdminPanel.Init()
 	local toggle = UI.Button({
 		Name = "Toggle",
 		AnchorPoint = Vector2.new(0, 0.5),
-		Position = UDim2.new(0, 12, 0.5, 0),
-		Size = UDim2.fromOffset(52, 52),
-		BackgroundColor3 = Color3.new(1, 1, 1),
+		Position = UDim2.new(0, 14, 0.5, 0),
+		Size = UDim2.fromOffset(50, 50),
+		BackgroundColor3 = R("Background"),
+		BackgroundTransparency = UI.GlassTransparency,
 		Text = "🎁",
-		TextSize = 28,
+		TextSize = 24,
+		Visible = false,
 		Parent = gui,
 	})
-	local corner = toggle:FindFirstChildOfClass("UICorner")
-	if corner then
-		corner.CornerRadius = UDim.new(1, 0)
-	end
-	UI.GoldGradient(45).Parent = toggle
-	UI.Stroke(Color3.fromRGB(120, 80, 10), 2).Parent = toggle
+	UI.Round(toggle)
+	UI.Stroke("Accent", 0.2).Parent = toggle
+	local toggleScale = toggle:FindFirstChildOfClass("UIScale")
 
 	local loading = false
 	toggle.Activated:Connect(function()
 		if panel then
 			panel.Visible = not panel.Visible
+			if panel.Visible and refreshEventStatus then
+				refreshEventStatus()
+			end
 			return
 		end
 		if loading then
@@ -651,11 +889,29 @@ function AdminPanel.Init()
 		local response = call("GetInfo")
 		loading = false
 		if not response.ok or type(response.data) ~= "table" then
-			warn("[BTToolsEvents] অ্যাডমিন প্যানেল খোলা যায়নি: " .. tostring(response.message))
+			HUD.Toast(response.message or "অ্যাডমিন প্যানেল খোলা যায়নি", "Danger")
 			return
 		end
 		info = response.data
-		buildPanel(gui).Visible = true
+		local built = buildPanel(gui)
+		panel = built
+		built.Visible = true
+	end)
+
+	listenForCommand(function()
+		toggle.Visible = not toggle.Visible
+		if toggle.Visible then
+			HUD.Toast("অ্যাডমিন বাটন চালু", "Success")
+			if toggleScale then
+				toggleScale.Scale = 0.5
+				TweenService:Create(toggleScale, TweenInfo.new(0.35, Enum.EasingStyle.Back, Enum.EasingDirection.Out), { Scale = 1 }):Play()
+			end
+		else
+			HUD.Toast("অ্যাডমিন বাটন বন্ধ", nil)
+			if panel then
+				panel.Visible = false
+			end
+		end
 	end)
 end
 
