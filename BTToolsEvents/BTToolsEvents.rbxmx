@@ -1,4 +1,4 @@
-<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4"><Meta name="ExplicitAutoJoints">true</Meta><External>null</External><External>nil</External><Item class="Folder" referent="RBXBT21A19A139409497C8E160877374610B8"><Properties><string name="Name">BTToolsEvents</string></Properties><Item class="ModuleScript" referent="RBXBT0FCBA7EA85064BD786451D42E6690794"><Properties><string name="Name">README</string><ProtectedString name="Source">--[[
+<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4"><Meta name="ExplicitAutoJoints">true</Meta><External>null</External><External>nil</External><Item class="Folder" referent="RBXBT14221814AE7D4B1A8B8A0731242388EC"><Properties><string name="Name">BTToolsEvents</string></Properties><Item class="ModuleScript" referent="RBXBTC4337641B9484B7E976E892135FF20E1"><Properties><string name="Name">README</string><ProtectedString name="Source">--[[
 	🎁 BT Tools Event: কোথায় কী রাখবেন
 
 	এই ফোল্ডারের ভেতরের প্রতিটা ফোল্ডারের নাম হল Roblox এর যে সার্ভিসে রাখতে হবে।
@@ -21,7 +21,7 @@
 	না হলে টুল সেভ হবে না।
 ]]
 return nil
-</ProtectedString></Properties></Item><Item class="Folder" referent="RBXBTDEA0AFF038354BB2BD14C9AF8307DA3F"><Properties><string name="Name">ReplicatedStorage</string></Properties><Item class="Folder" referent="RBXBT6D25AAC458E94865B77FCBB1E4C34CFA"><Properties><string name="Name">BTToolsEvents</string></Properties><Item class="ModuleScript" referent="RBXBT8F8E11D92D724CF381E929BFAE08B2FE"><Properties><string name="Name">Config</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="Folder" referent="RBXBT29A798D6F81445D6804A528288899A66"><Properties><string name="Name">ReplicatedStorage</string></Properties><Item class="Folder" referent="RBXBTE31839A5B2E64FB79130BDEC811F0D12"><Properties><string name="Name">BTToolsEvents</string></Properties><Item class="ModuleScript" referent="RBXBTF37C1DFA862D48DDA06E294CE3DD4103"><Properties><string name="Name">Config</string><ProtectedString name="Source">--[[
 	BT Tools Event: Config (ModuleScript)
 	জায়গা: ReplicatedStorage &gt; BTToolsEvents &gt; Config
 
@@ -242,7 +242,7 @@ function Config.IsSoundSet(id: string?): boolean
 end
 
 return Config
-</ProtectedString></Properties></Item><Item class="Folder" referent="RBXBT9A52FE799BDE4B52A6FDDD156DBDB724"><Properties><string name="Name">Remotes</string></Properties><Item class="RemoteFunction" referent="RBXBT2FA54A96DCE449ADB7FA6F8BF5CBBBA4"><Properties><string name="Name">AdminRequest</string></Properties></Item><Item class="RemoteEvent" referent="RBXBTFD8EB8C9775B44BAAFEA05045FBC265D"><Properties><string name="Name">OpenBox</string></Properties></Item><Item class="RemoteEvent" referent="RBXBT5C5C8915056640ADA5C5C9B1A516D315"><Properties><string name="Name">Notify</string></Properties></Item><Item class="RemoteEvent" referent="RBXBT7D6F609677A147F8B5A2B2B8E43F208E"><Properties><string name="Name">Announce</string></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBXBTC2083285BB75420CACA4FD2A099C94B4"><Properties><string name="Name">ServerScriptService</string></Properties><Item class="Folder" referent="RBXBT8858E3CFE8054166AFE612711207F015"><Properties><string name="Name">BTToolsEvents</string></Properties><Item class="Script" referent="RBXBT783A7D25365C4531A5212DBD32E43521"><Properties><string name="Name">Main</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="Folder" referent="RBXBTC1C288B6424845D29EE83E2B77276E28"><Properties><string name="Name">Remotes</string></Properties><Item class="RemoteFunction" referent="RBXBTA76F9A5A16FD4D23B44BFA4518B26479"><Properties><string name="Name">AdminRequest</string></Properties></Item><Item class="RemoteEvent" referent="RBXBT4E7B6E7A1C154FA196BA664CE024CFE9"><Properties><string name="Name">OpenBox</string></Properties></Item><Item class="RemoteEvent" referent="RBXBT10FD75CC98BA4095BAE9D6FADC862AE1"><Properties><string name="Name">Notify</string></Properties></Item><Item class="RemoteEvent" referent="RBXBT4C9928519BC84808AEC855B340B26F70"><Properties><string name="Name">Announce</string></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBXBT2C462BA82B6647A9902650926913E80A"><Properties><string name="Name">ServerScriptService</string></Properties><Item class="Folder" referent="RBXBT2220646ACCF9410991C7862206FD62CE"><Properties><string name="Name">BTToolsEvents</string></Properties><Item class="Script" referent="RBXBT206C81FA20DC4A4B842FE1EADE84898D"><Properties><string name="Name">Main</string><ProtectedString name="Source">--[[
 	BT Tools Event: Main (Script, সার্ভার)
 	জায়গা: ServerScriptService &gt; BTToolsEvents &gt; Main
 
@@ -268,7 +268,7 @@ BoxSpawner.Init()
 Showcase.Init()
 EventManager.Init()
 AdminService.Init()
-</ProtectedString><bool name="Disabled">false</bool></Properties></Item><Item class="Folder" referent="RBXBT0EC519A5A12145A2B7A18FA80BC79F74"><Properties><string name="Name">Modules</string></Properties><Item class="ModuleScript" referent="RBXBTCCDA7A1071E34E22856C9A5D4E04F4D4"><Properties><string name="Name">AdminService</string><ProtectedString name="Source">--[[
+</ProtectedString><bool name="Disabled">false</bool></Properties></Item><Item class="Folder" referent="RBXBT52086D862F254EE5AA9A9E71757A1D2F"><Properties><string name="Name">Modules</string></Properties><Item class="ModuleScript" referent="RBXBT81B3A807A96B4D83BD41843226D91A6C"><Properties><string name="Name">AdminService</string><ProtectedString name="Source">--[[
 	BT Tools Event: AdminService (ModuleScript, সার্ভার)
 
 	অ্যাডমিন প্যানেলের সব অনুরোধ এখানে আসে (RemoteFunction: AdminRequest)।
@@ -470,7 +470,7 @@ function AdminService.Init()
 end
 
 return AdminService
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBTEED00C5011D74F4996610D85E10B9CB3"><Properties><string name="Name">BoxSpawner</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT633E711ED73C4112ACB4276695808944"><Properties><string name="Name">BoxSpawner</string><ProtectedString name="Source">--[[
 	BT Tools Event: BoxSpawner (ModuleScript, সার্ভার)
 
 	বক্স কোথায় পড়বে সেটা খুঁজে বের করে।
@@ -648,7 +648,7 @@ function BoxSpawner.FindPositions(
 end
 
 return BoxSpawner
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT06FB8DEBEA814E108C44C8E835905356"><Properties><string name="Name">EventManager</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT0CA1D03AB0D44174971BDF4A09175BA4"><Properties><string name="Name">EventManager</string><ProtectedString name="Source">--[[
 	BT Tools Event: EventManager (ModuleScript, সার্ভার)
 
 	ইভেন্টের পুরো কাজ: বক্স স্পন, তোলা, খোলা, টাইমার আর শেষ।
@@ -1323,7 +1323,7 @@ function EventManager.Init()
 end
 
 return EventManager
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBTF010493DC59741D4AA8B73120CFF1421"><Properties><string name="Name">Showcase</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT2B0C3405E3C746AF8780F66879F46E13"><Properties><string name="Name">Showcase</string><ProtectedString name="Source">--[[
 	BT Tools Event: Showcase (ModuleScript, সার্ভার)
 
 	বিজয়ীর বড় অবতার যেটা নাচে আর হাতে জেতা টুল ধরে থাকে (R13)।
@@ -1940,7 +1940,7 @@ function Showcase.Init()
 end
 
 return Showcase
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBTF6C60EF418DD4D399409A5191A59D23D"><Properties><string name="Name">ToolData</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBTD176CEDE01A14A3B956F453C506AE22B"><Properties><string name="Name">ToolData</string><ProtectedString name="Source">--[[
 	BT Tools Event: ToolData (ModuleScript, সার্ভার)
 
 	কে কোন টুল পার্মানেন্ট পেয়েছে সেটা ডেটাস্টোরে রাখে, আর প্লেয়ারকে টুল দেয়।
@@ -2492,7 +2492,7 @@ function ToolData.Init()
 end
 
 return ToolData
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT987DA021496E4E00B9CDA6FE2BA93949"><Properties><string name="Name">Util</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBTB2A325B0F15744C598E1312346421329"><Properties><string name="Name">Util</string><ProtectedString name="Source">--[[
 	BT Tools Event: Util (ModuleScript, সার্ভার)
 	ছোট ছোট সাহায্যকারী ফাংশন: retry, rate limit, ক্যারেক্টার খোঁজা।
 ]]
@@ -2560,7 +2560,7 @@ function Util.IsInteger(value: any, minValue: number, maxValue: number): boolean
 end
 
 return Util
-</ProtectedString></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBXBT003BF1CC1F7E45258F68E5F74AC7D4A1"><Properties><string name="Name">StarterPlayerScripts</string></Properties><Item class="Folder" referent="RBXBT2CDE8A9B04BC44A5ADAA1710F3592554"><Properties><string name="Name">BTToolsEvents</string></Properties><Item class="LocalScript" referent="RBXBT472BAB4E52AD431495E23F716B6AC59E"><Properties><string name="Name">ClientMain</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBXBT4DCEE6FCBF1B4210897323427D84C21A"><Properties><string name="Name">StarterPlayerScripts</string></Properties><Item class="Folder" referent="RBXBT837DB230D12F46B28BDC94058C5499C0"><Properties><string name="Name">BTToolsEvents</string></Properties><Item class="LocalScript" referent="RBXBTE52AF82C717F4D2DBA0591455A1E1B5C"><Properties><string name="Name">ClientMain</string><ProtectedString name="Source">--[[
 	BT Tools Event: ClientMain (LocalScript, ক্লায়েন্ট)
 	জায়গা: StarterPlayer &gt; StarterPlayerScripts &gt; BTToolsEvents &gt; ClientMain
 
@@ -2582,54 +2582,154 @@ Minigame.Init()
 BoxVisuals.Init()
 WinnerTags.Init()
 AdminPanel.Init()
-</ProtectedString><bool name="Disabled">false</bool></Properties></Item><Item class="Folder" referent="RBXBTE50E68000CC94D79A51264A167703AB8"><Properties><string name="Name">Modules</string></Properties><Item class="ModuleScript" referent="RBXBTF78A52359DE445D888B3BCB8D5C986D6"><Properties><string name="Name">AdminPanel</string><ProtectedString name="Source">--[[
+</ProtectedString><bool name="Disabled">false</bool></Properties></Item><Item class="Folder" referent="RBXBT65404CEA926042DEB80FC585EABD4430"><Properties><string name="Name">Modules</string></Properties><Item class="ModuleScript" referent="RBXBT5A0C8DAA58B74279A6685B6F75869465"><Properties><string name="Name">AdminPanel</string><ProtectedString name="Source">--[[
 	BT Tools Event: AdminPanel (ModuleScript, ক্লায়েন্ট)
 
-	- গেম শুরুতে অ্যাডমিন বাটন লুকানো থাকে। চ্যাটে Config.ADMIN_COMMAND (/bttools) লিখলে
-	  বাঁ পাশে 🎁 বাটন আসে, আবার লিখলে চলে যায় (R15)।
-	- প্যানেলে চারটা ট্যাব:
-	  ইভেন্ট   মোট বক্স, সময়, কোন টুল কয়টা বক্সে, শুরুর নিরাপদ %, ফাঁক → START / STOP
-	  প্লেয়ার  UserId দিয়ে টুল দেওয়া, সরানো, সেভ করা টুল দেখা (অফলাইন প্লেয়ারও)
-	  ইতিহাস  প্লেয়ার অনুযায়ী জেতা / গিফট / সরানো, UserId দিয়ে খোঁজা (R16)
-	  থিম     তিনটা থিম নিজের স্ক্রিনে আগে দেখে নেওয়া
-	বাটন লুকানো থাকলেও আসল নিরাপত্তা সার্ভারে। অ্যাডমিন না হলে সার্ভার কিছুই করবে না।
+	গেম শুরুতে অ্যাডমিন বাটন লুকানো থাকে। চ্যাটে Config.ADMIN_COMMAND (/bttools) লিখলে
+	বাঁ পাশে 🎁 বাটন আসে, আবার লিখলে চলে যায়। বাটন চাপলে প্যানেল খোলে, তিনটা ট্যাব:
+	- 🎁 ইভেন্ট: মোট বক্স, সময়, টুল আর কয়টা বক্সে দেবেন, শুরুর নিরাপদ %, ফাঁক → START / STOP
+	- 👤 প্লেয়ার: UserId দিয়ে টুল দেওয়া, সরানো, সেভ করা টুল দেখা (অফলাইন প্লেয়ারও)
+	- 📜 ইতিহাস: প্লেয়ার অনুযায়ী জেতা / গিফট / সরানো, UserId দিয়ে খোঁজা
+	প্যানেলের ডিজাইন নিজস্ব, থিমের সাথে বদলায় না।
+	এই বাটন লুকানো থাকলেও আসল নিরাপত্তা সার্ভারে, অ্যাডমিন না হলে সার্ভার কিছুই করবে না।
 ]]
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TextChatService = game:GetService("TextChatService")
-local TweenService = game:GetService("TweenService")
 
 local Shared = ReplicatedStorage:WaitForChild("BTToolsEvents")
 local Config = require(Shared:WaitForChild("Config"))
 local AdminRemote = Shared:WaitForChild("Remotes"):WaitForChild("AdminRequest") :: RemoteFunction
 
 local Modules = script.Parent
-local UI = require(Modules:WaitForChild("UI"))
 local HUD = require(Modules:WaitForChild("HUD"))
 
-local R = UI.Role
+----------------------------------------------------------------------
+-- প্যানেলের নিজস্ব রং আর ছোট UI ফাংশন
+----------------------------------------------------------------------
+local UI = {}
+
+UI.Colors = {
+	Panel = Color3.fromRGB(18, 20, 30),
+	PanelLight = Color3.fromRGB(28, 31, 46),
+	Row = Color3.fromRGB(34, 38, 56),
+	Stroke = Color3.fromRGB(60, 66, 92),
+	Text = Color3.fromRGB(235, 238, 250),
+	SubText = Color3.fromRGB(160, 168, 195),
+	Gold = Color3.fromRGB(255, 205, 60),
+	GoldLight = Color3.fromRGB(255, 240, 170),
+	GoldDeep = Color3.fromRGB(214, 140, 20),
+	Green = Color3.fromRGB(60, 200, 120),
+	Red = Color3.fromRGB(235, 80, 80),
+	Blue = Color3.fromRGB(70, 140, 255),
+}
+
+UI.Fonts = {
+	Title = Enum.Font.FredokaOne,
+	Bold = Enum.Font.GothamBold,
+	Body = Enum.Font.GothamMedium,
+}
+
+-- Instance বানিয়ে props বসায় আর children যোগ করে।
+function UI.New(className: string, props: { [string]: any }?, children: { Instance }?): any
+	local inst = Instance.new(className)
+	if props then
+		for key, value in props do
+			if key ~= "Parent" then
+				(inst :: any)[key] = value
+			end
+		end
+	end
+	if children then
+		for _, child in children do
+			child.Parent = inst
+		end
+	end
+	if props and props.Parent then
+		inst.Parent = props.Parent
+	end
+	return inst
+end
+
+function UI.Corner(radius: number?): UICorner
+	return UI.New("UICorner", { CornerRadius = UDim.new(0, radius or 10) })
+end
+
+function UI.Stroke(color: Color3?, thickness: number?): UIStroke
+	return UI.New("UIStroke", {
+		Color = color or UI.Colors.Stroke,
+		Thickness = thickness or 1.5,
+		ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+	})
+end
+
+function UI.GoldGradient(rotation: number?): UIGradient
+	return UI.New("UIGradient", {
+		Rotation = rotation or 90,
+		Color = ColorSequence.new({
+			ColorSequenceKeypoint.new(0, UI.Colors.GoldLight),
+			ColorSequenceKeypoint.new(0.5, UI.Colors.Gold),
+			ColorSequenceKeypoint.new(1, UI.Colors.GoldDeep),
+		}),
+	})
+end
+
+function UI.Label(props: { [string]: any }): TextLabel
+	local defaults = {
+		BackgroundTransparency = 1,
+		Font = UI.Fonts.Body,
+		TextColor3 = UI.Colors.Text,
+		TextSize = 15,
+		TextWrapped = true,
+	}
+	for key, value in props do
+		defaults[key] = value
+	end
+	return UI.New("TextLabel", defaults)
+end
+
+function UI.Button(props: { [string]: any }): TextButton
+	local defaults = {
+		BackgroundColor3 = UI.Colors.Row,
+		AutoButtonColor = true,
+		Font = UI.Fonts.Bold,
+		TextColor3 = UI.Colors.Text,
+		TextSize = 15,
+	}
+	for key, value in props do
+		defaults[key] = value
+	end
+	local button = UI.New("TextButton", defaults)
+	UI.Corner(8).Parent = button
+	return button
+end
+
+function UI.ScreenGui(name: string, displayOrder: number): ScreenGui
+	local playerGui = Players.LocalPlayer:WaitForChild("PlayerGui")
+	local old = playerGui:FindFirstChild(name)
+	if old then
+		old:Destroy()
+	end
+	return UI.New("ScreenGui", {
+		Name = name,
+		ResetOnSpawn = false,
+		IgnoreGuiInset = false,
+		ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
+		DisplayOrder = displayOrder,
+		Parent = playerGui,
+	})
+end
+
+local C = UI.Colors
 local player = Players.LocalPlayer
-
-local THEME_DESCRIPTIONS = {
-	Midnight = "গাঢ় নীল কাচ, সোনালি রং",
-	Frost = "হালকা সাদা কাচ, নীল রং",
-	Ember = "কয়লা-কালো কাচ, কমলা রং",
-}
-
-local KIND_INFO = {
-	win = { text = "জিতেছে", role = "Accent" },
-	gift = { text = "গিফট", role = "Info" },
-	remove = { text = "সরানো", role = "Danger" },
-}
 
 local AdminPanel = {}
 
-local panel: Frame? = nil
+local panel: Frame
 local pages: { [string]: ScrollingFrame } = {}
 local tabButtons: { [string]: TextButton } = {}
 local info: any = nil
-local refreshEventStatus: (() -&gt; ())? = nil
 
 local function call(action: string, payload: any?): { ok: boolean, message: string?, data: any? }
 	local ok, result = pcall(function()
@@ -2644,103 +2744,92 @@ end
 ----------------------------------------------------------------------
 -- ছোট UI অংশ
 ----------------------------------------------------------------------
-local order = 0
-local function nextOrder(): number
-	order += 1
-	return order
-end
-
-local function page(parent: Frame, name: string): ScrollingFrame
+local function page(name: string): ScrollingFrame
 	local scroll = UI.New("ScrollingFrame", {
 		Name = name,
-		Position = UDim2.new(0, 0, 0, 104),
-		Size = UDim2.new(1, 0, 1, -104),
+		Position = UDim2.new(0, 0, 0, 92),
+		Size = UDim2.new(1, 0, 1, -92),
 		BackgroundTransparency = 1,
 		BorderSizePixel = 0,
-		ScrollBarThickness = 3,
-		ScrollBarImageColor3 = R("SubText"),
+		ScrollBarThickness = 5,
+		ScrollBarImageColor3 = C.Gold,
 		CanvasSize = UDim2.new(),
 		AutomaticCanvasSize = Enum.AutomaticSize.Y,
 		Visible = false,
-		Parent = parent,
+		Parent = panel,
 	}, {
-		UI.List(Enum.FillDirection.Vertical, 8),
+		UI.New("UIListLayout", { Padding = UDim.new(0, 8), SortOrder = Enum.SortOrder.LayoutOrder }),
 		UI.New("UIPadding", {
-			PaddingLeft = UDim.new(0, 18),
-			PaddingRight = UDim.new(0, 18),
-			PaddingTop = UDim.new(0, 4),
-			PaddingBottom = UDim.new(0, 18),
+			PaddingLeft = UDim.new(0, 14),
+			PaddingRight = UDim.new(0, 14),
+			PaddingTop = UDim.new(0, 6),
+			PaddingBottom = UDim.new(0, 14),
 		}),
 	})
 	pages[name] = scroll
 	return scroll
 end
 
-local function caption(parent: Instance, text: string)
-	UI.Caption({
+local order = 0
+local function nextOrder(): number
+	order += 1
+	return order
+end
+
+local function section(parent: Instance, text: string): TextLabel
+	return UI.Label({
 		LayoutOrder = nextOrder(),
-		Size = UDim2.new(1, 0, 0, 26),
-		TextYAlignment = Enum.TextYAlignment.Bottom,
+		Size = UDim2.new(1, 0, 0, 22),
+		Font = UI.Fonts.Bold,
+		TextSize = 15,
+		TextColor3 = C.Gold,
+		TextXAlignment = Enum.TextXAlignment.Left,
 		Text = text,
 		Parent = parent,
 	})
 end
 
-local function note(parent: Instance, text: string, role: string?): TextLabel
+local function note(parent: Instance, text: string): TextLabel
 	return UI.Label({
 		LayoutOrder = nextOrder(),
 		Size = UDim2.new(1, 0, 0, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
-		TextSize = 13,
-		TextColor3 = R(role or "SubText"),
+		TextSize = 14,
+		TextColor3 = C.SubText,
+		TextXAlignment = Enum.TextXAlignment.Left,
 		Text = text,
 		Parent = parent,
 	})
 end
 
-local function row(parent: Instance, height: number?): Frame
-	return UI.New("Frame", {
+local function input(parent: Instance, labelText: string, default: string): TextBox
+	local row = UI.New("Frame", {
 		LayoutOrder = nextOrder(),
-		Size = UDim2.new(1, 0, 0, height or 42),
-		BackgroundColor3 = R("Surface"),
-		BorderSizePixel = 0,
+		Size = UDim2.new(1, 0, 0, 38),
+		BackgroundColor3 = C.Row,
 		Parent = parent,
-	}, { UI.Corner(10) })
-end
-
-local function textBox(props: { [string]: any }): TextBox
-	local defaults: { [string]: any } = {
-		BackgroundColor3 = R("Background"),
-		BorderSizePixel = 0,
+	}, { UI.Corner(8) })
+	UI.Label({
+		Position = UDim2.new(0, 12, 0, 0),
+		Size = UDim2.new(0.62, -12, 1, 0),
+		TextXAlignment = Enum.TextXAlignment.Left,
+		Text = labelText,
+		Parent = row,
+	})
+	local box = UI.New("TextBox", {
+		AnchorPoint = Vector2.new(1, 0.5),
+		Position = UDim2.new(1, -8, 0.5, 0),
+		Size = UDim2.new(0.38, -8, 0, 28),
+		BackgroundColor3 = C.Panel,
 		ClearTextOnFocus = false,
 		Font = UI.Fonts.Bold,
-		TextSize = 15,
-		TextColor3 = R("Text"),
-		PlaceholderColor3 = R("SubText"),
-	}
-	for key, value in props do
-		defaults[key] = value
-	end
-	return UI.New("TextBox", defaults, { UI.Corner(8), UI.Stroke() })
-end
-
-local function input(parent: Instance, labelText: string, default: string, placeholder: string?): TextBox
-	local r = row(parent)
-	UI.Label({
-		Position = UDim2.new(0, 14, 0, 0),
-		Size = UDim2.new(0.62, -14, 1, 0),
-		TextSize = 14,
-		Text = labelText,
-		Parent = r,
-	})
-	return textBox({
-		AnchorPoint = Vector2.new(1, 0.5),
-		Position = UDim2.new(1, -7, 0.5, 0),
-		Size = UDim2.new(0.38, -7, 0, 30),
+		TextSize = 16,
+		TextColor3 = C.Text,
+		PlaceholderColor3 = C.SubText,
 		Text = default,
-		PlaceholderText = placeholder or "",
-		Parent = r,
-	})
+		Parent = row,
+	}, { UI.Corner(6), UI.Stroke(C.Stroke, 1) })
+	return box
 end
 
 local function readInt(box: TextBox): number?
@@ -2751,125 +2840,86 @@ local function readInt(box: TextBox): number?
 	return nil
 end
 
--- রঙিন বিন্দুসহ অবস্থা-লাইন।
-local function statusLine(parent: Instance): (string, string?) -&gt; ()
-	local holder = UI.New("Frame", {
-		LayoutOrder = nextOrder(),
-		Size = UDim2.new(1, 0, 0, 0),
-		AutomaticSize = Enum.AutomaticSize.Y,
-		BackgroundTransparency = 1,
-		Parent = parent,
-	})
-	local dot = UI.New("Frame", {
-		Position = UDim2.new(0, 2, 0, 5),
-		Size = UDim2.fromOffset(8, 8),
-		BackgroundColor3 = R("SubText"),
-		BorderSizePixel = 0,
-		Parent = holder,
-	}, { UI.New("UICorner", { CornerRadius = UDim.new(1, 0) }) })
-	local label = UI.Label({
-		Position = UDim2.new(0, 18, 0, 0),
-		Size = UDim2.new(1, -18, 0, 0),
-		AutomaticSize = Enum.AutomaticSize.Y,
-		TextSize = 14,
-		Parent = holder,
-	})
-	return function(text: string, role: string?)
-		label.Text = text
-		UI.Apply(dot, { BackgroundColor3 = R(role or "SubText") })
-		UI.Apply(label, { TextColor3 = R(if role then role else "SubText") })
-	end
-end
-
-local function buttonRow(parent: Instance, height: number): Frame
-	return UI.New("Frame", {
-		LayoutOrder = nextOrder(),
-		Size = UDim2.new(1, 0, 0, height),
-		BackgroundTransparency = 1,
-		Parent = parent,
-	}, { UI.List(Enum.FillDirection.Horizontal, 8) })
+local function setStatus(label: TextLabel, text: string, ok: boolean?)
+	label.Text = text
+	label.TextColor3 = if ok == nil then C.SubText elseif ok then C.Green else C.Red
 end
 
 ----------------------------------------------------------------------
--- ইভেন্ট ট্যাব
+-- 🎁 ইভেন্ট ট্যাব
 ----------------------------------------------------------------------
 local toolCounts: { [string]: number } = {}
 
-local function buildEventPage(root: Frame)
-	local p = page(root, "Event")
+local function buildEventPage()
+	local p = page("Event")
 	local defaults = info.defaults
+	local infoLabel = note(p, "")
+	local zoneText = if info.zoneCount &gt; 0
+		then `📍 স্পন জোন: {info.zoneCount} টা পার্ট পাওয়া গেছে।`
+		else "📍 কোনো স্পন জোন নেই, আপনার চারপাশে radius এর মধ্যে বক্স পড়বে।"
+	local showcaseText = if info.hasShowcase then "🏆 শোকেস পার্ট পাওয়া গেছে।" else "⚠️ WinnerShowcase পার্ট নেই, শোকেস দেখাবে না।"
+	infoLabel.Text = zoneText .. "\n" .. showcaseText
 
-	local infoRow = row(p, 0)
-	infoRow.AutomaticSize = Enum.AutomaticSize.Y
-	UI.Padding(14, 10).Parent = infoRow
-	UI.List(Enum.FillDirection.Vertical, 4).Parent = infoRow
-	local setZone = statusLine(infoRow)
-	local setShowcase = statusLine(infoRow)
-	if info.zoneCount &gt; 0 then
-		setZone(`স্পন জোন: {info.zoneCount} টা পার্ট পাওয়া গেছে`, "Success")
-	else
-		setZone("কোনো স্পন জোন নেই, আপনার চারপাশে radius এর মধ্যে বক্স পড়বে", "Accent")
-	end
-	if info.hasShowcase then
-		setShowcase("শোকেস পার্ট পাওয়া গেছে", "Success")
-	else
-		setShowcase("WinnerShowcase পার্ট নেই, শোকেস দেখাবে না", "Danger")
-	end
-
-	caption(p, "ইভেন্টের সেটিং")
+	section(p, "⚙️ ইভেন্টের সেটিং")
 	local totalBox = input(p, "মোট বক্স", tostring(defaults.totalBoxes))
 	local minutesBox = input(p, "সময় (মিনিট)", tostring(defaults.minutes))
 	local safeBox = input(p, "শুরুতে টুল নেই (%)", tostring(defaults.safePercent))
-	local gapBox = input(p, "দুই টুলের মাঝে ফাঁক", tostring(defaults.gap))
+	local gapBox = input(p, "দুই টুলের মাঝে ফাঁক (বক্স)", tostring(defaults.gap))
 	local radiusBox = input(p, "Radius (জোন না থাকলে)", tostring(defaults.radius))
 
-	caption(p, "কোন টুল কয়টা বক্সে")
+	section(p, "🧰 কোন টুল কয়টা বক্সে দেবেন")
 	if #info.tools == 0 then
-		note(p, "ServerStorage &gt; Tools ফোল্ডারে কোনো টুল নেই।", "Danger")
+		note(p, "ServerStorage &gt; Tools ফোল্ডারে কোনো টুল নেই।")
 	end
 	for _, toolName in info.tools do
 		toolCounts[toolName] = toolCounts[toolName] or 0
-		local r = row(p)
+		local row = UI.New("Frame", {
+			LayoutOrder = nextOrder(),
+			Size = UDim2.new(1, 0, 0, 38),
+			BackgroundColor3 = C.Row,
+			Parent = p,
+		}, { UI.Corner(8) })
 		UI.Label({
-			Position = UDim2.new(0, 14, 0, 0),
+			Position = UDim2.new(0, 12, 0, 0),
 			Size = UDim2.new(1, -140, 1, 0),
-			TextSize = 14,
+			TextXAlignment = Enum.TextXAlignment.Left,
 			TextTruncate = Enum.TextTruncate.AtEnd,
 			TextWrapped = false,
 			Text = toolName,
-			Parent = r,
+			Parent = row,
 		})
 		local countLabel = UI.Label({
 			AnchorPoint = Vector2.new(1, 0.5),
 			Position = UDim2.new(1, -44, 0.5, 0),
-			Size = UDim2.fromOffset(40, 28),
-			Font = UI.Fonts.Display,
-			TextSize = 17,
-			TextXAlignment = Enum.TextXAlignment.Center,
-			Parent = r,
+			Size = UDim2.fromOffset(44, 28),
+			Font = UI.Fonts.Bold,
+			TextSize = 18,
+			Text = tostring(toolCounts[toolName]),
+			Parent = row,
 		})
 		local function refresh()
 			local count = toolCounts[toolName]
 			countLabel.Text = tostring(count)
-			UI.Apply(countLabel, { TextColor3 = R(if count &gt; 0 then "Accent" else "SubText") })
+			countLabel.TextColor3 = if count &gt; 0 then C.Gold else C.SubText
+			row.BackgroundColor3 = if count &gt; 0 then C.Row:Lerp(C.Gold, 0.15) else C.Row
 		end
 		local minus = UI.Button({
 			AnchorPoint = Vector2.new(1, 0.5),
-			Position = UDim2.new(1, -86, 0.5, 0),
-			Size = UDim2.fromOffset(30, 28),
-			BackgroundColor3 = R("Background"),
+			Position = UDim2.new(1, -92, 0.5, 0),
+			Size = UDim2.fromOffset(32, 28),
+			BackgroundColor3 = C.Panel,
 			Text = "−",
-			TextSize = 18,
-			Parent = r,
+			TextSize = 20,
+			Parent = row,
 		})
 		local plus = UI.Button({
 			AnchorPoint = Vector2.new(1, 0.5),
 			Position = UDim2.new(1, -8, 0.5, 0),
-			Size = UDim2.fromOffset(30, 28),
-			BackgroundColor3 = R("Background"),
+			Size = UDim2.fromOffset(32, 28),
+			BackgroundColor3 = C.Panel,
 			Text = "+",
-			TextSize = 18,
-			Parent = r,
+			TextSize = 20,
+			Parent = row,
 		})
 		minus.Activated:Connect(function()
 			toolCounts[toolName] = math.max(0, toolCounts[toolName] - 1)
@@ -2882,37 +2932,33 @@ local function buildEventPage(root: Frame)
 		refresh()
 	end
 
-	caption(p, "")
-	local setStatus = statusLine(p)
-	refreshEventStatus = function()
-		task.spawn(function()
-			local response = call("GetInfo")
-			if response.ok and type(response.data) == "table" then
-				if response.data.active then
-					setStatus("এখন একটা ইভেন্ট চলছে", "Success")
-				else
-					setStatus("টুল বেছে নিয়ে START চাপুন", nil)
-				end
-			end
-		end)
-	end
-	setStatus(if info.active then "এখন একটা ইভেন্ট চলছে" else "টুল বেছে নিয়ে START চাপুন", if info.active then "Success" else nil)
+	local status = note(p, "")
+	setStatus(status, if info.active then "🟢 এখন একটা ইভেন্ট চলছে।" else "টুল বেছে নিয়ে START চাপুন।", nil)
 
-	local buttons = buttonRow(p, 44)
+	local buttons = UI.New("Frame", {
+		LayoutOrder = nextOrder(),
+		Size = UDim2.new(1, 0, 0, 44),
+		BackgroundTransparency = 1,
+		Parent = p,
+	})
 	local startButton = UI.Button({
-		LayoutOrder = 1,
-		Size = UDim2.new(0.65, -4, 1, 0),
-		TextSize = 16,
-		Text = "START EVENT",
+		Size = UDim2.new(0.62, -4, 1, 0),
+		BackgroundColor3 = C.Green,
+		TextColor3 = Color3.new(1, 1, 1),
+		TextSize = 18,
+		Text = "▶ START EVENT",
 		Parent = buttons,
-	}, "primary")
+	})
 	local stopButton = UI.Button({
-		LayoutOrder = 2,
-		Size = UDim2.new(0.35, -4, 1, 0),
-		TextSize = 16,
-		Text = "STOP",
+		AnchorPoint = Vector2.new(1, 0),
+		Position = UDim2.fromScale(1, 0),
+		Size = UDim2.new(0.38, -4, 1, 0),
+		BackgroundColor3 = C.Red,
+		TextColor3 = Color3.new(1, 1, 1),
+		TextSize = 18,
+		Text = "⏹ STOP",
 		Parent = buttons,
-	}, "danger")
+	})
 
 	local busy = false
 	startButton.Activated:Connect(function()
@@ -2928,14 +2974,14 @@ local function buildEventPage(root: Frame)
 			tools = toolCounts,
 		}
 		if not (payload.totalBoxes and payload.minutes and payload.radius and payload.safePercent and payload.gap) then
-			setStatus("সব ঘরে পূর্ণ সংখ্যা লিখুন", "Danger")
+			setStatus(status, "সব ঘরে পূর্ণ সংখ্যা লিখুন।", false)
 			return
 		end
 		busy = true
-		startButton.Text = "বক্স স্পন হচ্ছে…"
+		startButton.Text = "⏳ বক্স স্পন হচ্ছে..."
 		local response = call("Start", payload)
-		setStatus(response.message or (if response.ok then "শুরু হয়েছে" else "ব্যর্থ"), if response.ok then "Success" else "Danger")
-		startButton.Text = "START EVENT"
+		setStatus(status, response.message or (if response.ok then "শুরু হয়েছে।" else "ব্যর্থ।"), response.ok)
+		startButton.Text = "▶ START EVENT"
 		busy = false
 	end)
 	stopButton.Activated:Connect(function()
@@ -2944,18 +2990,18 @@ local function buildEventPage(root: Frame)
 		end
 		busy = true
 		local response = call("Stop")
-		setStatus(response.message or "", if response.ok then "Success" else "Danger")
+		setStatus(status, response.message or "", response.ok)
 		busy = false
 	end)
 end
 
 ----------------------------------------------------------------------
--- প্লেয়ার ট্যাব
+-- 👤 প্লেয়ার ট্যাব
 ----------------------------------------------------------------------
-local function buildPlayersPage(root: Frame)
-	local p = page(root, "Players")
+local function buildPlayersPage()
+	local p = page("Players")
 
-	caption(p, "অনলাইন প্লেয়ার · চাপলে UserId বসবে")
+	section(p, "👥 অনলাইন প্লেয়ার (চাপলে UserId বসবে)")
 	local onlineList = UI.New("Frame", {
 		LayoutOrder = nextOrder(),
 		Size = UDim2.new(1, 0, 0, 0),
@@ -2964,14 +3010,15 @@ local function buildPlayersPage(root: Frame)
 		Parent = p,
 	}, {
 		UI.New("UIGridLayout", {
-			CellSize = UDim2.new(0.5, -4, 0, 34),
-			CellPadding = UDim2.fromOffset(8, 8),
+			CellSize = UDim2.new(0.5, -4, 0, 32),
+			CellPadding = UDim2.fromOffset(8, 6),
 			SortOrder = Enum.SortOrder.Name,
 		}),
 	})
 
-	caption(p, "প্লেয়ার")
-	local userIdBox = input(p, "UserId", "", "যেমন 7864126209")
+	section(p, "🔢 UserId")
+	local userIdBox = input(p, "UserId", "")
+	userIdBox.PlaceholderText = "যেমন 7864126209"
 
 	local function refreshOnline()
 		for _, child in onlineList:GetChildren() do
@@ -2982,7 +3029,6 @@ local function buildPlayersPage(root: Frame)
 		for _, other in Players:GetPlayers() do
 			local button = UI.Button({
 				Name = other.Name,
-				Font = UI.Fonts.Medium,
 				TextSize = 13,
 				TextTruncate = Enum.TextTruncate.AtEnd,
 				Text = other.DisplayName,
@@ -2999,14 +3045,13 @@ local function buildPlayersPage(root: Frame)
 		task.defer(refreshOnline)
 	end)
 
-	caption(p, "টুল")
+	section(p, "🧰 টুল")
 	local selectedTool: string? = nil
 	local toolButtons: { TextButton } = {}
 	for _, toolName in info.tools do
 		local button = UI.Button({
 			LayoutOrder = nextOrder(),
-			Size = UDim2.new(1, 0, 0, 36),
-			Font = UI.Fonts.Medium,
+			Size = UDim2.new(1, 0, 0, 32),
 			TextSize = 14,
 			Text = toolName,
 			Parent = p,
@@ -3014,34 +3059,45 @@ local function buildPlayersPage(root: Frame)
 		button.Activated:Connect(function()
 			selectedTool = toolName
 			for _, other in toolButtons do
-				UI.SetButtonStyle(other, "ghost")
+				other.BackgroundColor3 = C.Row
+				other.TextColor3 = C.Text
 			end
-			UI.SetButtonStyle(button, "primary")
+			button.BackgroundColor3 = C.Gold
+			button.TextColor3 = Color3.fromRGB(30, 22, 5)
 		end)
 		table.insert(toolButtons, button)
 	end
 
-	caption(p, "")
-	local setStatus = statusLine(p)
-	setStatus("UserId আর টুল বেছে নিন", nil)
-	local actions = buttonRow(p, 42)
-	local function actionButton(order: number, text: string, style: string): TextButton
+	local status = note(p, "")
+	local actions = UI.New("Frame", {
+		LayoutOrder = nextOrder(),
+		Size = UDim2.new(1, 0, 0, 40),
+		BackgroundTransparency = 1,
+		Parent = p,
+	}, {
+		UI.New("UIListLayout", {
+			FillDirection = Enum.FillDirection.Horizontal,
+			Padding = UDim.new(0, 6),
+		}),
+	})
+	local function actionButton(text: string, color: Color3): TextButton
 		return UI.Button({
-			LayoutOrder = order,
-			Size = UDim2.new(1 / 3, -6, 1, 0),
+			Size = UDim2.new(1 / 3, -4, 1, 0),
+			BackgroundColor3 = color,
+			TextColor3 = Color3.new(1, 1, 1),
 			TextSize = 14,
 			Text = text,
 			Parent = actions,
-		}, style)
+		})
 	end
-	local giveButton = actionButton(1, "টুল দিন", "success")
-	local removeButton = actionButton(2, "সরান", "danger")
-	local viewButton = actionButton(3, "দেখুন", "info")
+	local giveButton = actionButton("✅ টুল দিন", C.Green)
+	local removeButton = actionButton("🗑 সরান", C.Red)
+	local viewButton = actionButton("📋 দেখুন", C.Blue)
 
 	local function readUserId(): number?
 		local userId = readInt(userIdBox)
 		if not userId or userId &lt; 1 then
-			setStatus("সঠিক UserId লিখুন", "Danger")
+			setStatus(status, "সঠিক UserId লিখুন।", false)
 			return nil
 		end
 		return userId
@@ -3057,25 +3113,33 @@ local function buildPlayersPage(root: Frame)
 		busy = false
 	end
 
-	local function changeTool(action: string)
+	giveButton.Activated:Connect(function()
 		run(function()
 			local userId = readUserId()
 			if not userId then
 				return
 			end
 			if not selectedTool then
-				setStatus("একটা টুল বেছে নিন", "Danger")
+				setStatus(status, "একটা টুল বেছে নিন।", false)
 				return
 			end
-			local response = call(action, { userId = userId, tool = selectedTool })
-			setStatus(response.message or "", if response.ok then "Success" else "Danger")
+			local response = call("GiveTool", { userId = userId, tool = selectedTool })
+			setStatus(status, response.message or "", response.ok)
 		end)
-	end
-	giveButton.Activated:Connect(function()
-		changeTool("GiveTool")
 	end)
 	removeButton.Activated:Connect(function()
-		changeTool("RemoveTool")
+		run(function()
+			local userId = readUserId()
+			if not userId then
+				return
+			end
+			if not selectedTool then
+				setStatus(status, "একটা টুল বেছে নিন।", false)
+				return
+			end
+			local response = call("RemoveTool", { userId = userId, tool = selectedTool })
+			setStatus(status, response.message or "", response.ok)
+		end)
 	end)
 	viewButton.Activated:Connect(function()
 		run(function()
@@ -3086,126 +3150,94 @@ local function buildPlayersPage(root: Frame)
 			local response = call("GetPlayerTools", { userId = userId })
 			if response.ok and type(response.data) == "table" then
 				local list = if #response.data &gt; 0 then table.concat(response.data, ", ") else "কোনো টুল নেই"
-				setStatus(`{userId} এর সেভ করা টুল: {list}`, "Info")
+				setStatus(status, `{userId} এর সেভ করা টুল: {list}`, true)
 			else
-				setStatus(response.message or "পড়া যায়নি", "Danger")
+				setStatus(status, response.message or "পড়া যায়নি।", false)
 			end
 		end)
 	end)
 end
 
 ----------------------------------------------------------------------
--- ইতিহাস ট্যাব
+-- 📜 ইতিহাস ট্যাব
 ----------------------------------------------------------------------
+local KIND_INFO = {
+	win = { text = "🏆 জিতেছে", color = C.Gold },
+	gift = { text = "🎁 গিফট", color = C.Blue },
+	remove = { text = "🗑 সরানো", color = C.Red },
+}
+
+-- একজন প্লেয়ারের একটা কার্ড, ভেতরে তার সব রেকর্ড (নতুনটা আগে)।
 local function historyCard(parent: Instance, index: number, entry: any)
 	local card = UI.New("Frame", {
 		LayoutOrder = index,
 		Size = UDim2.new(1, 0, 0, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
-		BackgroundColor3 = R("Surface"),
-		BorderSizePixel = 0,
+		BackgroundColor3 = C.Row,
 		Parent = parent,
 	}, {
-		UI.Corner(12),
-		UI.Padding(14, 12),
-		UI.List(Enum.FillDirection.Vertical, 6),
+		UI.Corner(8),
+		UI.New("UIPadding", {
+			PaddingLeft = UDim.new(0, 10),
+			PaddingRight = UDim.new(0, 10),
+			PaddingTop = UDim.new(0, 8),
+			PaddingBottom = UDim.new(0, 8),
+		}),
+		UI.New("UIListLayout", { Padding = UDim.new(0, 4), SortOrder = Enum.SortOrder.LayoutOrder }),
 	})
-	local header = UI.New("Frame", {
+	UI.Label({
 		LayoutOrder = 0,
 		Size = UDim2.new(1, 0, 0, 20),
-		BackgroundTransparency = 1,
-		Parent = card,
-	})
-	UI.Label({
-		Size = UDim2.new(0.6, 0, 1, 0),
 		Font = UI.Fonts.Bold,
-		TextSize = 15,
+		TextXAlignment = Enum.TextXAlignment.Left,
 		TextTruncate = Enum.TextTruncate.AtEnd,
 		TextWrapped = false,
-		Text = tostring(entry.n or "?"),
-		Parent = header,
-	})
-	UI.Label({
-		AnchorPoint = Vector2.new(1, 0),
-		Position = UDim2.fromScale(1, 0),
-		Size = UDim2.new(0.4, 0, 1, 0),
-		TextSize = 12,
-		TextColor3 = R("SubText"),
-		TextXAlignment = Enum.TextXAlignment.Right,
-		TextWrapped = false,
-		Text = `UserId {entry.u}`,
-		Parent = header,
+		Text = `👤 {entry.n or "?"} · UserId {entry.u}`,
+		Parent = card,
 	})
 	for i, record in entry.r or {} do
 		local kind = KIND_INFO[record.k] or KIND_INFO.win
-		local line = UI.New("Frame", {
-			LayoutOrder = i,
-			Size = UDim2.new(1, 0, 0, 22),
-			BackgroundTransparency = 1,
-			Parent = card,
-		})
-		local badge = UI.Label({
-			Size = UDim2.fromOffset(62, 20),
-			BackgroundColor3 = R(kind.role),
-			BackgroundTransparency = 0.82,
-			Font = UI.Fonts.Bold,
-			TextSize = 12,
-			TextColor3 = R(kind.role),
-			TextXAlignment = Enum.TextXAlignment.Center,
-			Text = kind.text,
-			Parent = line,
-		})
-		UI.Corner(6).Parent = badge
-		local when = if type(record.at) == "number" then os.date("%d/%m %H:%M", record.at) else "?"
-		local by = if type(record.by) == "string" then ` · {record.by}` else ""
+		local when = if type(record.at) == "number" then os.date("%d/%m/%Y %H:%M", record.at) else "?"
+		local by = if type(record.by) == "string" then `, by {record.by}` else ""
 		UI.Label({
-			Position = UDim2.new(0, 72, 0, 0),
-			Size = UDim2.new(1, -72, 1, 0),
-			TextSize = 14,
-			TextTruncate = Enum.TextTruncate.AtEnd,
-			TextWrapped = false,
-			RichText = true,
-			Text = `{record.t}  &lt;font transparency="0.45"&gt;{when}{by}&lt;/font&gt;`,
-			Parent = line,
+			LayoutOrder = i,
+			Size = UDim2.new(1, 0, 0, 0),
+			AutomaticSize = Enum.AutomaticSize.Y,
+			TextSize = 13,
+			TextColor3 = kind.color,
+			TextXAlignment = Enum.TextXAlignment.Left,
+			Text = `{kind.text}: {record.t}  ({when}{by})`,
+			Parent = card,
 		})
 	end
 end
 
-local function buildHistoryPage(root: Frame)
-	local p = page(root, "History")
-
-	caption(p, "খুঁজুন")
-	local search = row(p, 44)
-	local searchBox = textBox({
-		Position = UDim2.new(0, 6, 0.5, 0),
-		AnchorPoint = Vector2.new(0, 0.5),
-		Size = UDim2.new(1, -150, 0, 32),
-		PlaceholderText = "UserId (খালি = সবাই)",
-		Text = "",
-		Parent = search,
+local function buildHistoryPage()
+	local p = page("History")
+	section(p, "🔍 খুঁজুন (খালি রাখলে সবাই)")
+	local searchBox = input(p, "UserId", "")
+	searchBox.PlaceholderText = "যেমন 7864126209"
+	local refreshButton = UI.Button({
+		LayoutOrder = nextOrder(),
+		Size = UDim2.new(1, 0, 0, 36),
+		BackgroundColor3 = C.Blue,
+		TextColor3 = Color3.new(1, 1, 1),
+		Text = "🔄 ইতিহাস লোড করুন",
+		Parent = p,
 	})
-	local findButton = UI.Button({
-		AnchorPoint = Vector2.new(1, 0.5),
-		Position = UDim2.new(1, -6, 0.5, 0),
-		Size = UDim2.fromOffset(132, 32),
-		TextSize = 14,
-		Text = "লোড করুন",
-		Parent = search,
-	}, "primary")
-
-	local setStatus = statusLine(p)
-	setStatus("সবচেয়ে সাম্প্রতিক প্লেয়ার আগে দেখাবে", nil)
-
+	local status = note(p, "সবচেয়ে সাম্প্রতিক প্লেয়ার আগে দেখাবে।")
 	local list = UI.New("Frame", {
 		LayoutOrder = nextOrder(),
 		Size = UDim2.new(1, 0, 0, 0),
 		AutomaticSize = Enum.AutomaticSize.Y,
 		BackgroundTransparency = 1,
 		Parent = p,
-	}, { UI.List(Enum.FillDirection.Vertical, 8) })
+	}, {
+		UI.New("UIListLayout", { Padding = UDim.new(0, 6), SortOrder = Enum.SortOrder.LayoutOrder }),
+	})
 
 	local busy = false
-	findButton.Activated:Connect(function()
+	refreshButton.Activated:Connect(function()
 		if busy then
 			return
 		end
@@ -3213,13 +3245,13 @@ local function buildHistoryPage(root: Frame)
 		if searchBox.Text ~= "" then
 			local userId = readInt(searchBox)
 			if not userId or userId &lt; 1 then
-				setStatus("সঠিক UserId লিখুন", "Danger")
+				setStatus(status, "সঠিক UserId লিখুন।", false)
 				return
 			end
 			payload = { userId = userId }
 		end
 		busy = true
-		findButton.Text = "লোড হচ্ছে…"
+		refreshButton.Text = "⏳ লোড হচ্ছে..."
 		for _, child in list:GetChildren() do
 			if child:IsA("GuiObject") then
 				child:Destroy()
@@ -3228,101 +3260,19 @@ local function buildHistoryPage(root: Frame)
 		local response = call("GetHistory", payload)
 		if response.ok and type(response.data) == "table" then
 			if #response.data == 0 then
-				setStatus(if payload then "এই UserId এর কোনো ইতিহাস নেই" else "এখনো কোনো ইতিহাস নেই", nil)
+				setStatus(status, if payload then "এই UserId এর কোনো ইতিহাস নেই।" else "এখনো কোনো ইতিহাস নেই।", nil)
 			else
-				setStatus(`{#response.data} জন প্লেয়ার`, "Info")
+				setStatus(status, `{#response.data} জন প্লেয়ার`, true)
 			end
 			for i, entry in response.data do
 				historyCard(list, i, entry)
 			end
 		else
-			setStatus(response.message or "ইতিহাস পড়া যায়নি", "Danger")
+			setStatus(status, response.message or "ইতিহাস পড়া যায়নি।", false)
 		end
-		findButton.Text = "লোড করুন"
+		refreshButton.Text = "🔄 ইতিহাস লোড করুন"
 		busy = false
 	end)
-end
-
-----------------------------------------------------------------------
--- থিম ট্যাব
-----------------------------------------------------------------------
-local function buildThemePage(root: Frame)
-	local p = page(root, "Theme")
-	note(
-		p,
-		"এখানে থিম বদলালে শুধু আপনার স্ক্রিনে দেখাবে। সবার জন্য রাখতে ReplicatedStorage &gt; BTToolsEvents &gt; Config এ THEME = \"নাম\" লিখুন।"
-	)
-	caption(p, "থিম")
-
-	local names = {}
-	for name in Config.THEMES do
-		table.insert(names, name)
-	end
-	table.sort(names)
-
-	local refreshers: { () -&gt; () } = {}
-	for _, name in names do
-		local theme = Config.THEMES[name]
-		local r = row(p, 64)
-		local swatches = UI.New("Frame", {
-			Position = UDim2.new(0, 14, 0.5, 0),
-			AnchorPoint = Vector2.new(0, 0.5),
-			Size = UDim2.fromOffset(70, 26),
-			BackgroundTransparency = 1,
-			Parent = r,
-		}, { UI.List(Enum.FillDirection.Horizontal, -6) })
-		for i, colorKey in { "Background", "Surface", "Accent" } do
-			UI.New("Frame", {
-				LayoutOrder = i,
-				Size = UDim2.fromOffset(26, 26),
-				BackgroundColor3 = theme[colorKey],
-				BorderSizePixel = 0,
-				Parent = swatches,
-			}, {
-				UI.New("UICorner", { CornerRadius = UDim.new(1, 0) }),
-				UI.New("UIStroke", { Color = Color3.new(1, 1, 1), Transparency = 0.7, Thickness = 1.5 }),
-			})
-		end
-		UI.Label({
-			Position = UDim2.new(0, 96, 0, 12),
-			Size = UDim2.new(1, -200, 0, 20),
-			Font = UI.Fonts.Bold,
-			TextSize = 15,
-			TextWrapped = false,
-			Text = name,
-			Parent = r,
-		})
-		local sub = UI.Label({
-			Position = UDim2.new(0, 96, 0, 32),
-			Size = UDim2.new(1, -200, 0, 18),
-			TextSize = 12,
-			TextColor3 = R("SubText"),
-			TextTruncate = Enum.TextTruncate.AtEnd,
-			TextWrapped = false,
-			Parent = r,
-		})
-		local button = UI.Button({
-			AnchorPoint = Vector2.new(1, 0.5),
-			Position = UDim2.new(1, -12, 0.5, 0),
-			Size = UDim2.fromOffset(84, 32),
-			TextSize = 14,
-			Parent = r,
-		})
-		local function refresh()
-			local active = UI.ThemeName() == name
-			sub.Text = (THEME_DESCRIPTIONS[name] or "") .. (if name == Config.THEME then " · সবার জন্য চালু" else "")
-			button.Text = if active then "চলছে" else "দেখুন"
-			UI.SetButtonStyle(button, if active then "primary" else "ghost")
-		end
-		button.Activated:Connect(function()
-			UI.SetTheme(name)
-			for _, fn in refreshers do
-				fn()
-			end
-		end)
-		table.insert(refreshers, refresh)
-		refresh()
-	end
 end
 
 ----------------------------------------------------------------------
@@ -3333,64 +3283,67 @@ local function showTab(name: string)
 		scroll.Visible = tabName == name
 	end
 	for tabName, button in tabButtons do
-		UI.SetButtonStyle(button, if tabName == name then "primary" else "ghost")
+		local active = tabName == name
+		button.BackgroundColor3 = if active then C.Gold else C.Row
+		button.TextColor3 = if active then Color3.fromRGB(30, 22, 5) else C.Text
 	end
 end
 
 local function buildPanel(gui: ScreenGui): Frame
-	local root = UI.Card({
+	panel = UI.New("Frame", {
 		Name = "AdminPanel",
 		AnchorPoint = Vector2.new(0.5, 0.5),
 		Position = UDim2.fromScale(0.5, 0.5),
-		Size = UDim2.fromScale(0.94, 0.86),
+		Size = UDim2.fromScale(0.94, 0.84),
+		BackgroundColor3 = C.Panel,
 		Visible = false,
 		Parent = gui,
 	}, {
-		UI.New("UISizeConstraint", { MaxSize = Vector2.new(440, 600) }),
+		UI.Corner(16),
+		UI.Stroke(C.Gold, 2),
+		UI.New("UISizeConstraint", { MaxSize = Vector2.new(440, 580) }),
 	})
 
-	UI.Label({
-		Position = UDim2.new(0, 18, 0, 14),
-		Size = UDim2.new(1, -80, 0, 26),
-		Font = UI.Fonts.Display,
-		TextSize = 22,
-		TextWrapped = false,
-		Text = "BT Tools Event",
-		Parent = root,
+	local titleLabel = UI.Label({
+		Position = UDim2.new(0, 16, 0, 10),
+		Size = UDim2.new(1, -70, 0, 32),
+		Font = UI.Fonts.Title,
+		TextSize = 24,
+		TextColor3 = Color3.new(1, 1, 1),
+		TextXAlignment = Enum.TextXAlignment.Left,
+		Text = "🎁 BT Tools Event",
+		Parent = panel,
 	})
-	UI.Label({
-		Position = UDim2.new(0, 18, 0, 40),
-		Size = UDim2.new(1, -80, 0, 16),
-		TextSize = 13,
-		TextColor3 = R("SubText"),
-		TextWrapped = false,
-		Text = "অ্যাডমিন প্যানেল",
-		Parent = root,
-	})
+	UI.GoldGradient(90).Parent = titleLabel
 
 	local close = UI.Button({
 		AnchorPoint = Vector2.new(1, 0),
-		Position = UDim2.new(1, -14, 0, 14),
+		Position = UDim2.new(1, -12, 0, 10),
 		Size = UDim2.fromOffset(32, 32),
-		Font = UI.Fonts.Bold,
-		TextSize = 14,
+		BackgroundColor3 = C.Row,
 		Text = "✕",
-		Parent = root,
+		Parent = panel,
 	})
 	close.Activated:Connect(function()
-		root.Visible = false
+		panel.Visible = false
 	end)
 
 	local tabs = UI.New("Frame", {
-		Position = UDim2.new(0, 18, 0, 64),
-		Size = UDim2.new(1, -36, 0, 32),
+		Position = UDim2.new(0, 14, 0, 50),
+		Size = UDim2.new(1, -28, 0, 34),
 		BackgroundTransparency = 1,
-		Parent = root,
-	}, { UI.List(Enum.FillDirection.Horizontal, 6) })
-	for i, tab in { { "Event", "ইভেন্ট" }, { "Players", "প্লেয়ার" }, { "History", "ইতিহাস" }, { "Theme", "থিম" } } do
+		Parent = panel,
+	}, {
+		UI.New("UIListLayout", {
+			FillDirection = Enum.FillDirection.Horizontal,
+			Padding = UDim.new(0, 6),
+			SortOrder = Enum.SortOrder.LayoutOrder,
+		}),
+	})
+	for i, tab in { { "Event", "🎁 ইভেন্ট" }, { "Players", "👤 প্লেয়ার" }, { "History", "📜 ইতিহাস" } } do
 		local button = UI.Button({
 			LayoutOrder = i,
-			Size = UDim2.new(0.25, -5, 1, 0),
+			Size = UDim2.new(1 / 3, -4, 1, 0),
 			TextSize = 14,
 			Text = tab[2],
 			Parent = tabs,
@@ -3401,19 +3354,17 @@ local function buildPanel(gui: ScreenGui): Frame
 		tabButtons[tab[1]] = button
 	end
 
-	buildEventPage(root)
-	buildPlayersPage(root)
-	buildHistoryPage(root)
-	buildThemePage(root)
+	buildEventPage()
+	buildPlayersPage()
+	buildHistoryPage()
 	showTab("Event")
-	return root
+	return panel
 end
 
 ----------------------------------------------------------------------
--- চ্যাট কমান্ড
+-- চ্যাট কমান্ড (/bttools)
 ----------------------------------------------------------------------
 local function listenForCommand(onCommand: () -&gt; ())
-	local command = string.lower(Config.ADMIN_COMMAND)
 	if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
 		-- এভাবে বানানো কমান্ড চ্যাটে অন্য কেউ দেখে না।
 		local chatCommand = Instance.new("TextChatCommand")
@@ -3426,6 +3377,7 @@ local function listenForCommand(onCommand: () -&gt; ())
 		end)
 		chatCommand.Parent = TextChatService
 	else
+		local command = string.lower(Config.ADMIN_COMMAND)
 		player.Chatted:Connect(function(message)
 			local trimmed = string.gsub(message, "^%s*(.-)%s*$", "%1")
 			if string.lower(trimmed) == command then
@@ -3444,26 +3396,25 @@ function AdminPanel.Init()
 	local toggle = UI.Button({
 		Name = "Toggle",
 		AnchorPoint = Vector2.new(0, 0.5),
-		Position = UDim2.new(0, 14, 0.5, 0),
-		Size = UDim2.fromOffset(50, 50),
-		BackgroundColor3 = R("Background"),
-		BackgroundTransparency = UI.GlassTransparency,
+		Position = UDim2.new(0, 12, 0.5, 0),
+		Size = UDim2.fromOffset(52, 52),
+		BackgroundColor3 = Color3.new(1, 1, 1),
 		Text = "🎁",
-		TextSize = 24,
+		TextSize = 28,
 		Visible = false,
 		Parent = gui,
 	})
-	UI.Round(toggle)
-	UI.Stroke("Accent", 0.2).Parent = toggle
-	local toggleScale = toggle:FindFirstChildOfClass("UIScale")
+	local corner = toggle:FindFirstChildOfClass("UICorner")
+	if corner then
+		corner.CornerRadius = UDim.new(1, 0)
+	end
+	UI.GoldGradient(45).Parent = toggle
+	UI.Stroke(Color3.fromRGB(120, 80, 10), 2).Parent = toggle
 
 	local loading = false
 	toggle.Activated:Connect(function()
 		if panel then
 			panel.Visible = not panel.Visible
-			if panel.Visible and refreshEventStatus then
-				refreshEventStatus()
-			end
 			return
 		end
 		if loading then
@@ -3477,19 +3428,13 @@ function AdminPanel.Init()
 			return
 		end
 		info = response.data
-		local built = buildPanel(gui)
-		panel = built
-		built.Visible = true
+		buildPanel(gui).Visible = true
 	end)
 
 	listenForCommand(function()
 		toggle.Visible = not toggle.Visible
 		if toggle.Visible then
 			HUD.Toast("অ্যাডমিন বাটন চালু", "Success")
-			if toggleScale then
-				toggleScale.Scale = 0.5
-				TweenService:Create(toggleScale, TweenInfo.new(0.35, Enum.EasingStyle.Back, Enum.EasingDirection.Out), { Scale = 1 }):Play()
-			end
 		else
 			HUD.Toast("অ্যাডমিন বাটন বন্ধ", nil)
 			if panel then
@@ -3500,7 +3445,7 @@ function AdminPanel.Init()
 end
 
 return AdminPanel
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT9E23D1D897164F3FA88338D5D00572E3"><Properties><string name="Name">BoxVisuals</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT822F8330223D49AE833E5FB0D86B1898"><Properties><string name="Name">BoxVisuals</string><ProtectedString name="Source">--[[
 	BT Tools Event: BoxVisuals (ModuleScript, ক্লায়েন্ট)
 	মাটির বক্সগুলো ঘোরায় আর হালকা ভাসায়। শুধু নিজের স্ক্রিনে চলে, তাই সার্ভারে কোনো ল্যাগ নেই (I15)।
 	সার্ভার শুধু স্থির Root আর Prompt রাখে, এখানে শুধু "Visual" অংশটা নড়ে।
@@ -3561,7 +3506,7 @@ function BoxVisuals.Init()
 end
 
 return BoxVisuals
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBTCB84C4E74B5040BC85113786644F4BC7"><Properties><string name="Name">HUD</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBTD553B666B7614473B32ADA5A673D2009"><Properties><string name="Name">HUD</string><ProtectedString name="Source">--[[
 	BT Tools Event: HUD (ModuleScript, ক্লায়েন্ট)
 
 	- ওপরে ছোট কাচের কাউন্টার: [ 17/20 খোলা | 4:32 বাকি ] (R12)। ইভেন্ট না চললে লুকানো।
@@ -3989,7 +3934,7 @@ function HUD.Init()
 end
 
 return HUD
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT545DD093A7DF454C957EB6C67ED28391"><Properties><string name="Name">Minigame</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT1F8A963D0EC34D1DB97B2FACEBF0AA89"><Properties><string name="Name">Minigame</string><ProtectedString name="Source">--[[
 	BT Tools Event: Minigame (ModuleScript, ক্লায়েন্ট)
 
 	বক্স খোলার টাইমিং বার (R10, Option A):
@@ -4395,7 +4340,7 @@ function Minigame.Init()
 end
 
 return Minigame
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBTEA1C3B8E3EEC4E81811545495A82A6A3"><Properties><string name="Name">Sounds</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT446AC8AB47A94AE2B6C67EB8A1A5D4A6"><Properties><string name="Name">Sounds</string><ProtectedString name="Source">--[[
 	BT Tools Event: Sounds (ModuleScript, ক্লায়েন্ট)
 	Config.SOUND_IDS থেকে সাউন্ড বাজায়। ID 0 বা খালি হলে চুপচাপ কিছু করে না।
 ]]
@@ -4453,7 +4398,7 @@ function Sounds.Play(name: string, pitch: number?)
 end
 
 return Sounds
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT30580D0BD4564E1F8EF5931C6D8AEFD2"><Properties><string name="Name">UI</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT6268AB0E90404EA68D1861C1518DF651"><Properties><string name="Name">UI</string><ProtectedString name="Source">--[[
 	BT Tools Event: UI (ModuleScript, ক্লায়েন্ট)
 
 	সব UI এর ডিজাইনের ভিত্তি: থিম, ফন্ট, আর ছোট সাহায্যকারী ফাংশন।
@@ -4764,7 +4709,7 @@ function UI.ScreenGui(name: string, displayOrder: number): ScreenGui
 end
 
 return UI
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT14F141E3FE614AB6ACECD5D8F4B77500"><Properties><string name="Name">WinnerTags</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBT17D39CCE51E541CCABF635459BEEA23C"><Properties><string name="Name">WinnerTags</string><ProtectedString name="Source">--[[
 	BT Tools Event: WinnerTags (ModuleScript, ক্লায়েন্ট)
 	বিজয়ীর "👑 WINNER" ট্যাগে countdown বার আর সোনালি ঝিলিক চালায়।
 	ট্যাগগুলো সার্ভার বানায় (Showcase), এখানে শুধু নিজের স্ক্রিনে নড়াচড়া।
@@ -4841,7 +4786,7 @@ function WinnerTags.Init()
 end
 
 return WinnerTags
-</ProtectedString></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBXBT2E3AF6A8231B4233822038BAD5FBEAA1"><Properties><string name="Name">ServerStorage</string></Properties><Item class="Folder" referent="RBXBT5E1737E5357B43F6B4BAE55256AF73EF"><Properties><string name="Name">BTToolsEvents</string></Properties><Item class="Tool" referent="RBX94565139F8D34484B684BD035DC62B82">
+</ProtectedString></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBXBT229ECE8DFE834CDB84A0F831B5664898"><Properties><string name="Name">ServerStorage</string></Properties><Item class="Folder" referent="RBXBTA2D5FD7E08474EA580B42C6145616B28"><Properties><string name="Name">BTToolsEvents</string></Properties><Item class="Tool" referent="RBX94565139F8D34484B684BD035DC62B82">
 				<Properties>
 					<bool name="CanBeDropped">true</bool>
 					<bool name="Enabled">true</bool>
@@ -5214,7 +5159,7 @@ return WinnerTags
 					</Properties>
 				</Item>
 			</Item>
-		</Item><Item class="Folder" referent="RBXBT110B580F93924D2D9D4781768BF6DC1D"><Properties><string name="Name">Tools</string></Properties><Item class="Tool" referent="RBX9ABE287ADEBA4BD3B6DF4F886074905F">
+		</Item><Item class="Folder" referent="RBXBTAE21FDFFBFEE4AC09C2EB475E6F2FB93"><Properties><string name="Name">Tools</string></Properties><Item class="Tool" referent="RBX9ABE287ADEBA4BD3B6DF4F886074905F">
 					<Properties>
 						<bool name="CanBeDropped">true</bool>
 						<bool name="Enabled">true</bool>
@@ -12595,7 +12540,7 @@ WeldToolParts()</ProtectedString>
 						</Item>
 					</Item>
 				</Item>
-			</Item></Item><Item class="Folder" referent="RBXBTBD1C33730363464DADB5AF80FD3A0A0A"><Properties><string name="Name">Workspace</string></Properties><Item class="Folder" referent="RBXBT2894257F16DE45898F1BFA874F7B5B22"><Properties><string name="Name">HuntSpawnZones</string></Properties><Item class="Part" referent="RBXBT53409345D860454FABFCA30B303760D5"><Properties><string name="Name">Zone1</string><CoordinateFrame name="CFrame"><X>0</X><Y>5</Y><Z>0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>120</X><Y>12</Y><Z>120</Z></Vector3><Color3uint8 name="Color3uint8">4283484415</Color3uint8><float name="Transparency">0.75</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="Material">288</token></Properties></Item></Item><Item class="Part" referent="RBXBT69A36E4117354172BF93FCDA93AE69D1"><Properties><string name="Name">WinnerShowcase</string><CoordinateFrame name="CFrame"><X>0</X><Y>1</Y><Z>-40</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>36</X><Y>2</Y><Z>10</Z></Vector3><Color3uint8 name="Color3uint8">4294954300</Color3uint8><float name="Transparency">0.4</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="Material">288</token></Properties></Item></Item></Item><SharedStrings>
+			</Item></Item><Item class="Folder" referent="RBXBT8C1DAEA0478A4663B23C57BDE8CF6113"><Properties><string name="Name">Workspace</string></Properties><Item class="Folder" referent="RBXBT125435B1508240A794D2A72C88565CD4"><Properties><string name="Name">HuntSpawnZones</string></Properties><Item class="Part" referent="RBXBT15244D3033BA4E3C872F0BD45EEE819E"><Properties><string name="Name">Zone1</string><CoordinateFrame name="CFrame"><X>0</X><Y>5</Y><Z>0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>120</X><Y>12</Y><Z>120</Z></Vector3><Color3uint8 name="Color3uint8">4283484415</Color3uint8><float name="Transparency">0.75</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="Material">288</token></Properties></Item></Item><Item class="Part" referent="RBXBT5F8CB9983E534D069EAE89394030E325"><Properties><string name="Name">WinnerShowcase</string><CoordinateFrame name="CFrame"><X>0</X><Y>1</Y><Z>-40</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>36</X><Y>2</Y><Z>10</Z></Vector3><Color3uint8 name="Color3uint8">4294954300</Color3uint8><float name="Transparency">0.4</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="Material">288</token></Properties></Item></Item></Item><SharedStrings>
 		<SharedString md5="AkvqKo47oeLEz+OSuo64Fw==">Q1NHUEhTCAAAAAIAKLUv/WAwAZUHAFQIAQAAACgAAABMlxTgAQAARBNTwNGAcMFORBNTQNGA
 cEFOVgEoFApw2oTXvU2gz9d1Xa/rOgDEVII/FbRIwAAAAADDdMN0QKcZ+KC+KsHBugi/ughT
 wMDAmL4qQLIZ+L8MtEjKVIK/RBNTP8HBwb+/xFSCv7+YvirADLRIwD8/QEFBwL+/wD+owdmh
