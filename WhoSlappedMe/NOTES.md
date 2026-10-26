@@ -413,3 +413,12 @@ User: "texts are so small you can't see them, it doesn't look like the kit". Roo
 - All text boxes made taller.
 - New file `Release/WhoSlappedMeUI.rbxmx` = only the ScreenGui, so the UI can be replaced without touching anything else.
 
+---
+
+## 15. v2.5 controls and difficulty ✅
+
+| # | User request | Done |
+|---|--------------|------|
+| C1 | Power charge: moving the mouse to the TAP button is hard on PC | **PC: click anywhere on the screen** (or Space) taps. **Phone: TAP button only**, so dragging the camera can't tap by accident |
+| C2 | Protect (BLOCK) is too easy, PERFECT is too easy to get. Wants a value to make it harder | New `Config.PROTECT_SPEED` (1 easy · **1.6 default** · 2.2 hard · 3 very hard) makes the ring faster. Timing windows tighter: `PERFECT_WINDOW` 0.12 → **0.07**, `GOOD_WINDOW` 0.3 → **0.18** |
+

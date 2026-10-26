@@ -98,6 +98,8 @@ In Studio only, 2 players are enough (`STUDIO_TEST_PLAYERS`); a 2-player test pl
 | `MIN_SLAP_DAMAGE` / `MAX_SLAP_DAMAGE` | 5 / 40 | damage at 0% / 100% power |
 | `CHARGE_VALUES` | 30, 30, 40 | max % each charge adds |
 | `SWEEP_TIMES` | 1.3, 1.1, 0.9 | seconds per needle sweep (lower = harder) |
+| `PROTECT_SPEED` | 1.6 | how fast the BLOCK ring shrinks: bigger = harder (1 easy, 2.2 hard, 3 very hard) |
+| `PERFECT_WINDOW` / `GOOD_WINDOW` | 0.07 / 0.18 | seconds of timing allowed for PERFECT / GOOD: smaller = harder |
 | `PERFECT_REDUCTION` / `GOOD_REDUCTION` | 0.7 / 0.4 | block damage reduction |
 | `VOTE_TIME` / `GUESS_TIME` | 10 / 15 | |
 | `SUDDEN_DEATH_ROUND` | 12 | damage +10% every round after this (max ×2) |
