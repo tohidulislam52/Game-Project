@@ -74,11 +74,11 @@ Workspace
 
 ### 🎨 Editing the UI
 The UI is a normal ScreenGui (`StarterGui → WhoSlappedMeUI`), built in the same style as the Park UI kit
-(dark see-through windows, 8px corners, drop shadow, light cards, green buttons, font `16658221428`).
+(light see-through windows with dark text, 8px corners, drop shadow, light cards, solid green/red buttons, font `16658221428`, big auto-sized text).
 Change colours, sizes, images and texts freely in Studio. **Only keep the names**, the scripts look them up:
-`Status`, `PadInfo`, `Buttons/Leave`, `Buttons/Help`, `Banner`, `Picker` (`Title`, `Desc`, `Timer`, `TimerBar/Fill`,
+`Status`, `PadInfo`, `Buttons/Leave`, `Buttons/Help`, `Banner`, `Picker` (`Head/Title`, `Head/Timer`, `Desc`, `TimerBar/Fill`,
 `Content`, `CardTemplate`), `Power` (`Desc`, `Total`, `Bar/Needle`, `Bar/Yellow`, `Bar/Green`, `Chips/Chip1..3`, `Tap`),
-`Blackout` (`Center/…`, `Flash`), `Rules` (`Close`), `Winners` (`Row`, `WinnerTemplate`).
+`Blackout` (`Center/…`, `Flash`), `Rules` (`Head/Close`), `Winners` (`Row`, `WinnerTemplate`).
 
 ### Test it
 **Test → Clients and Servers → 2 or 3 players → Start.** Walk everyone onto the glowing pad.

@@ -393,3 +393,17 @@ The v2.1 UI (built in code) still did not fit. The user shared their **Park UI k
 **v2.2:** the UI is now a real ScreenGui `StarterGui/WhoSlappedMeUI` built with those rules, editable in Studio.
 Client scripts (`UI`, `Hud`, `Picker`, `PowerBar`, `Protect`, `Rules`) only look up parts by name and fill them.
 
+---
+
+## 14. v2.3 UI fix: text too small ✅
+
+User: "texts are so small you can't see them, it doesn't look like the kit". Root cause found and fixed:
+
+| Problem in v2.2 | Kit rule (re-checked by drawing the kit's own windows) | v2.3 |
+|-----------------|--------------------------------------------------------|------|
+| `UITextSizeConstraint` capped almost every label at 14-24 px | Kit uses no cap (14 of 1153 labels): the label box decides the text size | **No caps.** Labels fill 50-100% of their row like the kit |
+| Windows limited to ~520-660 px | Kit windows are 35-57% of the screen, up to 900 px | Windows up to 700-900 px |
+| Dark window body, white text | Kit dialogs: **light body** (white at 0.3) with dark `#323232` text, `#646464` descriptions | Light body, dark text |
+| Long sentences in thin single-line labels → shrunk | Kit uses short texts in tall rows | Short texts, tall rows |
+| Small icon-style buttons | Kit: solid green / red buttons with sheen, label at 70% height; solid red close button with icon | Same |
+
