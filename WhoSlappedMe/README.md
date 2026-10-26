@@ -15,6 +15,7 @@ All rules and decisions are in [`NOTES.md`](NOTES.md).
 | Path | What it is |
 |------|------------|
 | [`Release/WhoSlappedMe.rbxmx`](Release/WhoSlappedMe.rbxmx) | **The whole game in one file.** Insert this into Studio |
+| [`Release/WhoSlappedMeUI.rbxmx`](Release/WhoSlappedMeUI.rbxmx) | Only the UI (the `WhoSlappedMeUI` ScreenGui). Right-click **StarterGui → Insert from File** to update just the UI |
 | [`NOTES.md`](NOTES.md) | Requirements, decisions, ideas, open questions |
 | `Docs/map_top.png` | Top view of the arena |
 | `Original/` | The old prototype (kept for reference only) |

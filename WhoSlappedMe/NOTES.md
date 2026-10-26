@@ -407,3 +407,9 @@ User: "texts are so small you can't see them, it doesn't look like the kit". Roo
 | Long sentences in thin single-line labels → shrunk | Kit uses short texts in tall rows | Short texts, tall rows |
 | Small icon-style buttons | Kit: solid green / red buttons with sheen, label at 70% height; solid red close button with icon | Same |
 
+### 14.1 v2.4 text fix
+- Every label now has the kit's exact text settings: `TextScaled = true`, **`TextWrapped = true`**, `TextSize = 14`
+  (v2.3 had TextWrapped off, which squeezes text onto one line and shrinks it).
+- All text boxes made taller.
+- New file `Release/WhoSlappedMeUI.rbxmx` = only the ScreenGui, so the UI can be replaced without touching anything else.
+
