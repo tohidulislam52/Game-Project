@@ -1,4 +1,4 @@
-<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4"><Meta name="ExplicitAutoJoints">true</Meta><External>null</External><External>nil</External><Item class="Folder" referent="RBX5AE2EDC273184355A74B8677DA8FAB99"><Properties><string name="Name">WhoSlappedMe_INSTALL</string></Properties><Item class="ModuleScript" referent="RBXEDF78064CBF54A5A9E0B3A7139A7264D"><Properties><string name="Name">README</string><ProtectedString name="Source">--[[
+<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4"><Meta name="ExplicitAutoJoints">true</Meta><External>null</External><External>nil</External><Item class="Folder" referent="RBX49DC932CA84F4963AFC81AA9AD062BF3"><Properties><string name="Name">WhoSlappedMe_INSTALL</string></Properties><Item class="ModuleScript" referent="RBX798D18E31D02425287B48824F60BDDDE"><Properties><string name="Name">README</string><ProtectedString name="Source">--[[
 	WHO SLAPPED ME? - where everything goes
 
 	Drag each folder's CONTENT into the Roblox service with the same name:
@@ -14,7 +14,7 @@
 	ReplicatedStorage &gt; WhoSlappedMe &gt; Config
 ]]
 return nil
-</ProtectedString></Properties></Item><Item class="Folder" referent="RBX5D45DAA6848F4542BFFED99C36C548C4"><Properties><string name="Name">ReplicatedStorage</string></Properties><Item class="Folder" referent="RBXDDE3C15C2D87422C85735194B9EAAED6"><Properties><string name="Name">WhoSlappedMe</string></Properties><Item class="ModuleScript" referent="RBX23FF72EA18F64659A0A9B096248E5E8E"><Properties><string name="Name">Config</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="Folder" referent="RBXCB85969D10CD49EEBE760438D21F8AA7"><Properties><string name="Name">ReplicatedStorage</string></Properties><Item class="Folder" referent="RBX0BB7554E3AF443F9ACC867803ABDACBD"><Properties><string name="Name">WhoSlappedMe</string></Properties><Item class="ModuleScript" referent="RBX02456BD402404DCD82953EC798A15460"><Properties><string name="Name">Config</string><ProtectedString name="Source">--[[
 	WHO SLAPPED ME? - Config
 	Every setting of the game lives here. Change values, press Play, done.
 ]]
@@ -24,9 +24,12 @@ local Config = {}
 -- PLAYERS ------------------------------------------------------------------
 Config.MIN_PLAYERS = 3 -- a game never starts with fewer
 Config.MAX_PLAYERS = 6 -- 1 hot seat + 5 back seats (also limited by the seats in the map)
+-- STUDIO TEST ONLY: in Studio a game can start with this many players (0 = off).
+-- Live servers always use MIN_PLAYERS. A test game with fewer than MIN_PLAYERS ends when 1 player is left.
+Config.STUDIO_TEST_PLAYERS = 2
 
 -- JOIN PAD -----------------------------------------------------------------
-Config.JOIN_COUNTDOWN = 15 -- seconds after the first player steps on the pad
+Config.JOIN_COUNTDOWN = 15 -- starts only when MIN_PLAYERS are on the pad
 Config.FULL_COUNTDOWN = 3 -- countdown drops to this when the pad is full
 
 -- HEALTH -------------------------------------------------------------------
@@ -73,11 +76,9 @@ Config.SUDDEN_DEATH_MAX = 2 -- never more than x2
 
 -- TEST FEATURES (false = completely off) -----------------------------------
 Config.ENABLE_REVEAL = true -- wrong guess: everyone sees who really slapped (replay)
-Config.ENABLE_RULES_SCREEN = true -- rules cards + "?" button
+Config.ENABLE_RULES_SCREEN = true -- "?" button that shows the rules
 Config.ENABLE_TITLES = true -- fun titles above heads during the game
-Config.ENABLE_SPECTATE_CAM = true -- "Spectate" button for people watching outside
 Config.REVEAL_TIME = 3.5
-Config.SPECTATE_RADIUS = 70 -- how close to the arena a player must be to get the button
 
 -- ANIMATIONS (empty = skipped, the game still works) -------------------------
 -- Upload them with the same account / group that owns the game,
@@ -129,8 +130,16 @@ Config.PAD_COLORS = {
 -- Optional decal for the red hand print on the cheek ("" = a hand emoji is used)
 Config.HAND_PRINT_IMAGE = ""
 
+-- (don't change) the minimum that really applies: STUDIO_TEST_PLAYERS in Studio, MIN_PLAYERS everywhere else
+function Config.minPlayers(): number
+	if Config.STUDIO_TEST_PLAYERS &gt; 0 and game:GetService("RunService"):IsStudio() then
+		return math.min(Config.STUDIO_TEST_PLAYERS, Config.MIN_PLAYERS)
+	end
+	return Config.MIN_PLAYERS
+end
+
 return Config
-</ProtectedString></Properties></Item><Item class="Folder" referent="RBX0C7E2E62909448B8916C26BBEFC1F203"><Properties><string name="Name">Remotes</string></Properties><Item class="RemoteEvent" referent="RBXF46D57DBF6B04E64918290BA870E6934"><Properties><string name="Name">Net</string></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBX939CEE8C4EC84BBCB730C90494CA0CDA"><Properties><string name="Name">ServerScriptService</string></Properties><Item class="Folder" referent="RBXCB22B8F0AF8B4DA68EFC88F1D3EC5D4E"><Properties><string name="Name">WhoSlappedMe</string></Properties><Item class="Script" referent="RBX555D69C5C7BB41A68E4BF325422E8673"><Properties><string name="Name">Main</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="Folder" referent="RBXAE399E9BEFA64EEEB08A37165D3B3689"><Properties><string name="Name">Remotes</string></Properties><Item class="RemoteEvent" referent="RBX58138D34604041068120E99BB0CC8521"><Properties><string name="Name">Net</string></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBXFD4B1B704D934503B10AE1505C90A030"><Properties><string name="Name">ServerScriptService</string></Properties><Item class="Folder" referent="RBX9B0700ADD85F465EBDB3927D5080C2FB"><Properties><string name="Name">WhoSlappedMe</string></Properties><Item class="Script" referent="RBX7A9A9B93AABF4CC9BA386EB1EB99A592"><Properties><string name="Name">Main</string><ProtectedString name="Source">--[[
 	WHO SLAPPED ME? - server entry point
 	Lives in ServerScriptService &gt; WhoSlappedMe. Settings: ReplicatedStorage &gt; WhoSlappedMe &gt; Config
 ]]
@@ -163,7 +172,7 @@ while true do
 		task.wait(2)
 	end
 end
-</ProtectedString><bool name="Disabled">false</bool></Properties></Item><Item class="Folder" referent="RBXB404CC45007240F29601C762043C74EF"><Properties><string name="Name">Modules</string></Properties><Item class="ModuleScript" referent="RBX99B171D150BC455C8F3556D2F49F74FE"><Properties><string name="Name">Anim</string><ProtectedString name="Source">-- Plays the animations from Config.ANIMATIONS. Empty ids are skipped. Tracks are loaded once per character.
+</ProtectedString><bool name="Disabled">false</bool></Properties></Item><Item class="Folder" referent="RBX467C4A32AF2F434BA516663370E3530B"><Properties><string name="Name">Modules</string></Properties><Item class="ModuleScript" referent="RBX6B11F8D0C0E146859A45F7BB807B1F8B"><Properties><string name="Name">Anim</string><ProtectedString name="Source">-- Plays the animations from Config.ANIMATIONS. Empty ids are skipped. Tracks are loaded once per character.
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChild("Config"))
@@ -268,7 +277,7 @@ function Anim.stopAll(character: Model?)
 end
 
 return Anim
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXCB924467677545FCA36B955242010E81"><Properties><string name="Name">Arena</string><ProtectedString name="Source">-- Finds every map piece BY NAME, so parts can be moved or replaced freely.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX9E2821A2D0B049BCAD7FCF164DB56CF5"><Properties><string name="Name">Arena</string><ProtectedString name="Source">-- Finds every map piece BY NAME, so parts can be moved or replaced freely.
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChild("Config"))
@@ -283,7 +292,6 @@ Arena.zone = nil :: BasePart?
 Arena.maxPlayers = Config.MAX_PLAYERS
 
 local padParts: { BasePart } = {}
-local screenLabels: { [string]: TextLabel } = {}
 local signLabels: { [string]: TextLabel } = {}
 
 local function findSeat(container: Instance, name: string): Seat?
@@ -295,17 +303,6 @@ local function findSeat(container: Instance, name: string): Seat?
 		return holder
 	end
 	return holder:FindFirstChildWhichIsA("Seat", true)
-end
-
-local function collectLabels(gui: Instance?, into: { [string]: TextLabel })
-	if not gui then
-		return
-	end
-	for _, d in gui:GetDescendants() do
-		if d:IsA("TextLabel") then
-			into[d.Name] = d
-		end
-	end
 end
 
 function Arena.init()
@@ -326,8 +323,9 @@ function Arena.init()
 	end
 	Arena.maxPlayers = math.min(Config.MAX_PLAYERS, 1 + #Arena.backSeats)
 
+	-- invisible markers (visible in Studio, hidden while playing)
 	local points = model:WaitForChild("Points")
-	for _, name in { "SlapSpot", "KOSpot", "ExitSpot", "RevealCam", "SpectateCam" } do
+	for _, name in { "SlapSpot", "KOSpot", "ExitSpot", "RevealCam", "ArenaBounds" } do
 		local part = points:WaitForChild(name) :: BasePart
 		part.Transparency = 1
 		part.CanCollide = false
@@ -341,36 +339,24 @@ function Arena.init()
 	for _, d in pad:GetDescendants() do
 		if d:IsA("BasePart") and d.Name == "Glow" then
 			table.insert(padParts, d)
+		elseif d:IsA("TextLabel") then
+			signLabels[d.Name] = d
 		end
 	end
-	collectLabels(pad:FindFirstChild("Sign"), signLabels)
 
-	local screens = model:FindFirstChild("Screens")
-	collectLabels(screens and screens:FindFirstChild("PhaseScreen"), screenLabels)
-
-	-- Clients read these instead of looking into the workspace (works with streaming).
-	local shared = ReplicatedStorage:WaitForChild("WhoSlappedMe")
-	shared:SetAttribute("RevealCam", Arena.points.RevealCam.CFrame)
-	shared:SetAttribute("SpectateCam", Arena.points.SpectateCam.CFrame)
-	shared:SetAttribute("ArenaCenter", Arena.hotSeat.Position)
+	-- the client reads this for the wrong-guess replay camera
+	ReplicatedStorage:WaitForChild("WhoSlappedMe"):SetAttribute("RevealCam", Arena.points.RevealCam.CFrame)
 end
 
-local function setText(labels: { [string]: TextLabel }, name: string, text: string?)
-	local label = labels[name]
-	if label and text then
-		label.Text = text
+-- Is this position inside the arena (inside the glass)?
+function Arena.isInside(position: Vector3): boolean
+	local box = Arena.points.ArenaBounds
+	if not box then
+		return false
 	end
-end
-
--- Big screen behind the hot seat (everyone can see it, so never put the slapper's name here before the reveal)
-function Arena.setScreen(title: string, sub: string?, info: string?)
-	setText(screenLabels, "Title", title)
-	setText(screenLabels, "Sub", sub or "")
-	setText(screenLabels, "Info", info or "")
-end
-
-function Arena.setScreenInfo(info: string)
-	setText(screenLabels, "Info", info)
+	local rel = box.CFrame:PointToObjectSpace(position)
+	local half = box.Size / 2
+	return math.abs(rel.X) &lt;= half.X and math.abs(rel.Y) &lt;= half.Y and math.abs(rel.Z) &lt;= half.Z
 end
 
 -- Join pad colour + sign. state = "Open" | "Countdown" | "Closed"
@@ -379,9 +365,13 @@ function Arena.setPad(state: string, title: string, count: string, info: string)
 	for _, part in padParts do
 		part.Color = color
 	end
-	setText(signLabels, "Title", title)
-	setText(signLabels, "Count", count)
-	setText(signLabels, "Info", info)
+	local labels = { Title = title, Count = count, Info = info }
+	for name, text in labels do
+		local label = signLabels[name]
+		if label then
+			label.Text = text
+		end
+	end
 	local titleLabel = signLabels.Title
 	if titleLabel then
 		titleLabel.TextColor3 = color
@@ -389,7 +379,7 @@ function Arena.setPad(state: string, title: string, count: string, info: string)
 end
 
 return Arena
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXDD71044AEA3244ADB0F9F8082D5F82B9"><Properties><string name="Name">Game</string><ProtectedString name="Source">-- The game itself: lottery -&gt; vote -&gt; slap -&gt; guess, round after round, until 2 players are left.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX4AF265916D67465A8127AA4082058D37"><Properties><string name="Name">Game</string><ProtectedString name="Source">-- The game itself: lottery -&gt; vote -&gt; slap -&gt; guess, round after round, until 2 players are left.
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Shared = ReplicatedStorage:WaitForChild("WhoSlappedMe")
@@ -408,13 +398,13 @@ type Rec = Participants.Rec
 type Waiter = Waiter.Waiter
 type Ctx = { aborted: boolean, waiters: { [Waiter]: boolean } }
 
-local WINNERS_LEFT = 2 -- the game ends when this many (or fewer) players are left
 local rng = Random.new()
 
 local Game = {}
 
 local state = {
 	running = false,
+	winnersLeft = 2, -- the game ends when this many (or fewer) players are left (1 in a small Studio test)
 	round = 1, -- number of the next slap (sudden death uses it)
 	everFull = false, -- once full, nobody can join this game any more
 	eliminated = {} :: { [number]: boolean },
@@ -533,17 +523,6 @@ local function updatePad()
 	JoinPad.showInGame(open, Participants.count())
 end
 
-local function screenCountdown(seconds: number, waiter: Waiter)
-	task.spawn(function()
-		for s = seconds, 1, -1 do
-			if waiter.done then
-				return
-			end
-			Arena.setScreenInfo(tostring(s))
-			task.wait(1)
-		end
-	end)
-end
 
 ---------------------------------------------------------------------------
 -- joining mid-game
@@ -583,7 +562,7 @@ end
 
 local function runLottery(): boolean
 	local list = Participants.list()
-	if #list &lt;= WINNERS_LEFT then
+	if #list &lt;= state.winnersLeft then
 		return false
 	end
 	local winner = list[rng:NextInteger(1, #list)]
@@ -592,7 +571,6 @@ local function runLottery(): boolean
 		table.insert(cards, Participants.card(rec))
 	end
 	Net.sendList(players(), "Lottery", { cards = cards, winner = winner.userId, duration = Config.LOTTERY_TIME })
-	Arena.setScreen("LOTTERY", "Who goes into the HOT SEAT?", "")
 	if sleep(Config.LOTTERY_TIME + 0.4) or not alive(winner) then
 		return false
 	end
@@ -614,7 +592,6 @@ local function runLottery(): boolean
 			end
 		end
 	end
-	Arena.setScreen("HOT SEAT", winner.name, "is getting slapped!")
 	status(players(), winner.name .. " is in the HOT SEAT!")
 	return not sleep(1.5)
 end
@@ -638,7 +615,7 @@ end
 
 local function runVote(front: Rec): Rec?
 	local backs = backRecs()
-	if #backs &lt; 2 then
+	if #backs == 0 then
 		return nil
 	end
 	local eligible: { Rec } = {}
@@ -663,8 +640,6 @@ local function runVote(front: Rec): Rec?
 	state.vote = { votes = {}, voters = voters, eligible = eligibleSet, waiter = waiter }
 	Net.sendList(playersOf(backs), "VoteOpen", { cards = cards, endsAt = workspace:GetServerTimeNow() + Config.VOTE_TIME })
 	Net.send(front.player, "Status", { text = "The others are voting... don't look back!" })
-	Arena.setScreen("VOTING", "Who will slap " .. front.name .. "?", "")
-	screenCountdown(Config.VOTE_TIME, waiter)
 	await(waiter, Config.VOTE_TIME + 0.3)
 	local vote = state.vote
 	state.vote = nil
@@ -744,7 +719,6 @@ local function runSlap(front: Rec, slapper: Rec): SlapResult?
 
 	-- 1. the front player's screen goes black BEFORE the slapper gets up
 	Net.send(front.player, "Blackout", { on = true })
-	Arena.setScreen("SHHH...", "The slapper is getting up", "")
 	if sleep(0.7) then
 		return nil
 	end
@@ -777,7 +751,6 @@ local function runSlap(front: Rec, slapper: Rec): SlapResult?
 		local add = math.floor(Config.CHARGE_VALUES[i] * mult + 0.5)
 		total += add
 		Net.send(slapper.player, "PowerResult", { index = i, add = add, zone = zone, total = total })
-		Arena.setScreenInfo(("Power %d%%"):format(total))
 		if sleep(0.45) then
 			return nil
 		end
@@ -789,7 +762,6 @@ local function runSlap(front: Rec, slapper: Rec): SlapResult?
 	local blockWaiter = Waiter.new()
 	state.block = { sentAt = os.clock(), duration = duration, waiter = blockWaiter }
 	Net.send(front.player, "ProtectStart", { duration = duration })
-	Arena.setScreen("SLAP INCOMING!", ("%d%% power"):format(total), "")
 	if sleep(math.max(duration - Config.SLAP_WINDUP, 0)) then
 		return nil
 	end
@@ -818,7 +790,6 @@ local function runSlap(front: Rec, slapper: Rec): SlapResult?
 	state.round += 1
 	Titles.onBlock(front, block)
 	Net.sendAll("SlapResult", { userId = front.userId, power = total, damage = damage, block = block })
-	Arena.setScreen(("%d%% SLAP!"):format(total), ("-%d HP"):format(damage), block ~= "MISS" and (block .. " BLOCK!") or "")
 	sleep(1.1)
 	return { power = total, damage = damage, block = block }
 end
@@ -875,8 +846,6 @@ local function runGuess(front: Rec, slapper: Rec, block: string): (boolean?, num
 		clue = block == "PERFECT",
 	})
 	status(playersOf(backs), front.name .. " is guessing... keep a straight face!")
-	Arena.setScreen("WHO SLAPPED ME?", front.name .. " is guessing...", "")
-	screenCountdown(Config.GUESS_TIME, waiter)
 	local guess = await(waiter, Config.GUESS_TIME + 0.5)
 	state.guess = nil
 	waiter:resolve(nil)
@@ -889,7 +858,6 @@ end
 local function knockOut(front: Rec, slapper: Rec)
 	state.front = nil
 	Net.sendAll("KO", { userId = front.userId })
-	Arena.setScreen("KNOCKED OUT!", front.name .. " is out!", "Slapped by " .. slapper.name)
 	status(players(), ("%s was knocked out by %s!"):format(front.name, slapper.name))
 	task.wait(2)
 	if alive(front) then
@@ -904,7 +872,7 @@ end
 local function playRound()
 	state.ctx = { aborted = false, waiters = {} }
 	admitJoiners()
-	if Participants.count() &lt;= WINNERS_LEFT then
+	if Participants.count() &lt;= state.winnersLeft then
 		return
 	end
 	if not alive(state.front) then
@@ -950,7 +918,6 @@ local function playRound()
 			front = Participants.card(front),
 			slapper = Participants.card(slapper),
 		})
-		Arena.setScreen("CORRECT!", front.name .. " caught " .. slapper.name, "Swapping seats")
 		if sleep(1.5) then
 			return
 		end
@@ -962,7 +929,6 @@ local function playRound()
 		end
 	else
 		Net.sendList(list, "GuessResult", { correct = false, guessed = guessed, revealed = Config.ENABLE_REVEAL })
-		Arena.setScreen("WRONG!", front.name .. " stays in the hot seat", "")
 		if Config.ENABLE_REVEAL and not sleep(1.5) then
 			Reveal.run(slapper, front, sleep)
 		end
@@ -994,11 +960,9 @@ local function finish()
 			table.insert(names, rec.name)
 		end
 		Net.sendAll("Winners", { list = winners })
-		Arena.setScreen("WINNERS!", table.concat(names, " &amp; "), "")
 		task.wait(Config.WINNER_TIME)
 	elseif #list &gt; 0 then
 		status(players(), "Not enough players left. Game cancelled.")
-		Arena.setScreen("GAME CANCELLED", "Not enough players", "")
 		task.wait(2)
 	end
 	state.running = false
@@ -1016,15 +980,20 @@ function Game.run(starters: { Player })
 	state.eliminated = {}
 	state.front, state.slapper = nil, nil
 	state.lastSlapper, state.slapStreak = 0, 0
+	-- a Studio test with fewer than MIN_PLAYERS plays until 1 is left, a real game until 2 are left
+	state.winnersLeft = #starters &lt; Config.MIN_PLAYERS and 1 or 2
 	for _, player in starters do
 		Participants.add(player)
+	end
+	if state.winnersLeft == 1 then
+		status(players(), ("STUDIO TEST MODE: %d players, last one standing wins"):format(#starters))
 	end
 	if Participants.count() &gt;= Arena.maxPlayers then
 		state.everFull = true
 	end
 	updatePad()
 
-	while Participants.count() &gt; WINNERS_LEFT do
+	while Participants.count() &gt; state.winnersLeft do
 		local ok, err = pcall(playRound)
 		if not ok then
 			warn("[WhoSlappedMe] round error: " .. tostring(err))
@@ -1048,6 +1017,9 @@ function Game.run(starters: { Player })
 end
 
 function Game.init()
+	JoinPad.isPlaying = function(player: Player): boolean
+		return Participants.get(player) ~= nil
+	end
 	JoinPad.canJoin = function(player: Player): boolean
 		-- knocked-out / left players wait for the NEXT game
 		return Participants.get(player) == nil and not (state.running and state.eliminated[player.UserId])
@@ -1069,7 +1041,7 @@ function Game.init()
 		elseif state.slapper == rec then
 			abort()
 		end
-		if Participants.count() &lt;= WINNERS_LEFT then
+		if Participants.count() &lt;= state.winnersLeft then
 			abort()
 		end
 		if reason ~= "finished" then
@@ -1144,7 +1116,8 @@ function Game.init()
 end
 
 return Game
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX84AE9637680D48D897E76ECE4FF0C8EF"><Properties><string name="Name">JoinPad</string><ProtectedString name="Source">-- Who is standing on the join pad, and the lobby countdown.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX423A3427E1F849F1A13569BFB3454525"><Properties><string name="Name">JoinPad</string><ProtectedString name="Source">-- Who is standing on the join pad, the lobby countdown,
+-- and the safety check that never lets anyone stay stuck inside the arena.
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -1152,23 +1125,36 @@ local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChi
 local Modules = script.Parent
 local Net = require(Modules.Net)
 local Arena = require(Modules.Arena)
+local Seating = require(Modules.Seating)
 
 local SCAN_INTERVAL = 0.25
+local EJECT_COOLDOWN = 1
 
 local JoinPad = {}
 local entered: { [Player]: number } = {}
+local lastEject: { [Player]: number } = {}
 
--- Game.lua sets this: may this player join right now?
+-- Game.lua sets these
 JoinPad.canJoin = function(_player: Player): boolean
 	return true
 end
+JoinPad.isPlaying = function(_player: Player): boolean
+	return false
+end
 
-local function isInside(player: Player): boolean
-	local zone = Arena.zone
+local function getRoot(player: Player): (BasePart?, Humanoid?)
 	local character = player.Character
 	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
 	local root = character and character:FindFirstChild("HumanoidRootPart") :: BasePart?
-	if not zone or not humanoid or not root or humanoid.Health &lt;= 0 then
+	if not humanoid or not root or humanoid.Health &lt;= 0 then
+		return nil, nil
+	end
+	return root, humanoid
+end
+
+local function onPad(root: BasePart): boolean
+	local zone = Arena.zone
+	if not zone then
 		return false
 	end
 	local rel = zone.CFrame:PointToObjectSpace(root.Position)
@@ -1176,9 +1162,23 @@ local function isInside(player: Player): boolean
 	return math.abs(rel.X) &lt;= half.X + 0.5 and math.abs(rel.Z) &lt;= half.Z + 0.5 and rel.Y &gt; -2 and rel.Y &lt; 10
 end
 
+-- Anyone inside the glass who is not in the game is sent out (server + their own client).
+local function eject(player: Player, root: BasePart, humanoid: Humanoid)
+	local now = os.clock()
+	if lastEject[player] and now - lastEject[player] &lt; EJECT_COOLDOWN then
+		return
+	end
+	lastEject[player] = now
+	local exit = Arena.points.ExitSpot.CFrame
+	local character = root.Parent :: Model
+	Seating.release(character, humanoid, exit)
+	Net.send(player, "Eject", { cf = exit })
+end
+
 local function scan()
 	for _, player in Players:GetPlayers() do
-		local inside = isInside(player)
+		local root, humanoid = getRoot(player)
+		local inside = root ~= nil and onPad(root)
 		if inside and not entered[player] then
 			entered[player] = os.clock()
 			Net.send(player, "Pad", { on = true })
@@ -1186,12 +1186,16 @@ local function scan()
 			entered[player] = nil
 			Net.send(player, "Pad", { on = false })
 		end
+		if root and humanoid and not JoinPad.isPlaying(player) and Arena.isInside(root.Position) then
+			eject(player, root, humanoid)
+		end
 	end
 end
 
 function JoinPad.start()
 	Players.PlayerRemoving:Connect(function(player)
 		entered[player] = nil
+		lastEject[player] = nil
 	end)
 	task.spawn(function()
 		while true do
@@ -1219,15 +1223,20 @@ function JoinPad.queue(): { Player }
 end
 
 -- Blocks until a game should start. Returns the players that start it.
+-- The countdown only runs while at least the minimum number of players is on the pad.
 function JoinPad.runLobby(): { Player }
 	local countdown: number? = nil
 	local max = Arena.maxPlayers
 	while true do
 		local list = JoinPad.queue()
-		if #list == 0 then
+		local need = Config.minPlayers()
+		if #list &lt; need then
+			if countdown then
+				Net.sendList(list, "Status", { text = "Not enough players. Countdown stopped." })
+			end
 			countdown = nil
-			Arena.setPad("Open", "STAND HERE TO JOIN", ("0/%d"):format(max), ("Needs %d players"):format(Config.MIN_PLAYERS))
-			Arena.setScreen("WHO SLAPPED ME?", "Step on the glowing pad to play", ("%d - %d players"):format(Config.MIN_PLAYERS, max))
+			Arena.setPad("Open", "STAND HERE TO JOIN", ("%d/%d"):format(#list, max), ("Waiting for players %d/%d"):format(#list, need))
+			Net.sendList(list, "PadCount", { count = #list, max = max, need = need })
 		else
 			if not countdown then
 				countdown = Config.JOIN_COUNTDOWN
@@ -1236,22 +1245,14 @@ function JoinPad.runLobby(): { Player }
 				countdown = math.min(countdown :: number, Config.FULL_COUNTDOWN)
 			end
 			if (countdown :: number) &lt;= 0 then
-				if #list &gt;= Config.MIN_PLAYERS then
-					local chosen = {}
-					for i = 1, math.min(#list, max) do
-						chosen[i] = list[i]
-					end
-					return chosen
+				local chosen = {}
+				for i = 1, math.min(#list, max) do
+					chosen[i] = list[i]
 				end
-				countdown = Config.JOIN_COUNTDOWN
-				Net.sendList(list, "Status", { text = ("Need at least %d players. Waiting for more..."):format(Config.MIN_PLAYERS) })
+				return chosen
 			end
-			local enough = #list &gt;= Config.MIN_PLAYERS
-			local info = enough and ("Starting in %d"):format(countdown :: number)
-				or ("Need %d more · %d"):format(Config.MIN_PLAYERS - #list, countdown :: number)
-			Arena.setPad("Countdown", "STAND HERE TO JOIN", ("%d/%d"):format(#list, max), info)
-			Arena.setScreen("WHO SLAPPED ME?", ("%d/%d players on the pad"):format(#list, max), info)
-			Net.sendList(list, "PadCount", { seconds = countdown, count = #list, max = max, enough = enough })
+			Arena.setPad("Countdown", "STAND HERE TO JOIN", ("%d/%d"):format(#list, max), ("Starting in %d"):format(countdown :: number))
+			Net.sendList(list, "PadCount", { count = #list, max = max, need = need, seconds = countdown })
 		end
 		task.wait(1)
 		if countdown then
@@ -1271,7 +1272,7 @@ function JoinPad.showInGame(open: boolean, count: number)
 end
 
 return JoinPad
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX4B6A32E8773F4C3CB835DC48B49040BC"><Properties><string name="Name">Net</string><ProtectedString name="Source">-- The single RemoteEvent of the game, with a per-player rate limit.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX73B8A2465ACC4886972ECFCAA89FB82A"><Properties><string name="Name">Net</string><ProtectedString name="Source">-- The single RemoteEvent of the game, with a per-player rate limit.
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -1329,7 +1330,7 @@ Players.PlayerRemoving:Connect(function(player)
 end)
 
 return Net
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXD0A2D06A7B07488AB1D5811F65B41733"><Properties><string name="Name">Participants</string><ProtectedString name="Source">-- Everyone who is inside the current game: health, seat, locks and clean-up.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXCE759A12EE304D3298F5D308D54F9C4A"><Properties><string name="Name">Participants</string><ProtectedString name="Source">-- Everyone who is inside the current game: health, seat, locks and clean-up.
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChild("Config"))
@@ -1526,6 +1527,7 @@ function Participants.standAt(rec: Rec, cf: CFrame)
 	end
 	rec.busy = true
 	Anim.stop(character, "Sit")
+	Net.send(rec.player, "StandUp") -- the client owns its character: let it stand up too
 	Seating.standAt(character, humanoid, cf)
 end
 
@@ -1596,7 +1598,8 @@ function Participants.remove(player: Player, reason: string, destination: CFrame
 		end
 	end
 
-	Net.send(player, "Left", { reason = reason })
+	-- the client also moves itself out, so nobody ever stays stuck inside the arena
+	Net.send(player, "Left", { reason = reason, cf = destination })
 	local callback = Participants.onRemoved
 	if callback then
 		callback(rec, reason)
@@ -1604,7 +1607,7 @@ function Participants.remove(player: Player, reason: string, destination: CFrame
 end
 
 return Participants
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXC491CD7FD85544B4AC2AD262BE3E42AF"><Properties><string name="Name">Reveal</string><ProtectedString name="Source">-- TEST FEATURE (Config.ENABLE_REVEAL): after a wrong guess the slapper replays the slap
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX82D74D3898CD4142ACCF4315053FE322"><Properties><string name="Name">Reveal</string><ProtectedString name="Source">-- TEST FEATURE (Config.ENABLE_REVEAL): after a wrong guess the slapper replays the slap
 -- while everyone in the game watches from the side camera, with "It was X!".
 -- Safe to delete: Game.lua checks Config.ENABLE_REVEAL before calling it.
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -1625,7 +1628,6 @@ function Reveal.run(slapper: any, front: any, sleep: (number) -&gt; boolean)
 	end
 	local duration = Config.REVEAL_TIME
 	Net.sendAll("Reveal", { userId = slapper.userId, name = slapper.name, duration = duration })
-	Arena.setScreen("IT WAS...", slapper.name .. "!", "")
 
 	Participants.standAt(slapper, Arena.points.SlapSpot.CFrame)
 	local character = slapper.player.Character
@@ -1648,7 +1650,7 @@ function Reveal.run(slapper: any, front: any, sleep: (number) -&gt; boolean)
 end
 
 return Reveal
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX6FE77E063508464AB31EDC06304FB5BD"><Properties><string name="Name">Seating</string><ProtectedString name="Source">-- Moving characters in and out of seats. All server side.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX63908BFF888B4B5E894B47A302A55234"><Properties><string name="Name">Seating</string><ProtectedString name="Source">-- Moving characters in and out of seats. All server side.
 local Seating = {}
 
 function Seating.root(character: Model): BasePart?
@@ -1690,19 +1692,33 @@ function Seating.sit(character: Model, humanoid: Humanoid, seat: Seat): boolean
 	return humanoid.SeatPart == seat
 end
 
+-- Really gets the character out of its seat: keeps breaking the seat weld until the seat lets go.
+-- (The player's own client is also told to stand up, see Participants.)
+function Seating.standUp(humanoid: Humanoid)
+	for _ = 1, 10 do
+		Seating.unseat(humanoid)
+		if humanoid.SeatPart == nil then
+			return
+		end
+		task.wait(0.05)
+	end
+end
+
 -- Teleports and freezes the character (the slapper behind the hot seat).
 function Seating.standAt(character: Model, humanoid: Humanoid, cf: CFrame)
-	Seating.unseat(humanoid)
+	Seating.standUp(humanoid)
 	local root = Seating.root(character)
 	if root then
 		root.Anchored = true
 	end
 	character:PivotTo(cf)
+	task.wait(0.1)
+	character:PivotTo(cf) -- once more, in case the seat pulled it back in between
 end
 
 -- Sends the character somewhere outside the game, free to walk.
 function Seating.release(character: Model, humanoid: Humanoid, cf: CFrame)
-	Seating.unseat(humanoid)
+	Seating.standUp(humanoid)
 	local root = Seating.root(character)
 	if root then
 		root.Anchored = false
@@ -1711,7 +1727,7 @@ function Seating.release(character: Model, humanoid: Humanoid, cf: CFrame)
 end
 
 return Seating
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX166568AA19D8474BBA4EC24F1FD6BDBD"><Properties><string name="Name">Titles</string><ProtectedString name="Source">-- TEST FEATURE (Config.ENABLE_TITLES): fun titles above heads during a game.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXC77B739939B34599A4A20B6172BBBAE8"><Properties><string name="Name">Titles</string><ProtectedString name="Source">-- TEST FEATURE (Config.ENABLE_TITLES): fun titles above heads during a game.
 -- Safe to delete: Game.lua only calls these functions, and they do nothing when the feature is off.
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -1794,7 +1810,7 @@ function Titles.onSlapper(rec: any, caught: boolean)
 end
 
 return Titles
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXAD87EAC29CAF4C47B9D6F366C3DAB56C"><Properties><string name="Name">Waiter</string><ProtectedString name="Source">-- One-shot wait with a timeout. resolve() wakes the waiting thread right away (no polling).
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX5AC594A047AC4959BC3D85679257FD07"><Properties><string name="Name">Waiter</string><ProtectedString name="Source">-- One-shot wait with a timeout. resolve() wakes the waiting thread right away (no polling).
 local Waiter = {}
 Waiter.__index = Waiter
 
@@ -1840,7 +1856,7 @@ function Waiter.await(self: Waiter, timeout: number): any
 end
 
 return Waiter
-</ProtectedString></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBXBA9231C107ED4CF9A3F76E3CE0A8FBC4"><Properties><string name="Name">StarterPlayerScripts</string></Properties><Item class="Folder" referent="RBX6C0342C449084DEEBE75CADC31961D38"><Properties><string name="Name">WhoSlappedMe</string></Properties><Item class="LocalScript" referent="RBXDB5F09C141E449DABC0ACD9AFE13C3BA"><Properties><string name="Name">ClientMain</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBX630F4E8610644DD18A309277E6001325"><Properties><string name="Name">StarterPlayerScripts</string></Properties><Item class="Folder" referent="RBX2BF993E9245C48548C09174F9DE9ACBC"><Properties><string name="Name">WhoSlappedMe</string></Properties><Item class="LocalScript" referent="RBX9704B12AD42146EE9303C5762BE787A3"><Properties><string name="Name">ClientMain</string><ProtectedString name="Source">--[[
 	WHO SLAPPED ME? - client entry point
 	Lives in StarterPlayer &gt; StarterPlayerScripts &gt; WhoSlappedMe
 ]]
@@ -1860,7 +1876,6 @@ local PowerBar = require(Modules.PowerBar)
 local Protect = require(Modules.Protect)
 local CameraCtl = require(Modules.CameraCtl)
 local Rules = require(Modules.Rules)
-local Spectate = require(Modules.Spectate)
 
 local C = UI.C
 local player = Players.LocalPlayer
@@ -1875,6 +1890,27 @@ local function setJumpLocked(locked: boolean)
 	if humanoid then
 		humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping, not locked)
 	end
+end
+
+-- The client owns its character, so standing up / moving out from here always works.
+local function standUp()
+	local character = player.Character
+	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+	if humanoid then
+		humanoid.Sit = false
+		humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
+	end
+end
+
+local function moveOut(cf: CFrame)
+	standUp()
+	task.delay(0.15, function()
+		local character = player.Character
+		local root = character and character:FindFirstChild("HumanoidRootPart") :: BasePart?
+		if character and root and not root.Anchored then
+			character:PivotTo(cf)
+		end
+	end)
 end
 
 local function closeAll()
@@ -1895,19 +1931,14 @@ end)
 Protect.bind(function(offset)
 	net:FireServer("Block", offset)
 end)
-Spectate.start()
 
 local handlers: { [string]: (any) -&gt; () } = {}
 
 handlers.Joined = function()
 	inGame = true
 	setJumpLocked(true)
-	Spectate.setInGame(true)
 	Fx.play("Join")
 	refreshButtons()
-	if Config.ENABLE_RULES_SCREEN then
-		Rules.showFirstTime()
-	end
 end
 
 handlers.Left = function(data)
@@ -1916,10 +1947,22 @@ handlers.Left = function(data)
 	closeAll()
 	Protect.reset()
 	CameraCtl.reset()
-	Spectate.setInGame(false)
 	refreshButtons()
+	if typeof(data.cf) == "CFrame" then
+		moveOut(data.cf)
+	end
 	if data.reason == "ko" then
 		Hud.banner("KNOCKED OUT!", "Better luck next game", C.Red, myId, 3)
+	end
+end
+
+handlers.StandUp = function()
+	standUp()
+end
+
+handlers.Eject = function(data)
+	if typeof(data.cf) == "CFrame" then
+		moveOut(data.cf)
 	end
 end
 
@@ -1936,9 +1979,6 @@ handlers.Pad = function(data)
 	onPad = data.on == true
 	Hud.setPad(onPad and not inGame)
 	refreshButtons()
-	if onPad and not inGame and Config.ENABLE_RULES_SCREEN then
-		Rules.showFirstTime()
-	end
 end
 
 handlers.PadCount = function(data)
@@ -2100,8 +2140,8 @@ player.CharacterAdded:Connect(function()
 	-- a new character is never in the game (the server removes players when their character goes)
 	CameraCtl.reset()
 end)
-</ProtectedString><bool name="Disabled">false</bool></Properties></Item><Item class="Folder" referent="RBXE25E58F46A094476869B88642AD53281"><Properties><string name="Name">Modules</string></Properties><Item class="ModuleScript" referent="RBXEB28915E16B9432C9DB2F098305D3FD1"><Properties><string name="Name">CameraCtl</string><ProtectedString name="Source">-- Camera modes: front-seat first person lock, reveal shot, spectate shot, and shake.
--- Priority: reveal &gt; front &gt; spectate. With no mode the normal Roblox camera is back.
+</ProtectedString><bool name="Disabled">false</bool></Properties></Item><Item class="Folder" referent="RBX8A70B7674B6743C08B2EF2CFC5DCA98E"><Properties><string name="Name">Modules</string></Properties><Item class="ModuleScript" referent="RBXAC4C7B1EB2AE4F7FB4FED9370F9C4BCE"><Properties><string name="Name">CameraCtl</string><ProtectedString name="Source">-- Camera modes: front-seat first person lock, reveal shot, and shake.
+-- Priority: reveal &gt; front. With no mode the normal Roblox camera is back.
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
@@ -2112,7 +2152,6 @@ local CameraCtl = {}
 
 local frontLook: Vector3? = nil
 local revealCF: CFrame? = nil
-local spectateCF: CFrame? = nil
 local bound = false
 local shakeUntil, shakePower, shakeLength = 0, 0, 1
 
@@ -2145,9 +2184,6 @@ local function step()
 		end
 	end
 	if not cf then
-		cf = spectateCF
-	end
-	if not cf then
 		return
 	end
 	if camera.CameraType ~= Enum.CameraType.Scriptable then
@@ -2157,7 +2193,7 @@ local function step()
 end
 
 local function refresh()
-	local wanted = revealCF ~= nil or frontLook ~= nil or spectateCF ~= nil
+	local wanted = revealCF ~= nil or frontLook ~= nil
 	if wanted and not bound then
 		bound = true
 		RunService:BindToRenderStep(BIND, Enum.RenderPriority.Camera.Value + 1, step)
@@ -2191,15 +2227,6 @@ function CameraCtl.setReveal(cf: CFrame?)
 	refresh()
 end
 
-function CameraCtl.setSpectate(cf: CFrame?)
-	spectateCF = cf
-	refresh()
-end
-
-function CameraCtl.isSpectating(): boolean
-	return spectateCF ~= nil
-end
-
 function CameraCtl.shake(power: number, length: number?)
 	shakePower = power
 	shakeLength = length or 0.5
@@ -2207,12 +2234,12 @@ function CameraCtl.shake(power: number, length: number?)
 end
 
 function CameraCtl.reset()
-	frontLook, revealCF, spectateCF = nil, nil, nil
+	frontLook, revealCF = nil, nil
 	refresh()
 end
 
 return CameraCtl
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX874668EC34B24A4BA68BD23DB0E936D9"><Properties><string name="Name">Fx</string><ProtectedString name="Source">-- Sounds, slap particles, hand print, popups. Everything is local and reused (no new parts per slap).
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX98B001E887E946D9973E12165E99DE0E"><Properties><string name="Name">Fx</string><ProtectedString name="Source">-- Sounds, slap particles, hand print, popups. Everything is local and reused (no new parts per slap).
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local SoundService = game:GetService("SoundService")
@@ -2454,10 +2481,9 @@ function Fx.ko(userId: number)
 end
 
 return Fx
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX0CDEB626E6134EDA94A862A3DE569879"><Properties><string name="Name">Hud</string><ProtectedString name="Source">-- Status line, pad info, Leave / ? buttons, result banners and the winners screen.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX3C13C7B0F6914CEA9998BD0084C94B09"><Properties><string name="Name">Hud</string><ProtectedString name="Source">-- Status line, pad info, Leave / ? buttons, result banners and the winners screen.
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChild("Config"))
 local UI = require(script.Parent.UI)
 local C = UI.C
 
@@ -2536,10 +2562,10 @@ function Hud.padCount(data: any)
 	if not padInfo.Visible then
 		return
 	end
-	if data.enough then
+	if data.seconds then
 		padInfo.Text = ("%d/%d players · Starting in %d"):format(data.count, data.max, data.seconds)
 	else
-		padInfo.Text = ("%d/%d players · Need %d to start · %d"):format(data.count, data.max, Config.MIN_PLAYERS, data.seconds)
+		padInfo.Text = ("Waiting for players %d/%d"):format(data.count, data.need)
 	end
 end
 
@@ -2737,7 +2763,7 @@ function Hud.winners(list: { any }, seconds: number)
 end
 
 return Hud
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX592819F9FF5E4DB68C0CF9B3947E85D8"><Properties><string name="Name">Picker</string><ProtectedString name="Source">-- Avatar card panel used for the lottery, the vote and the guess.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX7B2B3FC7E7BF47008261C6B3B631B47E"><Properties><string name="Name">Picker</string><ProtectedString name="Source">-- Avatar card panel used for the lottery, the vote and the guess.
 local UI = require(script.Parent.UI)
 local Fx = require(script.Parent.Fx)
 local C = UI.C
@@ -2963,7 +2989,7 @@ function Picker.lottery(cards: { Card }, winner: number, duration: number, onDon
 end
 
 return Picker
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX150A4C432DA34FFE879751486253342D"><Properties><string name="Name">PowerBar</string><ProtectedString name="Source">-- Slapper mini-game: the needle sweeps ONCE per charge. Tap in the green middle.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXCE5271AC055F4518ABF137E2E0AE9A3D"><Properties><string name="Name">PowerBar</string><ProtectedString name="Source">-- Slapper mini-game: the needle sweeps ONCE per charge. Tap in the green middle.
 -- No tap = it stops at the end by itself (red, weakest).
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
@@ -3204,7 +3230,7 @@ function PowerBar.close()
 end
 
 return PowerBar
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX0993B4B98E424C2CB72D497F51F26A84"><Properties><string name="Name">Protect</string><ProtectedString name="Source">-- Front player: black screen while the slapper is behind, and the BLOCK mini-game
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX7E9C9F1924E347D8BF523D064D5B2D3E"><Properties><string name="Name">Protect</string><ProtectedString name="Source">-- Front player: black screen while the slapper is behind, and the BLOCK mini-game
 -- (a ring shrinks onto the circle; the slap lands exactly when it touches).
 local UserInputService = game:GetService("UserInputService")
 
@@ -3414,7 +3440,7 @@ function Protect.reset()
 end
 
 return Protect
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX1A837E7A0FB5490489DDE46B01A42B2D"><Properties><string name="Name">Rules</string><ProtectedString name="Source">-- TEST FEATURE (Config.ENABLE_RULES_SCREEN): rules cards shown the first time, and on the "?" button.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX59C90BACD131413DB420A405C8531FF0"><Properties><string name="Name">Rules</string><ProtectedString name="Source">-- TEST FEATURE (Config.ENABLE_RULES_SCREEN): one panel with all the rules, opened only by the "?" button.
 -- Safe to delete: ClientMain checks the setting before using it.
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -3422,185 +3448,87 @@ local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChi
 local UI = require(script.Parent.UI)
 local C = UI.C
 
-local CARDS = {
-	{
-		"🎰 LOTTERY",
-		"One player is picked to sit in the HOT SEAT. Everyone else sits behind them.",
-	},
-	{
-		"🗳️ VOTE",
-		"The players in the back vote who slaps. Most votes slaps. A tie is decided at random.",
-	},
-	{
-		"✋ SLAP &amp; 🛡️ BLOCK",
-		"The slapper charges power 3 times: tap in the GREEN. The hot seat player sees a black screen. Press BLOCK when the ring hits the circle: less damage. A PERFECT block crosses out 2 players who did NOT slap!",
-	},
-	{
-		"🤔 GUESS",
-		"Guess who slapped you. Right: you swap seats. Wrong: you stay in the hot seat. 0 HP = knocked out. The last 2 players win!",
-	},
+local RULES = {
+	{ "🎰 LOTTERY", "One player goes into the HOT SEAT. The others sit behind." },
+	{ "🗳️ VOTE", "The back seats vote who slaps. Most votes wins, a tie is random." },
+	{ "🛡️ BLOCK", "Slapper taps in the GREEN 3 times. Hot seat: press BLOCK when the ring hits the circle. PERFECT = less damage + 2 innocent players crossed out." },
+	{ "🤔 GUESS", "Right guess: swap seats. Wrong: stay. 0 HP = out. Last 2 win!" },
 }
 
 local Rules = {}
 
-local panel = UI.panel({ Name = "Rules", ZIndex = 90, MaxSize = Vector2.new(520, 340) })
-local title = UI.label({
-	Position = UDim2.fromScale(0.05, 0.06),
-	Size = UDim2.fromScale(0.9, 0.18),
+local panel = UI.panel({ Name = "Rules", ZIndex = 90, Size = UDim2.fromScale(0.92, 0.75), MaxSize = Vector2.new(560, 420) })
+UI.label({
+	Position = UDim2.fromScale(0.05, 0.03),
+	Size = UDim2.fromScale(0.9, 0.11),
+	Text = "HOW TO PLAY",
 	Font = Enum.Font.GothamBlack,
 	TextColor3 = C.Gold,
-	MaxText = 40,
+	MaxText = 34,
 	Parent = panel,
 })
-local body = UI.label({
-	Position = UDim2.fromScale(0.07, 0.28),
-	Size = UDim2.fromScale(0.86, 0.42),
-	TextWrapped = true,
-	Font = Enum.Font.GothamMedium,
-	MaxText = 24,
+local list = UI.make("Frame", {
+	Position = UDim2.fromScale(0.05, 0.16),
+	Size = UDim2.fromScale(0.9, 0.66),
+	BackgroundTransparency = 1,
 	Parent = panel,
-})
-local page = UI.label({
-	Position = UDim2.fromScale(0.05, 0.71),
-	Size = UDim2.fromScale(0.9, 0.07),
-	TextColor3 = C.SubText,
-	MaxText = 18,
-	Parent = panel,
-})
-local nextButton = UI.button({
-	AnchorPoint = Vector2.new(0.5, 1),
-	Position = UDim2.fromScale(0.5, 0.95),
-	Size = UDim2.fromScale(0.5, 0.14),
-	Text = "NEXT",
-	Parent = panel,
-})
+}, { UI.make("UIListLayout", { Padding = UDim.new(0.02, 0), SortOrder = Enum.SortOrder.LayoutOrder }) })
 
-local index = 1
-local shownOnce = false
-
-local function render()
-	local card = CARDS[index]
-	title.Text = card[1]
-	body.Text = card[2]
-	page.Text = ("%d / %d"):format(index, #CARDS)
-	nextButton.Text = index &lt; #CARDS and "NEXT" or "GOT IT!"
+for i, rule in RULES do
+	local row = UI.make("Frame", {
+		LayoutOrder = i,
+		Size = UDim2.fromScale(1, 0.235),
+		BackgroundColor3 = C.Card,
+		Parent = list,
+	}, { UI.corner(10) })
+	UI.label({
+		Position = UDim2.fromScale(0.03, 0.1),
+		Size = UDim2.fromScale(0.27, 0.8),
+		Text = rule[1],
+		Font = Enum.Font.GothamBlack,
+		TextXAlignment = Enum.TextXAlignment.Left,
+		MaxText = 20,
+		Parent = row,
+	})
+	UI.label({
+		Position = UDim2.fromScale(0.31, 0.08),
+		Size = UDim2.fromScale(0.67, 0.84),
+		Text = rule[2],
+		Font = Enum.Font.GothamMedium,
+		TextColor3 = C.SubText,
+		TextWrapped = true,
+		TextXAlignment = Enum.TextXAlignment.Left,
+		MaxText = 16,
+		Parent = row,
+	})
 end
 
-nextButton.Activated:Connect(function()
-	if index &lt; #CARDS then
-		index += 1
-		render()
-	else
-		panel.Visible = false
-	end
+local closeButton = UI.button({
+	AnchorPoint = Vector2.new(0.5, 1),
+	Position = UDim2.fromScale(0.5, 0.96),
+	Size = UDim2.fromScale(0.4, 0.1),
+	Text = "GOT IT",
+	Parent = panel,
+})
+closeButton.Activated:Connect(function()
+	panel.Visible = false
 end)
 
+-- "?" button: open / close
 function Rules.show()
 	if not Config.ENABLE_RULES_SCREEN then
 		return
 	end
-	index = 1
-	render()
+	if panel.Visible then
+		panel.Visible = false
+		return
+	end
 	panel.Visible = true
 	UI.pop(panel)
 end
 
-function Rules.showFirstTime()
-	if not shownOnce then
-		shownOnce = true
-		Rules.show()
-	end
-end
-
-function Rules.hide()
-	panel.Visible = false
-end
-
 return Rules
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX9F3D5BCAA5F647B8925E581DB1F82047"><Properties><string name="Name">Spectate</string><ProtectedString name="Source">-- TEST FEATURE (Config.ENABLE_SPECTATE_CAM): "SPECTATE" button for players watching near the arena.
--- Safe to delete: ClientMain checks the setting before using it.
-local Players = game:GetService("Players")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
-local Shared = ReplicatedStorage:WaitForChild("WhoSlappedMe")
-local Config = require(Shared:WaitForChild("Config"))
-local UI = require(script.Parent.UI)
-local CameraCtl = require(script.Parent.CameraCtl)
-local C = UI.C
-
-local player = Players.LocalPlayer
-
-local Spectate = {}
-local inGame = false
-
-local button = UI.button({
-	Name = "Spectate",
-	AnchorPoint = Vector2.new(1, 1),
-	Position = UDim2.new(1, -16, 1, -16),
-	Size = UDim2.fromOffset(170, 46),
-	BackgroundColor3 = C.Card,
-	Text = "👁 SPECTATE",
-	MaxText = 20,
-	Visible = false,
-	ZIndex = 75,
-	Parent = UI.root(),
-})
-
-local function near(): boolean
-	local center = Shared:GetAttribute("ArenaCenter")
-	local character = player.Character
-	local root = character and character:FindFirstChild("HumanoidRootPart") :: BasePart?
-	if typeof(center) ~= "Vector3" or not root then
-		return false
-	end
-	return (root.Position - center).Magnitude &lt;= Config.SPECTATE_RADIUS
-end
-
-local function stop()
-	if CameraCtl.isSpectating() then
-		CameraCtl.setSpectate(nil)
-	end
-	button.Text = "👁 SPECTATE"
-end
-
-button.Activated:Connect(function()
-	if CameraCtl.isSpectating() then
-		stop()
-	else
-		local cf = Shared:GetAttribute("SpectateCam")
-		if typeof(cf) == "CFrame" then
-			CameraCtl.setSpectate(cf)
-			button.Text = "✕ STOP"
-		end
-	end
-end)
-
-function Spectate.setInGame(value: boolean)
-	inGame = value
-	if value then
-		stop()
-		button.Visible = false
-	end
-end
-
-function Spectate.start()
-	if not Config.ENABLE_SPECTATE_CAM then
-		return
-	end
-	task.spawn(function()
-		while true do
-			local show = not inGame and near()
-			if not show and button.Visible then
-				stop()
-			end
-			button.Visible = show
-			task.wait(0.5)
-		end
-	end)
-end
-
-return Spectate
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXE1E008DF389548E49383ABC31D430471"><Properties><string name="Name">UI</string><ProtectedString name="Source">-- Small helpers to build the UI in code, plus the one ScreenGui everything lives in.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXC9FD6A9A06F74F54BF55001C9036DBA3"><Properties><string name="Name">UI</string><ProtectedString name="Source">-- Small helpers to build the UI in code, plus the one ScreenGui everything lives in.
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
@@ -3747,4 +3675,4 @@ function UI.panel(props: { [string]: any }): Frame
 end
 
 return UI
-</ProtectedString></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBX61BB45914E3E4C85BA6B1153ED770C36"><Properties><string name="Name">Workspace</string></Properties><Item class="Model" referent="RBX348E7F2104764539994C9E0B5A461777"><Properties><string name="Name">WhoSlappedMe</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>0.0</X><Y>0.0</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Folder" referent="RBXFBF6977D928F4282879ED0B68FF5347A"><Properties><string name="Name">Map</string></Properties><Item class="Part" referent="RBX4372066E131849FF9FD8B694241C4C54"><Properties><string name="Name">Ground</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>-0.45</Y><Z>-50.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>100.0</X><Y>1.0</Y><Z>104.0</Z></Vector3><Color3uint8 name="Color3uint8">4282006600</Color3uint8><token name="Material">816</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXB1EC1EEECD82488293970DC024CCE031"><Properties><string name="Name">StageBase</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>1.05</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>52.0</X><Y>2.0</Y><Z>52.0</Z></Vector3><Color3uint8 name="Color3uint8">4280426032</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX1DE88C477F6A489A95B1260A4DB632F0"><Properties><string name="Name">StageFloor</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.15</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>50.0</X><Y>0.2</Y><Z>50.0</Z></Vector3><Color3uint8 name="Color3uint8">4282135130</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX6E338AEA722E42F79CBF78B499B915B2"><Properties><string name="Name">CenterCircle</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.27</Y><Z>-67.0</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.06</X><Y>22.0</Y><Z>22.0</Z></Vector3><Color3uint8 name="Color3uint8">4284760736</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">2</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXF8215AE21D0A444AB6C704FD0E682F23"><Properties><string name="Name">HotSeatGlow</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.28</Y><Z>-72.0</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.06</X><Y>8.0</Y><Z>8.0</Z></Vector3><Color3uint8 name="Color3uint8">4294917260</Color3uint8><token name="Material">288</token><float name="Transparency">0.3</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">2</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXF71F3D1B46944307A71DA73EDD2C64DF"><Properties><string name="Name">EdgeGlow</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.1</Y><Z>-86.05</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>52.6</X><Y>0.5</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4294917260</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXD143A575F53F4D1A9A8255518E501817"><Properties><string name="Name">EdgeGlow</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.1</Y><Z>-33.95</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>52.6</X><Y>0.5</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4294917260</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX8AE280D0ABC84B45B4A34E0DB8ECC2BE"><Properties><string name="Name">EdgeGlow</string><CoordinateFrame name="CFrame"><X>-26.05</X><Y>2.1</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.5</X><Y>0.5</Y><Z>52.6</Z></Vector3><Color3uint8 name="Color3uint8">4294917260</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX2EA629010467496C9E6ECAB247F76F7A"><Properties><string name="Name">EdgeGlow</string><CoordinateFrame name="CFrame"><X>26.05</X><Y>2.1</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.5</X><Y>0.5</Y><Z>52.6</Z></Vector3><Color3uint8 name="Color3uint8">4294917260</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXE520D8807B2745FBB43F0A736C55DCE1"><Properties><string name="Name">Backdrop</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>14.0</Y><Z>-87.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>52.0</X><Y>28.0</Y><Z>2.0</Z></Vector3><Color3uint8 name="Color3uint8">4279768100</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXCBE78C893F4F4927B9611FC8BE064F22"><Properties><string name="Name">ScreenFrame</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>11.0</Y><Z>-85.9</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>30.0</X><Y>13.0</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4294917260</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXFFF37146107B42C4AB00FDAA0BC6C9E4"><Properties><string name="Name">TitleSign</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>22.5</Y><Z>-85.8</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>40.0</X><Y>5.0</Y><Z>0.6</Z></Vector3><Color3uint8 name="Color3uint8">4279768100</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBXC27C6D3C0DC844EA9960C05280381052"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">30.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBXA05EAED355D8474E9D33A17FFB2A3438"><Properties><string name="Name">Title</string><string name="Text">WHO SLAPPED ME?</string><UDim2 name="Position"><XS>0.02</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.96</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.921569</R><G>0.72549</G><B>0.235294</B></Color3><float name="TextStrokeTransparency">0.4</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item><Item class="Part" referent="RBX54ADD4DEAA93437CB49A4BB7191776A7"><Properties><string name="Name">Pillar</string><CoordinateFrame name="CFrame"><X>-26.8</X><Y>7.05</Y><Z>-33.2</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>2.4</X><Y>14.0</Y><Z>2.4</Z></Vector3><Color3uint8 name="Color3uint8">4293638460</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX713619369BE849A088717B6C50077C62"><Properties><string name="Name">PillarCap</string><CoordinateFrame name="CFrame"><X>-26.8</X><Y>14.45</Y><Z>-33.2</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>2.8</X><Y>0.8</Y><Z>2.8</Z></Vector3><Color3uint8 name="Color3uint8">4294917260</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXA43E3B45638941D9ADD5E19DCB51AA2A"><Properties><string name="Name">Pillar</string><CoordinateFrame name="CFrame"><X>26.8</X><Y>7.05</Y><Z>-33.2</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>2.4</X><Y>14.0</Y><Z>2.4</Z></Vector3><Color3uint8 name="Color3uint8">4293638460</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX27B9D0C231644079942B7E603C12B85B"><Properties><string name="Name">PillarCap</string><CoordinateFrame name="CFrame"><X>26.8</X><Y>14.45</Y><Z>-33.2</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>2.8</X><Y>0.8</Y><Z>2.8</Z></Vector3><Color3uint8 name="Color3uint8">4294917260</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXBDA13300A66247B990B667F743BCF191"><Properties><string name="Name">ArchPost</string><CoordinateFrame name="CFrame"><X>-7.4</X><Y>6.3</Y><Z>-31.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>1.2</X><Y>12.5</Y><Z>1.2</Z></Vector3><Color3uint8 name="Color3uint8">4293638460</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXA4D5542B50C94A3E8B0B48F116F7DF59"><Properties><string name="Name">ArchPost</string><CoordinateFrame name="CFrame"><X>7.4</X><Y>6.3</Y><Z>-31.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>1.2</X><Y>12.5</Y><Z>1.2</Z></Vector3><Color3uint8 name="Color3uint8">4293638460</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXCD19854DCFAF43CFB90B8E7538939106"><Properties><string name="Name">ArchSign</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>13.4</Y><Z>-31.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>16.0</X><Y>2.4</Y><Z>1.0</Z></Vector3><Color3uint8 name="Color3uint8">4279768100</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBX06976668AC33467ABDAD0A6A10DBD197"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">30.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBXBF8213BC7D9145959B191BBBB15B4DF0"><Properties><string name="Name">Title</string><string name="Text">WHO SLAPPED ME?</string><UDim2 name="Position"><XS>0.03</XS><XO>0</XO><YS>0.08</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.94</XS><XO>0</XO><YS>0.84</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>1.0</R><G>0.235294</G><B>0.54902</B></Color3><float name="TextStrokeTransparency">0.4</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item><Item class="Part" referent="RBXDDF35538B5D24F619DE6F9A585ED4DB4"><Properties><string name="Name">LightBar</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>20.0</Y><Z>-72.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>6.0</X><Y>0.6</Y><Z>1.2</Z></Vector3><Color3uint8 name="Color3uint8">4280163876</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SpotLight" referent="RBXD36DF0387C1D454EB5D4C7D247754136"><Properties><string name="Name">SpotLight</string><float name="Angle">55.0</float><float name="Brightness">4.0</float><Color3 name="Color"><R>1.0</R><G>0.882353</G><B>0.803922</B></Color3><token name="Face">4</token><float name="Range">24.0</float><bool name="Shadows">true</bool><bool name="Enabled">true</bool></Properties></Item></Item><Item class="Part" referent="RBX4E5A7EF1BD114F6F9F9F076180663DD8"><Properties><string name="Name">Bleacher</string><CoordinateFrame name="CFrame"><X>-31.0</X><Y>0.8</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.0</X><Y>1.5</Y><Z>46.0</Z></Vector3><Color3uint8 name="Color3uint8">4282794080</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXEF9FEC5939FF41F2B7B12C5BF6AD5797"><Properties><string name="Name">Bleacher</string><CoordinateFrame name="CFrame"><X>-34.0</X><Y>1.55</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.0</X><Y>3.0</Y><Z>46.0</Z></Vector3><Color3uint8 name="Color3uint8">4283715184</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXC540DBA4B7D74B039F0FDDBEC6B5E96B"><Properties><string name="Name">Bleacher</string><CoordinateFrame name="CFrame"><X>-37.0</X><Y>2.3</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.0</X><Y>4.5</Y><Z>46.0</Z></Vector3><Color3uint8 name="Color3uint8">4282794080</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXC39901E979E04C7690855157404B88F0"><Properties><string name="Name">Bleacher</string><CoordinateFrame name="CFrame"><X>31.0</X><Y>0.8</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.0</X><Y>1.5</Y><Z>46.0</Z></Vector3><Color3uint8 name="Color3uint8">4282794080</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX1264159A2F724F1D88537D532407E749"><Properties><string name="Name">Bleacher</string><CoordinateFrame name="CFrame"><X>34.0</X><Y>1.55</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.0</X><Y>3.0</Y><Z>46.0</Z></Vector3><Color3uint8 name="Color3uint8">4283715184</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX19270D045A154642BC0BB612A93E5EB3"><Properties><string name="Name">Bleacher</string><CoordinateFrame name="CFrame"><X>37.0</X><Y>2.3</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.0</X><Y>4.5</Y><Z>46.0</Z></Vector3><Color3uint8 name="Color3uint8">4282794080</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item></Item><Item class="Folder" referent="RBX234C434BC4B940028ABEEB3EE95A93B4"><Properties><string name="Name">Border</string></Properties><Item class="Part" referent="RBX8B6ED31409E048A4B950B0A2AEF1500D"><Properties><string name="Name">GlassLeft</string><CoordinateFrame name="CFrame"><X>-25.7</X><Y>7.25</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.6</X><Y>10.0</Y><Z>52.0</Z></Vector3><Color3uint8 name="Color3uint8">4289385215</Color3uint8><token name="Material">1568</token><float name="Transparency">0.8</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXF595B8BEE91841149A07D189C8D6EF53"><Properties><string name="Name">GlassRight</string><CoordinateFrame name="CFrame"><X>25.7</X><Y>7.25</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.6</X><Y>10.0</Y><Z>52.0</Z></Vector3><Color3uint8 name="Color3uint8">4289385215</Color3uint8><token name="Material">1568</token><float name="Transparency">0.8</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX4AEEFCA9655A4757821D537DD51E6A70"><Properties><string name="Name">GlassFront</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>7.25</Y><Z>-34.3</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>52.0</X><Y>10.0</Y><Z>0.6</Z></Vector3><Color3uint8 name="Color3uint8">4289385215</Color3uint8><token name="Material">1568</token><float name="Transparency">0.8</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXCCADFBDB8AA547CE8E194D78DFF7A0D5"><Properties><string name="Name">RailLeft</string><CoordinateFrame name="CFrame"><X>-25.7</X><Y>12.5</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.9</X><Y>0.5</Y><Z>52.0</Z></Vector3><Color3uint8 name="Color3uint8">4294917260</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXB3CDC751595D47A5AC73F10E966D5978"><Properties><string name="Name">RailRight</string><CoordinateFrame name="CFrame"><X>25.7</X><Y>12.5</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.9</X><Y>0.5</Y><Z>52.0</Z></Vector3><Color3uint8 name="Color3uint8">4294917260</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXB57BE1BB638E4673892C60E9DB4D3430"><Properties><string name="Name">RailFront</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>12.5</Y><Z>-34.3</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>52.0</X><Y>0.5</Y><Z>0.9</Z></Vector3><Color3uint8 name="Color3uint8">4294917260</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXF5192D2B100D415A9189475F33D8CA62"><Properties><string name="Name">BarrierLeft</string><CoordinateFrame name="CFrame"><X>-25.7</X><Y>32.5</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.6</X><Y>40.0</Y><Z>52.0</Z></Vector3><Color3uint8 name="Color3uint8">4289385215</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXC006DE10C8B84134B1B5C2CABA877B0B"><Properties><string name="Name">BarrierRight</string><CoordinateFrame name="CFrame"><X>25.7</X><Y>32.5</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.6</X><Y>40.0</Y><Z>52.0</Z></Vector3><Color3uint8 name="Color3uint8">4289385215</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX8B0A8534669B4445BE2293050A93878A"><Properties><string name="Name">BarrierFront</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>32.5</Y><Z>-34.3</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>52.0</X><Y>40.0</Y><Z>0.6</Z></Vector3><Color3uint8 name="Color3uint8">4289385215</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXE6DCF018BDF24BFDACB4014A608B68B2"><Properties><string name="Name">BarrierBack</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>40.0</Y><Z>-86.4</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>52.0</X><Y>24.0</Y><Z>0.6</Z></Vector3><Color3uint8 name="Color3uint8">4289385215</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item></Item><Item class="Folder" referent="RBX89685DCDA9584D76B7282E3FAFAAFC88"><Properties><string name="Name">Seats</string></Properties><Item class="Model" referent="RBX099D3F553B1C48B8A4A8675EFB2BF954"><Properties><string name="Name">HotSeat</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>0.0</X><Y>3.75</Y><Z>-72.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBXB1B248A718154A46A3EEE40BD9DC4F91"><Properties><string name="Name">Pedestal</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.75</Y><Z>-72.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>5.0</X><Y>1.0</Y><Z>5.0</Z></Vector3><Color3uint8 name="Color3uint8">4293638460</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBXE67ED118652C40359449411A6C460216"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>3.75</Y><Z>-72.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.0</X><Y>1.0</Y><Z>3.0</Z></Vector3><Color3uint8 name="Color3uint8">4291961660</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXDE7CCAF17A1D4227AAFC5AA8948A5C49"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>5.25</Y><Z>-70.2</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.4</X><Y>2.0</Y><Z>0.6</Z></Vector3><Color3uint8 name="Color3uint8">4291961660</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX2646FD9636AD4EA7A748D1D554F7C658"><Properties><string name="Name">BackTrim</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>6.4</Y><Z>-70.2</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.8</X><Y>0.35</Y><Z>0.8</Z></Vector3><Color3uint8 name="Color3uint8">4293638460</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX57F257C2758C4BA18E5FB45DD119F098"><Properties><string name="Name">ArmLeft</string><CoordinateFrame name="CFrame"><X>-1.95</X><Y>4.75</Y><Z>-72.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.6</X><Y>1.0</Y><Z>3.2</Z></Vector3><Color3uint8 name="Color3uint8">4293638460</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXC890F4871DB74F2798D1BBB79617DA7B"><Properties><string name="Name">ArmRight</string><CoordinateFrame name="CFrame"><X>1.95</X><Y>4.75</Y><Z>-72.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.6</X><Y>1.0</Y><Z>3.2</Z></Vector3><Color3uint8 name="Color3uint8">4293638460</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item></Item><Item class="Model" referent="RBX94D530DB8ECC4DC1B0C257CC61B444EE"><Properties><string name="Name">BackSeat1</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>-9.725217</X><Y>3.75</Y><Z>-61.929243</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBX1E532F60C8E24428BDBEE149FAC997FE"><Properties><string name="Name">Ring</string><CoordinateFrame name="CFrame"><X>-9.725217</X><Y>2.28</Y><Z>-61.929243</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.06</X><Y>4.6</Y><Z>4.6</Z></Vector3><Color3uint8 name="Color3uint8">4282557941</Color3uint8><token name="Material">288</token><float name="Transparency">0.35</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">2</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX36692BF2F73C4D37B1A3993B0346C2A3"><Properties><string name="Name">Pedestal</string><CoordinateFrame name="CFrame"><X>-9.725217</X><Y>2.75</Y><Z>-61.929243</Z><R00>0.71934</R00><R01>0.0</R01><R02>-0.694658</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.694658</R20><R21>0.0</R21><R22>0.71934</R22></CoordinateFrame><Vector3 name="size"><X>3.2</X><Y>1.0</Y><Z>3.2</Z></Vector3><Color3uint8 name="Color3uint8">4280821304</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBXBCCD8CCBEC0941B59EB3EE3DF81759DD"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>-9.725217</X><Y>3.75</Y><Z>-61.929243</Z><R00>0.71934</R00><R01>0.0</R01><R02>-0.694658</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.694658</R20><R21>0.0</R21><R22>0.71934</R22></CoordinateFrame><Vector3 name="size"><X>2.6</X><Y>1.0</Y><Z>2.6</Z></Vector3><Color3uint8 name="Color3uint8">4282557941</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX6DF781FE8C294746B20A472BE8F038C4"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>-10.801938</X><Y>5.25</Y><Z>-60.814266</Z><R00>0.71934</R00><R01>0.0</R01><R02>-0.694658</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.694658</R20><R21>0.0</R21><R22>0.71934</R22></CoordinateFrame><Vector3 name="size"><X>2.8</X><Y>2.0</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4282557941</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBXA72E677EE5C1456F953B8597AE949154"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBX7E530A7601E04E369CD6B4F9EA6B3F29"><Properties><string name="Name">Number</string><string name="Text">1</string><UDim2 name="Position"><XS>0.25</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.5</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>1.0</R><G>1.0</G><B>1.0</B></Color3><float name="TextStrokeTransparency">0.3</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item><Item class="Model" referent="RBXFEAA1EFCF6A5468CB98EB0C728A6C01B"><Properties><string name="Name">BackSeat2</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>-5.244492</X><Y>3.75</Y><Z>-59.019426</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBX832A7F863D1846D6BA72FD0B0631543E"><Properties><string name="Name">Ring</string><CoordinateFrame name="CFrame"><X>-5.244492</X><Y>2.28</Y><Z>-59.019426</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.06</X><Y>4.6</Y><Z>4.6</Z></Vector3><Color3uint8 name="Color3uint8">4284922730</Color3uint8><token name="Material">288</token><float name="Transparency">0.35</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">2</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX170AAFAC226F4A36A463FAB2D2B8A47F"><Properties><string name="Name">Pedestal</string><CoordinateFrame name="CFrame"><X>-5.244492</X><Y>2.75</Y><Z>-59.019426</Z><R00>0.927184</R00><R01>0.0</R01><R02>-0.374607</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.374607</R20><R21>0.0</R21><R22>0.927184</R22></CoordinateFrame><Vector3 name="size"><X>3.2</X><Y>1.0</Y><Z>3.2</Z></Vector3><Color3uint8 name="Color3uint8">4280821304</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBXEFCA2775C320405AB832AB9C3508890D"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>-5.244492</X><Y>3.75</Y><Z>-59.019426</Z><R00>0.927184</R00><R01>0.0</R01><R02>-0.374607</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.374607</R20><R21>0.0</R21><R22>0.927184</R22></CoordinateFrame><Vector3 name="size"><X>2.6</X><Y>1.0</Y><Z>2.6</Z></Vector3><Color3uint8 name="Color3uint8">4284922730</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXCAF91BE9C27943FBBD00E527538AFCF5"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>-5.825133</X><Y>5.25</Y><Z>-57.582291</Z><R00>0.927184</R00><R01>0.0</R01><R02>-0.374607</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.374607</R20><R21>0.0</R21><R22>0.927184</R22></CoordinateFrame><Vector3 name="size"><X>2.8</X><Y>2.0</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4284922730</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBXD3B3D8900C5946BA8B0A735963ADDEE9"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBXEF82FFB158184F33A88B7EC9BF1E2759"><Properties><string name="Name">Number</string><string name="Text">2</string><UDim2 name="Position"><XS>0.25</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.5</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>1.0</R><G>1.0</G><B>1.0</B></Color3><float name="TextStrokeTransparency">0.3</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item><Item class="Model" referent="RBXE7A9C8B44F1A47A88637CE2C6480C5EF"><Properties><string name="Name">BackSeat3</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>0.0</X><Y>3.75</Y><Z>-58.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBXBA61F98FF4BF466998973A668C7F673B"><Properties><string name="Name">Ring</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.28</Y><Z>-58.0</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.06</X><Y>4.6</Y><Z>4.6</Z></Vector3><Color3uint8 name="Color3uint8">4294953512</Color3uint8><token name="Material">288</token><float name="Transparency">0.35</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">2</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX6072C9DB5761425D9FA34CE95023E93A"><Properties><string name="Name">Pedestal</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.75</Y><Z>-58.0</Z><R00>1.0</R00><R01>0.0</R01><R02>-0.0</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.0</R20><R21>0.0</R21><R22>1.0</R22></CoordinateFrame><Vector3 name="size"><X>3.2</X><Y>1.0</Y><Z>3.2</Z></Vector3><Color3uint8 name="Color3uint8">4280821304</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBXF6A07D7CD36D404C97C3E14266A39B88"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>3.75</Y><Z>-58.0</Z><R00>1.0</R00><R01>0.0</R01><R02>-0.0</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.0</R20><R21>0.0</R21><R22>1.0</R22></CoordinateFrame><Vector3 name="size"><X>2.6</X><Y>1.0</Y><Z>2.6</Z></Vector3><Color3uint8 name="Color3uint8">4294953512</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX5CB0FB78C3B7475685596C75B7810402"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>5.25</Y><Z>-56.45</Z><R00>1.0</R00><R01>0.0</R01><R02>-0.0</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.0</R20><R21>0.0</R21><R22>1.0</R22></CoordinateFrame><Vector3 name="size"><X>2.8</X><Y>2.0</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4294953512</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBXBEA94AF434C742429882BDFA67FB58A6"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBX52DF993005D04C5A94182C442942488E"><Properties><string name="Name">Number</string><string name="Text">3</string><UDim2 name="Position"><XS>0.25</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.5</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>1.0</R><G>1.0</G><B>1.0</B></Color3><float name="TextStrokeTransparency">0.3</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item><Item class="Model" referent="RBX4999359ACB394C4B9D16CC8D3E53C228"><Properties><string name="Name">BackSeat4</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>5.244492</X><Y>3.75</Y><Z>-59.019426</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBXE79B36A41028403D9BE905B34FB88C59"><Properties><string name="Name">Ring</string><CoordinateFrame name="CFrame"><X>5.244492</X><Y>2.28</Y><Z>-59.019426</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.06</X><Y>4.6</Y><Z>4.6</Z></Vector3><Color3uint8 name="Color3uint8">4289415100</Color3uint8><token name="Material">288</token><float name="Transparency">0.35</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">2</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX958CF7B1ED084D4C9DF6E1E4B4ED06F6"><Properties><string name="Name">Pedestal</string><CoordinateFrame name="CFrame"><X>5.244492</X><Y>2.75</Y><Z>-59.019426</Z><R00>0.927184</R00><R01>0.0</R01><R02>0.374607</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.374607</R20><R21>0.0</R21><R22>0.927184</R22></CoordinateFrame><Vector3 name="size"><X>3.2</X><Y>1.0</Y><Z>3.2</Z></Vector3><Color3uint8 name="Color3uint8">4280821304</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBX320442C8A81E493BAE4C46C3CCE40E77"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>5.244492</X><Y>3.75</Y><Z>-59.019426</Z><R00>0.927184</R00><R01>0.0</R01><R02>0.374607</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.374607</R20><R21>0.0</R21><R22>0.927184</R22></CoordinateFrame><Vector3 name="size"><X>2.6</X><Y>1.0</Y><Z>2.6</Z></Vector3><Color3uint8 name="Color3uint8">4289415100</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX1F9B79E3CB7C4C6AAF9B06A89235A759"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>5.825133</X><Y>5.25</Y><Z>-57.582291</Z><R00>0.927184</R00><R01>0.0</R01><R02>0.374607</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.374607</R20><R21>0.0</R21><R22>0.927184</R22></CoordinateFrame><Vector3 name="size"><X>2.8</X><Y>2.0</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4289415100</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBX15D3A4999B7B4A3A84FAC8D6EE64BC75"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBXA336B40B44614E268518FA16A208A695"><Properties><string name="Name">Number</string><string name="Text">4</string><UDim2 name="Position"><XS>0.25</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.5</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>1.0</R><G>1.0</G><B>1.0</B></Color3><float name="TextStrokeTransparency">0.3</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item><Item class="Model" referent="RBX12DCAD65D5D3461BAB039829FCC6253D"><Properties><string name="Name">BackSeat5</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>9.725217</X><Y>3.75</Y><Z>-61.929243</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBXD11FD20EB4F742D5AB7BDD1C3E9A7D7E"><Properties><string name="Name">Ring</string><CoordinateFrame name="CFrame"><X>9.725217</X><Y>2.28</Y><Z>-61.929243</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.06</X><Y>4.6</Y><Z>4.6</Z></Vector3><Color3uint8 name="Color3uint8">4294930499</Color3uint8><token name="Material">288</token><float name="Transparency">0.35</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">2</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX2595C3949C844322A764C35F9597CD68"><Properties><string name="Name">Pedestal</string><CoordinateFrame name="CFrame"><X>9.725217</X><Y>2.75</Y><Z>-61.929243</Z><R00>0.71934</R00><R01>0.0</R01><R02>0.694658</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.694658</R20><R21>0.0</R21><R22>0.71934</R22></CoordinateFrame><Vector3 name="size"><X>3.2</X><Y>1.0</Y><Z>3.2</Z></Vector3><Color3uint8 name="Color3uint8">4280821304</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBX60FD1AAD3C3145BFAAC347AE0AE75AFF"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>9.725217</X><Y>3.75</Y><Z>-61.929243</Z><R00>0.71934</R00><R01>0.0</R01><R02>0.694658</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.694658</R20><R21>0.0</R21><R22>0.71934</R22></CoordinateFrame><Vector3 name="size"><X>2.6</X><Y>1.0</Y><Z>2.6</Z></Vector3><Color3uint8 name="Color3uint8">4294930499</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX428FD02D16CC4BDEAECFB89611817B4F"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>10.801938</X><Y>5.25</Y><Z>-60.814266</Z><R00>0.71934</R00><R01>0.0</R01><R02>0.694658</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.694658</R20><R21>0.0</R21><R22>0.71934</R22></CoordinateFrame><Vector3 name="size"><X>2.8</X><Y>2.0</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4294930499</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBX6F515D431EFD40DDAAF2920B285960E7"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBXFA47DBC31D93474D81CA55D62CD172D3"><Properties><string name="Name">Number</string><string name="Text">5</string><UDim2 name="Position"><XS>0.25</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.5</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>1.0</R><G>1.0</G><B>1.0</B></Color3><float name="TextStrokeTransparency">0.3</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item></Item><Item class="Folder" referent="RBX5540DDF487D747AC88323D70A4E6A611"><Properties><string name="Name">Points</string></Properties><Item class="Part" referent="RBX6F5E82C5E85B4E2992C8BA3E04D7197A"><Properties><string name="Name">SlapSpot</string><CoordinateFrame name="CFrame"><X>1.3</X><Y>5.25</Y><Z>-69.2</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>2.0</X><Y>2.0</Y><Z>1.0</Z></Vector3><Color3uint8 name="Color3uint8">4294922320</Color3uint8><token name="Material">288</token><float name="Transparency">0.5</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX860F77E509D24AC89BA7F25AF5FB0E54"><Properties><string name="Name">KOSpot</string><CoordinateFrame name="CFrame"><X>-34.0</X><Y>6.05</Y><Z>-60.0</Z><R00>0.0</R00><R01>0.0</R01><R02>-1.0</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>1.0</R20><R21>0.0</R21><R22>-0.0</R22></CoordinateFrame><Vector3 name="size"><X>2.0</X><Y>2.0</Y><Z>1.0</Z></Vector3><Color3uint8 name="Color3uint8">4294922320</Color3uint8><token name="Material">288</token><float name="Transparency">0.5</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX5E75147A17D64DF882D6A375E4DB48EC"><Properties><string name="Name">ExitSpot</string><CoordinateFrame name="CFrame"><X>9.0</X><Y>3.35</Y><Z>-20.0</Z><R00>1.0</R00><R01>0.0</R01><R02>-0.0</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.0</R20><R21>0.0</R21><R22>1.0</R22></CoordinateFrame><Vector3 name="size"><X>2.0</X><Y>2.0</Y><Z>1.0</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.5</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX14B2422A5C844863995D600541AD8C2F"><Properties><string name="Name">RevealCam</string><CoordinateFrame name="CFrame"><X>14.0</X><Y>9.0</Y><Z>-66.5</Z><R00>0.365652</R00><R01>-0.134699</R01><R02>0.920953</R02><R10>0.0</R10><R11>0.989472</R11><R12>0.144721</R12><R20>-0.930751</R20><R21>-0.052918</R21><R22>0.361803</R22></CoordinateFrame><Vector3 name="size"><X>1.0</X><Y>1.0</Y><Z>2.0</Z></Vector3><Color3uint8 name="Color3uint8">4283474175</Color3uint8><token name="Material">288</token><float name="Transparency">0.5</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX38213B938CEA4542806DE30F7BA37F92"><Properties><string name="Name">SpectateCam</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>34.0</Y><Z>-38.0</Z><R00>1.0</R00><R01>0.0</R01><R02>-0.0</R02><R10>-0.0</R10><R11>0.670286</R11><R12>0.742103</R12><R20>0.0</R20><R21>-0.742103</R21><R22>0.670286</R22></CoordinateFrame><Vector3 name="size"><X>1.0</X><Y>1.0</Y><Z>2.0</Z></Vector3><Color3uint8 name="Color3uint8">4283474175</Color3uint8><token name="Material">288</token><float name="Transparency">0.5</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item></Item><Item class="Folder" referent="RBX92D7A1BEBF83469495576AA84E35F00C"><Properties><string name="Name">Screens</string></Properties><Item class="Part" referent="RBXDD8712B54B924764BA7BB11E45279BFE"><Properties><string name="Name">PhaseScreen</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>11.0</Y><Z>-85.65</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>29.0</X><Y>12.0</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4278716428</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBX268CF84FA40F4A61A2BF6089FFD80657"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">40.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBX69BA1E233B3646579CFB93A010DB1652"><Properties><string name="Name">Title</string><string name="Text">WHO SLAPPED ME?</string><UDim2 name="Position"><XS>0.04</XS><XO>0</XO><YS>0.08</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.92</XS><XO>0</XO><YS>0.38</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>1.0</R><G>0.235294</G><B>0.54902</B></Color3><float name="TextStrokeTransparency">0.6</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item><Item class="TextLabel" referent="RBX62EEC3349880499D9162F51A8D7CD075"><Properties><string name="Name">Sub</string><string name="Text">Step on the glowing pad to play</string><UDim2 name="Position"><XS>0.04</XS><XO>0</XO><YS>0.5</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.92</XS><XO>0</XO><YS>0.22</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>1.0</R><G>1.0</G><B>1.0</B></Color3><float name="TextStrokeTransparency">1.0</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>700</Weight><Style>Normal</Style></Font></Properties></Item><Item class="TextLabel" referent="RBXC212D9178B6540B1A334879BBF7F4033"><Properties><string name="Name">Info</string><string name="Text" /><UDim2 name="Position"><XS>0.04</XS><XO>0</XO><YS>0.76</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.92</XS><XO>0</XO><YS>0.18</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.921569</R><G>0.72549</G><B>0.235294</B></Color3><float name="TextStrokeTransparency">1.0</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>700</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item><Item class="Model" referent="RBX8F14B3E9719D454E8D659C5E5C1C1CDD"><Properties><string name="Name">JoinPad</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>0.0</X><Y>0.2</Y><Z>-20.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBX63736C6B4BFE4BD68AB5F2A28480FDE2"><Properties><string name="Name">Zone</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>0.2</Y><Z>-20.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>12.0</X><Y>0.3</Y><Z>12.0</Z></Vector3><Color3uint8 name="Color3uint8">4280558640</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXAE852C1A5F504770BBB39634C12BEC80"><Properties><string name="Name">Glow</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>0.3</Y><Z>-26.15</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>12.8</X><Y>0.4</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX6F12173E04EA4F25A0EBB4158C84F36D"><Properties><string name="Name">Glow</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>0.3</Y><Z>-13.85</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>12.8</X><Y>0.4</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX9180170D966441F2B9C30C928701DA42"><Properties><string name="Name">Glow</string><CoordinateFrame name="CFrame"><X>-6.15</X><Y>0.3</Y><Z>-20.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.5</X><Y>0.4</Y><Z>12.8</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXF912420975694A95B57834933CB1CDBF"><Properties><string name="Name">Glow</string><CoordinateFrame name="CFrame"><X>6.15</X><Y>0.3</Y><Z>-20.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.5</X><Y>0.4</Y><Z>12.8</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXF83CBE1A5F2D40519704D1BED12389CE"><Properties><string name="Name">Sign</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>9.0</Y><Z>-20.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.4</X><Y>0.4</Y><Z>0.4</Z></Vector3><Color3uint8 name="Color3uint8">4294967295</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="BillboardGui" referent="RBX29C31BF9B2184AFB876909B4B195EF6F"><Properties><string name="Name">Board</string><UDim2 name="Size"><XS>16</XS><XO>0</XO><YS>6</YS><YO>0</YO></UDim2><float name="MaxDistance">160.0</float><float name="LightInfluence">0.0</float><bool name="AlwaysOnTop">false</bool></Properties><Item class="TextLabel" referent="RBXD0837BCBA0C147A4A4F0BDF317E072AE"><Properties><string name="Name">Title</string><string name="Text">STAND HERE TO JOIN</string><UDim2 name="Position"><XS>0</XS><XO>0</XO><YS>0</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>1</XS><XO>0</XO><YS>0.42</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.313725</R><G>0.862745</G><B>0.470588</B></Color3><float name="TextStrokeTransparency">0.2</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item><Item class="TextLabel" referent="RBX81D0AD4792EE4919B870BCF6E0C7D6E2"><Properties><string name="Name">Count</string><string name="Text">0/6</string><UDim2 name="Position"><XS>0</XS><XO>0</XO><YS>0.42</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>1</XS><XO>0</XO><YS>0.3</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>1.0</R><G>1.0</G><B>1.0</B></Color3><float name="TextStrokeTransparency">0.2</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item><Item class="TextLabel" referent="RBX63B6A2A774DE4BE6A9F73C22EAB80D09"><Properties><string name="Name">Info</string><string name="Text">Needs 3 players</string><UDim2 name="Position"><XS>0</XS><XO>0</XO><YS>0.72</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>1</XS><XO>0</XO><YS>0.28</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.921569</R><G>0.72549</G><B>0.235294</B></Color3><float name="TextStrokeTransparency">0.2</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>700</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item></Item></Item></Item></roblox>
+</ProtectedString></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBX0976703E3A3C4C908D8F86962D713518"><Properties><string name="Name">Workspace</string></Properties><Item class="Model" referent="RBX0CA4AE766926423D9E343F0B564FD83D"><Properties><string name="Name">WhoSlappedMe</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>0.0</X><Y>0.0</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Folder" referent="RBX5F9348B3DA114129A28979EF695D1DE6"><Properties><string name="Name">Map</string></Properties><Item class="Part" referent="RBX37BE93690DB044F2ADB4A58B48D386C2"><Properties><string name="Name">Plaza</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>-0.15</Y><Z>-57.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>30.0</X><Y>0.4</Y><Z>33.0</Z></Vector3><Color3uint8 name="Color3uint8">4279506470</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX80913C3155964FFFA73E167DA8994016"><Properties><string name="Name">Stage</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>0.8</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.0</X><Y>1.5</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4280164924</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX25E55740F9AD4AAFA5B04F937AE4B648"><Properties><string name="Name">EdgeFront</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>1.45</Y><Z>-53.45</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.3</X><Y>0.25</Y><Z>0.25</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX0A3DC40A65C340D1A7E1F1DF4C0404EB"><Properties><string name="Name">EdgeLeft</string><CoordinateFrame name="CFrame"><X>-10.05</X><Y>1.45</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.25</X><Y>0.25</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXD7394997C25E4B529332044722055B6D"><Properties><string name="Name">EdgeRight</string><CoordinateFrame name="CFrame"><X>10.05</X><Y>1.45</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.25</X><Y>0.25</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX43985380B1A14792A8E34DC82A6E5D9E"><Properties><string name="Name">HotSeatCircle</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>1.58</Y><Z>-65.5</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.05</X><Y>6.5</Y><Z>6.5</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.55</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">2</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXE06C78BB06304168ADB0BBD344E10A14"><Properties><string name="Name">LogoWall</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>5.55</Y><Z>-70.9</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.6</X><Y>8.0</Y><Z>0.8</Z></Vector3><Color3uint8 name="Color3uint8">4280164924</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX19A8E02A9AE3472F97E773FEB4F225EE"><Properties><string name="Name">LogoWallTop</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>9.7</Y><Z>-70.9</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.6</X><Y>0.3</Y><Z>0.9</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX03494900860C4957829EC97DD63EBCBD"><Properties><string name="Name">Logo</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>6.8</Y><Z>-70.45</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>11.0</X><Y>2.2</Y><Z>0.2</Z></Vector3><Color3uint8 name="Color3uint8">4279506470</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBX4E8436A204B648C0958197E710E63D24"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">40.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBXCD91A87B11B24D20932B0E7CAED5162A"><Properties><string name="Name">Title</string><string name="Text">WHO SLAPPED ME?</string><UDim2 name="Position"><XS>0.03</XS><XO>0</XO><YS>0.08</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.94</XS><XO>0</XO><YS>0.84</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.901961</R><G>0.705882</G><B>0.27451</B></Color3><float name="TextStrokeTransparency">0.5</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item><Item class="Part" referent="RBX1996EF2F796246999C47F21124DA6623"><Properties><string name="Name">Spotlight</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>14.0</Y><Z>-65.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.5</X><Y>0.5</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SpotLight" referent="RBXAFB42D42A44642A4BBCE46AFF6557FF0"><Properties><string name="Name">SpotLight</string><float name="Angle">50.0</float><float name="Brightness">3.0</float><Color3 name="Color"><R>1.0</R><G>0.894118</G><B>0.823529</B></Color3><token name="Face">4</token><float name="Range">16.0</float><bool name="Shadows">true</bool><bool name="Enabled">true</bool></Properties></Item></Item></Item><Item class="Folder" referent="RBX21184A2D9E8549A9ABCCBDE614E49571"><Properties><string name="Name">Border</string></Properties><Item class="Part" referent="RBXEC44D2213DEA4B68AF185A3A45D6A5DC"><Properties><string name="Name">GlassLeft</string><CoordinateFrame name="CFrame"><X>-10.0</X><Y>4.8</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.3</X><Y>6.5</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">1568</token><float name="Transparency">0.6</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXD5DFD05C46764A979F89D7A73EB2E633"><Properties><string name="Name">GlassRight</string><CoordinateFrame name="CFrame"><X>10.0</X><Y>4.8</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.3</X><Y>6.5</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">1568</token><float name="Transparency">0.6</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX2BCF532497284690A4BB9649730285E2"><Properties><string name="Name">GlassFront</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>4.8</Y><Z>-53.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.3</X><Y>6.5</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">1568</token><float name="Transparency">0.6</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX38D7C527FE724B24A4104946FC514E01"><Properties><string name="Name">RailLeft</string><CoordinateFrame name="CFrame"><X>-10.0</X><Y>8.17</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.45</X><Y>0.25</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXB6A96529B40C48799C4AB11F7CB31880"><Properties><string name="Name">RailRight</string><CoordinateFrame name="CFrame"><X>10.0</X><Y>8.17</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.45</X><Y>0.25</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXFE1684A4A9EB41EEBAF5F2806846DE68"><Properties><string name="Name">RailFront</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>8.17</Y><Z>-53.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.45</X><Y>0.25</Y><Z>0.45</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX7B3CFA9C01D84ABC8695E04E6EED7182"><Properties><string name="Name">PostLeft</string><CoordinateFrame name="CFrame"><X>-10.0</X><Y>5.15</Y><Z>-53.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.9</X><Y>7.2</Y><Z>0.9</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXD4FD8F748D724DDD83A073C745F0D333"><Properties><string name="Name">PostRight</string><CoordinateFrame name="CFrame"><X>10.0</X><Y>5.15</Y><Z>-53.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.9</X><Y>7.2</Y><Z>0.9</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXAFD31E5AD6E74F38B0FE7F00910D0514"><Properties><string name="Name">BarrierLeft</string><CoordinateFrame name="CFrame"><X>-10.0</X><Y>16.025</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.3</X><Y>15.95</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXB593D996BE5C40658C95D4A0E00623B2"><Properties><string name="Name">BarrierRight</string><CoordinateFrame name="CFrame"><X>10.0</X><Y>16.025</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.3</X><Y>15.95</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX7344DB33680E4B39BB8D92C2A47766D8"><Properties><string name="Name">BarrierFront</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>16.025</Y><Z>-53.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.3</X><Y>15.95</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXBF6FFD80905C4B3BAD2303CD695C7B08"><Properties><string name="Name">BarrierBack</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>16.925</Y><Z>-70.9</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.6</X><Y>14.15</Y><Z>0.8</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXD856D4F27DCA4D83919B4659BFF58AF2"><Properties><string name="Name">Roof</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>24.0</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.6</X><Y>0.5</Y><Z>17.8</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item></Item><Item class="Folder" referent="RBX42F33F1ED87045AB933ED08149715E51"><Properties><string name="Name">Seats</string></Properties><Item class="Model" referent="RBX76A2AEE3F86A401791558E630211F03F"><Properties><string name="Name">HotSeat</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>0.0</X><Y>2.55</Y><Z>-65.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBX4B1376CCBF2D4717B12AB0FADDA4D5F5"><Properties><string name="Name">Pedestal</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>1.85</Y><Z>-65.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.6</X><Y>0.6</Y><Z>3.6</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBX3168E894D11445BF9B84C5CC6382505E"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.55</Y><Z>-65.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>2.6</X><Y>0.8</Y><Z>2.6</Z></Vector3><Color3uint8 name="Color3uint8">4291635260</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX3C81379D31484A1BB60EA0A33DD3E0DE"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>3.85</Y><Z>-64.05</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>2.8</X><Y>1.8</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4291635260</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXC35ADA2B17F443029122A19E9816F526"><Properties><string name="Name">BackTrim</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>4.9</Y><Z>-64.05</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.1</X><Y>0.3</Y><Z>0.7</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXFA2EA72E6B6A4C8DBA0A4E48D54F6825"><Properties><string name="Name">ArmLeft</string><CoordinateFrame name="CFrame"><X>-1.55</X><Y>3.35</Y><Z>-65.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.5</X><Y>0.8</Y><Z>2.8</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXFC4C585B4BF045048B71A4ADD297CFED"><Properties><string name="Name">ArmRight</string><CoordinateFrame name="CFrame"><X>1.55</X><Y>3.35</Y><Z>-65.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.5</X><Y>0.8</Y><Z>2.8</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item></Item><Item class="Model" referent="RBX97FF5761CFE34E1287168EED2E469E1A"><Properties><string name="Name">BackSeat1</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>-6.128356</X><Y>2.55</Y><Z>-60.357699</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBXF63A945DA2604BBB89C3321D6473D5BF"><Properties><string name="Name">Leg</string><CoordinateFrame name="CFrame"><X>-6.128356</X><Y>2.05</Y><Z>-60.357699</Z><R00>0.642788</R00><R01>0.0</R01><R02>-0.766044</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.766044</R20><R21>0.0</R21><R22>0.642788</R22></CoordinateFrame><Vector3 name="size"><X>1.4</X><Y>1.0</Y><Z>1.4</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBXF3FC02F3B25F4946808307A3F16F49A5"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>-6.128356</X><Y>2.8</Y><Z>-60.357699</Z><R00>0.642788</R00><R01>0.0</R01><R02>-0.766044</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.766044</R20><R21>0.0</R21><R22>0.642788</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>0.5</Y><Z>2.2</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXB1692686C9274EBD828EF60435647802"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>-6.971004</X><Y>3.7</Y><Z>-59.650633</Z><R00>0.642788</R00><R01>0.0</R01><R02>-0.766044</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.766044</R20><R21>0.0</R21><R22>0.642788</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>1.3</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBX1042C3EB874D4F419B978896F718E891"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBXDFE059C193D64C75AFE84F678E1AF84B"><Properties><string name="Name">Number</string><string name="Text">1</string><UDim2 name="Position"><XS>0.3</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.4</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.117647</R><G>0.133333</G><B>0.235294</B></Color3><float name="TextStrokeTransparency">1.0</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item><Item class="Model" referent="RBXC2831C88036741F189A716E57D0A565C"><Properties><string name="Name">BackSeat2</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>-3.380946</X><Y>2.55</Y><Z>-58.249538</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBX9EFD8A452F934A02B2D54B1523C4DE06"><Properties><string name="Name">Leg</string><CoordinateFrame name="CFrame"><X>-3.380946</X><Y>2.05</Y><Z>-58.249538</Z><R00>0.906308</R00><R01>0.0</R01><R02>-0.422618</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.422618</R20><R21>0.0</R21><R22>0.906308</R22></CoordinateFrame><Vector3 name="size"><X>1.4</X><Y>1.0</Y><Z>1.4</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBX66E58A90AF58459A8571858E6490D1EE"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>-3.380946</X><Y>2.8</Y><Z>-58.249538</Z><R00>0.906308</R00><R01>0.0</R01><R02>-0.422618</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.422618</R20><R21>0.0</R21><R22>0.906308</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>0.5</Y><Z>2.2</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX473B44E48BD743398B92EC8216BAE4B4"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>-3.845826</X><Y>3.7</Y><Z>-57.252599</Z><R00>0.906308</R00><R01>0.0</R01><R02>-0.422618</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.422618</R20><R21>0.0</R21><R22>0.906308</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>1.3</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBXE0CDAA61B6B24254ADDFC51C50AB40BE"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBXB55E174C93294E5BA8C54E6BE2CFAF85"><Properties><string name="Name">Number</string><string name="Text">2</string><UDim2 name="Position"><XS>0.3</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.4</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.117647</R><G>0.133333</G><B>0.235294</B></Color3><float name="TextStrokeTransparency">1.0</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item><Item class="Model" referent="RBX3A9BB5A774674D3E8D5304B76555BF9B"><Properties><string name="Name">BackSeat3</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>0.0</X><Y>2.55</Y><Z>-57.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBX0E3AE466C17848C895C5CB77C19BB00C"><Properties><string name="Name">Leg</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.05</Y><Z>-57.5</Z><R00>1.0</R00><R01>0.0</R01><R02>-0.0</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.0</R20><R21>0.0</R21><R22>1.0</R22></CoordinateFrame><Vector3 name="size"><X>1.4</X><Y>1.0</Y><Z>1.4</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBXBE46B87A35C844B78025C9AFCC828B87"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.8</Y><Z>-57.5</Z><R00>1.0</R00><R01>0.0</R01><R02>-0.0</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.0</R20><R21>0.0</R21><R22>1.0</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>0.5</Y><Z>2.2</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX627C42E02847438FABEDDF00AB536A71"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>3.7</Y><Z>-56.4</Z><R00>1.0</R00><R01>0.0</R01><R02>-0.0</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.0</R20><R21>0.0</R21><R22>1.0</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>1.3</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBX912D03AD1E524B40B037A88D2B3E2195"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBX4059B08D100A4347A701914164809909"><Properties><string name="Name">Number</string><string name="Text">3</string><UDim2 name="Position"><XS>0.3</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.4</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.117647</R><G>0.133333</G><B>0.235294</B></Color3><float name="TextStrokeTransparency">1.0</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item><Item class="Model" referent="RBX304039A9A9E1476991D559F41F951D78"><Properties><string name="Name">BackSeat4</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>3.380946</X><Y>2.55</Y><Z>-58.249538</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBXA22B4F0E84BD4ADE99976C05BC9EB45F"><Properties><string name="Name">Leg</string><CoordinateFrame name="CFrame"><X>3.380946</X><Y>2.05</Y><Z>-58.249538</Z><R00>0.906308</R00><R01>0.0</R01><R02>0.422618</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.422618</R20><R21>0.0</R21><R22>0.906308</R22></CoordinateFrame><Vector3 name="size"><X>1.4</X><Y>1.0</Y><Z>1.4</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBX6EB56AB2CCE5424482BFD67897EE0C0C"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>3.380946</X><Y>2.8</Y><Z>-58.249538</Z><R00>0.906308</R00><R01>0.0</R01><R02>0.422618</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.422618</R20><R21>0.0</R21><R22>0.906308</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>0.5</Y><Z>2.2</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX022E778143A6446386A1CA931C5E7FE6"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>3.845826</X><Y>3.7</Y><Z>-57.252599</Z><R00>0.906308</R00><R01>0.0</R01><R02>0.422618</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.422618</R20><R21>0.0</R21><R22>0.906308</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>1.3</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBX1EE5B1CD16D54C84A33777F08EC2C668"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBXDFC262FDC62B454B95740D23BEDE7CBA"><Properties><string name="Name">Number</string><string name="Text">4</string><UDim2 name="Position"><XS>0.3</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.4</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.117647</R><G>0.133333</G><B>0.235294</B></Color3><float name="TextStrokeTransparency">1.0</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item><Item class="Model" referent="RBX3AB64FE7197E48AFB60E779729E7023B"><Properties><string name="Name">BackSeat5</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>6.128356</X><Y>2.55</Y><Z>-60.357699</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBX34076D3465024252AB4B51189768B855"><Properties><string name="Name">Leg</string><CoordinateFrame name="CFrame"><X>6.128356</X><Y>2.05</Y><Z>-60.357699</Z><R00>0.642788</R00><R01>0.0</R01><R02>0.766044</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.766044</R20><R21>0.0</R21><R22>0.642788</R22></CoordinateFrame><Vector3 name="size"><X>1.4</X><Y>1.0</Y><Z>1.4</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBX928E093F498D46CEB98524AE67DBE2A5"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>6.128356</X><Y>2.8</Y><Z>-60.357699</Z><R00>0.642788</R00><R01>0.0</R01><R02>0.766044</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.766044</R20><R21>0.0</R21><R22>0.642788</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>0.5</Y><Z>2.2</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX6BFC7B83884047EEA2330AD02ABF4717"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>6.971004</X><Y>3.7</Y><Z>-59.650633</Z><R00>0.642788</R00><R01>0.0</R01><R02>0.766044</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.766044</R20><R21>0.0</R21><R22>0.642788</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>1.3</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBX89DB64F8542B4B6BBDCF729514056D6A"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBX50700A7411AC45F4866ED580D5F02716"><Properties><string name="Name">Number</string><string name="Text">5</string><UDim2 name="Position"><XS>0.3</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.4</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.117647</R><G>0.133333</G><B>0.235294</B></Color3><float name="TextStrokeTransparency">1.0</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item></Item><Item class="Folder" referent="RBX6986547DA5034B78AE6B96AA498F38A1"><Properties><string name="Name">Points</string></Properties><Item class="Part" referent="RBX929E0E18ADE441A1A13E233D4C896060"><Properties><string name="Name">SlapSpot</string><CoordinateFrame name="CFrame"><X>1.2</X><Y>4.55</Y><Z>-62.9</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>2.0</X><Y>2.0</Y><Z>1.0</Z></Vector3><Color3uint8 name="Color3uint8">4294922320</Color3uint8><token name="Material">288</token><float name="Transparency">0.5</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXCF1892C0E0D3484F89F40F7C8F8F9B9A"><Properties><string name="Name">KOSpot</string><CoordinateFrame name="CFrame"><X>12.5</X><Y>3.3</Y><Z>-60.0</Z><R00>0.0</R00><R01>0.0</R01><R02>1.0</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-1.0</R20><R21>0.0</R21><R22>-0.0</R22></CoordinateFrame><Vector3 name="size"><X>2.0</X><Y>2.0</Y><Z>1.0</Z></Vector3><Color3uint8 name="Color3uint8">4294922320</Color3uint8><token name="Material">288</token><float name="Transparency">0.5</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXD91E4BEFE59D40DB8BA058B5D07BE1D5"><Properties><string name="Name">ExitSpot</string><CoordinateFrame name="CFrame"><X>6.5</X><Y>3.3</Y><Z>-47.5</Z><R00>1.0</R00><R01>0.0</R01><R02>-0.0</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.0</R20><R21>0.0</R21><R22>1.0</R22></CoordinateFrame><Vector3 name="size"><X>2.0</X><Y>2.0</Y><Z>1.0</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.5</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX7E329854A69742CB94890A24BA4DEFA0"><Properties><string name="Name">RevealCam</string><CoordinateFrame name="CFrame"><X>7.5</X><Y>6.5</Y><Z>-61.5</Z><R00>0.470588</R00><R01>-0.197297</R01><R02>0.860012</R02><R10>0.0</R10><R11>0.97468</R11><R12>0.223603</R12><R20>-0.882353</R20><R21>-0.105225</R21><R22>0.458673</R22></CoordinateFrame><Vector3 name="size"><X>1.0</X><Y>1.0</Y><Z>2.0</Z></Vector3><Color3uint8 name="Color3uint8">4283474175</Color3uint8><token name="Material">288</token><float name="Transparency">0.5</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX71DFF6B1C4FD48AE9A0EB20330257B93"><Properties><string name="Name">ArenaBounds</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>12.55</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>19.4</X><Y>22.0</Y><Z>16.4</Z></Vector3><Color3uint8 name="Color3uint8">4283474175</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item></Item><Item class="Model" referent="RBX6BCC8A77108640EB8CA944DC31E86DE5"><Properties><string name="Name">JoinPad</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>0.0</X><Y>0.2</Y><Z>-47.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBX0B9B3336B172496CA2162B92F08714D4"><Properties><string name="Name">Zone</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>0.2</Y><Z>-47.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>8.0</X><Y>0.3</Y><Z>8.0</Z></Vector3><Color3uint8 name="Color3uint8">4280164924</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX5767055B48394DB4800A6B9C67561262"><Properties><string name="Name">Glow</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>0.25</Y><Z>-51.6</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>8.6</X><Y>0.35</Y><Z>0.4</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX5D89951B707B430F85B089CEC37C337D"><Properties><string name="Name">Glow</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>0.25</Y><Z>-43.4</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>8.6</X><Y>0.35</Y><Z>0.4</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX622EE37ADCF04E02A852DDEAFB52F4AD"><Properties><string name="Name">Glow</string><CoordinateFrame name="CFrame"><X>-4.1</X><Y>0.25</Y><Z>-47.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.4</X><Y>0.35</Y><Z>8.6</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX5E232749CFFA435B8A837C2296A3D627"><Properties><string name="Name">Glow</string><CoordinateFrame name="CFrame"><X>4.1</X><Y>0.25</Y><Z>-47.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.4</X><Y>0.35</Y><Z>8.6</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX3B3E9F41EBDD41C0960D836899DD3C4B"><Properties><string name="Name">Sign</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>6.5</Y><Z>-47.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.4</X><Y>0.4</Y><Z>0.4</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="BillboardGui" referent="RBXA6871C4411BE4F98A0418046EE78AA5E"><Properties><string name="Name">Board</string><UDim2 name="Size"><XS>10</XS><XO>0</XO><YS>3.6</YS><YO>0</YO></UDim2><float name="MaxDistance">120.0</float><float name="LightInfluence">0.0</float><bool name="AlwaysOnTop">false</bool></Properties><Item class="TextLabel" referent="RBXD5A82C52B41F4E73B0A8C9894CD16F53"><Properties><string name="Name">Title</string><string name="Text">STAND HERE TO JOIN</string><UDim2 name="Position"><XS>0</XS><XO>0</XO><YS>0</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>1</XS><XO>0</XO><YS>0.42</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.313725</R><G>0.862745</G><B>0.470588</B></Color3><float name="TextStrokeTransparency">0.2</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item><Item class="TextLabel" referent="RBXFB68516CA8FD4529909005F721F450BD"><Properties><string name="Name">Count</string><string name="Text">0/6</string><UDim2 name="Position"><XS>0</XS><XO>0</XO><YS>0.42</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>1</XS><XO>0</XO><YS>0.3</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>1.0</R><G>1.0</G><B>1.0</B></Color3><float name="TextStrokeTransparency">0.2</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item><Item class="TextLabel" referent="RBX9743A9262A544A51B7E2A691CB61F518"><Properties><string name="Name">Info</string><string name="Text">Waiting for players 0/3</string><UDim2 name="Position"><XS>0</XS><XO>0</XO><YS>0.72</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>1</XS><XO>0</XO><YS>0.28</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.901961</R><G>0.705882</G><B>0.27451</B></Color3><float name="TextStrokeTransparency">0.2</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>700</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item></Item></Item></Item></roblox>

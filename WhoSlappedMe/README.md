@@ -6,6 +6,8 @@ All rules and decisions are in [`NOTES.md`](NOTES.md).
 
 ![Top view of the arena](Docs/map_top.png)
 
+**v2:** simpler and smaller (about 30 × 33 studs), no big screen, no bleachers, no spectate button.
+
 ---
 
 ## 📦 Files
@@ -49,8 +51,8 @@ ServerScriptService
     └── Modules
         ├── Game               lottery → vote → slap → guess, winners
         ├── Participants       players in the game: health, seats, locks, clean-up
-        ├── JoinPad            join pad + countdown
-        ├── Arena              finds map parts by name, big screen, pad sign
+        ├── JoinPad            join pad, countdown, sends out anyone stuck inside
+        ├── Arena              finds map parts by name, pad sign
         ├── Seating · Anim · Net · Waiter
         ├── Reveal             🧪 test feature
         └── Titles             🧪 test feature
@@ -62,14 +64,14 @@ StarterPlayer > StarterPlayerScripts
         ├── PowerBar           slapper mini-game
         ├── Protect            black screen + BLOCK mini-game
         ├── CameraCtl · Fx · Hud · UI
-        ├── Rules              🧪 test feature
-        └── Spectate           🧪 test feature
+        └── Rules              🧪 test feature
 Workspace
 └── WhoSlappedMe (Model)       the arena
 ```
 
 ### Test it
-**Test → Clients and Servers → 3 players → Start.** Walk all 3 onto the glowing pad.
+**Test → Clients and Servers → 2 or 3 players → Start.** Walk everyone onto the glowing pad.
+In Studio only, 2 players are enough (`STUDIO_TEST_PLAYERS`); a 2-player test plays until 1 is left. Live servers always need 3.
 (Studio test players have no real avatar, so their pictures stay blank. In a live server they show.)
 
 ---
@@ -79,7 +81,7 @@ Workspace
 | Setting | Default | |
 |---------|---------|---|
 | `MIN_PLAYERS` / `MAX_PLAYERS` | 3 / 6 | |
-| `JOIN_COUNTDOWN` | 15 | seconds after the first player steps on the pad |
+| `JOIN_COUNTDOWN` | 15 | starts only when 3 players are on the pad, stops if someone steps off |
 | `MAX_HEALTH`, `START_DAMAGE` | 100, 1 | everyone starts at 99 so Roblox shows its health bar |
 | `MIN_SLAP_DAMAGE` / `MAX_SLAP_DAMAGE` | 5 / 40 | damage at 0% / 100% power |
 | `CHARGE_VALUES` | 30, 30, 40 | max % each charge adds |
@@ -97,9 +99,8 @@ Workspace
 | Setting | What it does |
 |---------|--------------|
 | `ENABLE_REVEAL` | after a wrong guess, everyone sees a replay of the slap and "It was X!" |
-| `ENABLE_RULES_SCREEN` | rules cards the first time + "?" button |
+| `ENABLE_RULES_SCREEN` | "?" button that opens one panel with all rules (never opens by itself) |
 | `ENABLE_TITLES` | "Mind Reader", "Iron Cheek", "Silent Slapper" above heads |
-| `ENABLE_SPECTATE_CAM` | "Spectate" button for people near the arena |
 
 Each one is a separate module, so it can also be deleted later.
 
@@ -117,9 +118,9 @@ The code only looks for these names:
 | `Points/SlapSpot` | Where the slapper stands (behind the hot seat, facing the same way) |
 | `Points/KOSpot` | Where knocked-out players go |
 | `Points/ExitSpot` | Where players go when they leave or the game ends |
-| `Points/RevealCam` / `Points/SpectateCam` | Camera positions (the part's front = camera direction) |
+| `Points/RevealCam` | Camera for the wrong-guess replay (the part's front = camera direction) |
+| `Points/ArenaBounds` | Invisible box = inside of the arena. Anyone inside who is not playing is sent to `ExitSpot` |
 | `JoinPad/Zone` | The area players stand on to join. Parts named `Glow` change colour |
 | `JoinPad/Sign/Board` | Billboard with `Title`, `Count`, `Info` labels |
-| `Screens/PhaseScreen/Gui` | Big screen with `Title`, `Sub`, `Info` labels |
 
 `Points` parts are visible in Studio and hidden automatically when the game runs.

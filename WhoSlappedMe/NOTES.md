@@ -6,7 +6,7 @@ and the front player has to guess who did it.
 - The old prototype is kept in [`Original/who_slapped_me_original.rbxmx`](Original/who_slapped_me_original.rbxmx).
 - **All in-game text, code and notes are in English** (user request).
 - Status markers: ✅ approved · ❓ open question · 💡 proposal waiting for approval
-- **Status: v1 built** → [`Release/WhoSlappedMe.rbxmx`](Release/WhoSlappedMe.rbxmx), install guide in [`README.md`](README.md).
+- **Status: v2 built** (section 11 done) → [`Release/WhoSlappedMe.rbxmx`](Release/WhoSlappedMe.rbxmx), install guide in [`README.md`](README.md).
 
 ---
 
@@ -264,7 +264,7 @@ and the front player guesses. Correct guess = swap seats.
 
 ---
 
-## 10. Map design ✅ (built in v1, see `Docs/map_top.png`)
+## 10. Map design (v1, replaced by 11.1 in v2)
 
 Theme: a **game-show stage**. Everything is plain anchored Parts, so it's easy to swap later.
 
@@ -301,7 +301,7 @@ Theme: a **game-show stage**. Everything is plain anchored Parts, so it's easy t
 
 ---
 
-## 11. v2 feedback from the user (after playing v1) 📝
+## 11. v2 feedback from the user (after playing v1) ✅ done in v2
 
 **Main point:** this game goes into a **hangout game**, so it must stay **simple**. v1 is too complicated.
 
@@ -320,12 +320,12 @@ Theme: a **game-show stage**. Everything is plain anchored Parts, so it's easy t
 | V11 | **Rules screen:** 4 panels you have to click through, and it opens by itself again and again | **One panel with all 4 rules** on it. It **never opens by itself**, only with the **"?" button** (same button as v1) |
 | V12 | **Map: simple, small, still nice and professional.** Border so nobody can get in | New compact design, see **11.1** below (replaces section 10) |
 
-### Already done, not released yet
+### Also in v2
 | # | Change |
 |---|--------|
-| S1 | **Studio test mode:** `Config.STUDIO_TEST_PLAYERS = 2` lets a game start with 2 players **only in Studio** (live servers still need `MIN_PLAYERS`). A test game with fewer than `MIN_PLAYERS` plays until 1 player is left. Ships with v2 |
+| S1 | **Studio test mode:** `Config.STUDIO_TEST_PLAYERS = 2` lets a game start with 2 players **only in Studio** (live servers still need `MIN_PLAYERS`). A test game with fewer than `MIN_PLAYERS` plays until 1 player is left. Released in v2 |
 
-### 11.1 v2 map design proposal (V4, V5, V6, V12) 💡
+### 11.1 v2 map design (V4, V5, V6, V12) ✅ built
 
 Goal: **small, clean, 3 colours only**, looks like a little game-show corner inside a hangout.
 
@@ -340,13 +340,13 @@ Goal: **small, clean, 3 colours only**, looks like a little game-show corner ins
 
 | | v1 | v2 |
 |---|----|----|
-| Whole area | ~100 × 104 studs | **~26 × 38 studs** (arena + pad) |
-| Stage | 52 × 52 | **24 × 22**, 1.5 high |
+| Whole area | ~100 × 104 studs | **30 × 33 studs** (arena + pad) |
+| Stage | 52 × 52 | **20 × 17**, 1.5 high |
 | Back seats | radius 14 | **radius 8**, tight curved row |
 | Bleachers | yes | **removed** |
 | Big phase screen | yes | **removed**. Only a small logo "WHO SLAPPED ME?" on the back wall |
 | Join pad | 12 × 12 | **8 × 8**, right outside the gate, ring changes colour (green / yellow / red) + small sign |
-| Parts | 74 | **~35** |
+| Parts | 74 | **55** |
 
 **Look (professional, not busy):**
 - Colours: dark navy floor + white/gold seats + one pink accent line (stage edge, top of the border). No rainbow.
@@ -359,5 +359,5 @@ Goal: **small, clean, 3 colours only**, looks like a little game-show corner ins
 - Invisible wall above the glass **and an invisible roof**, so nobody can jump, climb or fall in from above.
 - Players only enter by the game's teleport. On leave/KO/game end they are always put outside (V9).
 
-**Names the code needs stay the same** (`Seats/HotSeat`, `Seats/BackSeat1..5`, `Points/SlapSpot`, `Points/ExitSpot`, `Points/KOSpot`, `JoinPad/Zone`, `JoinPad/Sign`), so the user can still swap parts later. `Screens/PhaseScreen`, `Points/SpectateCam` and the bleachers are dropped. `KOSpot` moves outside next to the arena.
+**Names the code needs stay the same** (`Seats/HotSeat`, `Seats/BackSeat1..5`, `Points/SlapSpot`, `Points/ExitSpot`, `Points/KOSpot`, `JoinPad/Zone`, `JoinPad/Sign`), so the user can still swap parts later. `Screens/PhaseScreen`, `Points/SpectateCam` and the bleachers are dropped. New: `Points/ArenaBounds` (invisible box of the arena inside, used by the stuck-player check). `KOSpot` moves outside next to the arena.
 
