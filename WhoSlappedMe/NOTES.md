@@ -361,3 +361,19 @@ Goal: **small, clean, 3 colours only**, looks like a little game-show corner ins
 
 **Names the code needs stay the same** (`Seats/HotSeat`, `Seats/BackSeat1..5`, `Points/SlapSpot`, `Points/ExitSpot`, `Points/KOSpot`, `JoinPad/Zone`, `JoinPad/Sign`), so the user can still swap parts later. `Screens/PhaseScreen`, `Points/SpectateCam` and the bleachers are dropped. New: `Points/ArenaBounds` (invisible box of the arena inside, used by the stuck-player check). `KOSpot` moves outside next to the arena.
 
+---
+
+## 12. v2.1 UI redesign ✅
+
+User feedback: the UI looked unprofessional / "AI made". Only the client UI scripts changed (game logic untouched).
+
+| Before | After |
+|--------|-------|
+| Solid bright panels, thick pink borders | Dark **semi-transparent** panels, thin subtle borders |
+| Gotham, stretched `TextScaled` text everywhere | **Builder Sans** with fixed sizes (title / body / small label), sharper and consistent |
+| Emojis in titles, ALL CAPS shouting | Clean short copy, small upper-case labels above titles |
+| Pop-in bounce | Smooth fade in/out (CanvasGroup) |
+| Fixed pixel sizes or full-screen stretch | One layout that auto-scales with the screen (phone and PC) |
+
+Changed scripts (StarterPlayerScripts > WhoSlappedMe): `ClientMain` (texts only), `Modules/UI`, `Hud`, `Picker`, `PowerBar`, `Protect`, `Rules`.
+

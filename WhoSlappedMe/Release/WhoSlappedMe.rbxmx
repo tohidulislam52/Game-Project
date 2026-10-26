@@ -1,4 +1,4 @@
-<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4"><Meta name="ExplicitAutoJoints">true</Meta><External>null</External><External>nil</External><Item class="Folder" referent="RBX49DC932CA84F4963AFC81AA9AD062BF3"><Properties><string name="Name">WhoSlappedMe_INSTALL</string></Properties><Item class="ModuleScript" referent="RBX798D18E31D02425287B48824F60BDDDE"><Properties><string name="Name">README</string><ProtectedString name="Source">--[[
+<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4"><Meta name="ExplicitAutoJoints">true</Meta><External>null</External><External>nil</External><Item class="Folder" referent="RBX8568B359F5E8432E81F844435C0D52F5"><Properties><string name="Name">WhoSlappedMe_INSTALL</string></Properties><Item class="ModuleScript" referent="RBX1C9C571B5CF34F97A7B9011B1F00E920"><Properties><string name="Name">README</string><ProtectedString name="Source">--[[
 	WHO SLAPPED ME? - where everything goes
 
 	Drag each folder's CONTENT into the Roblox service with the same name:
@@ -14,7 +14,7 @@
 	ReplicatedStorage &gt; WhoSlappedMe &gt; Config
 ]]
 return nil
-</ProtectedString></Properties></Item><Item class="Folder" referent="RBXCB85969D10CD49EEBE760438D21F8AA7"><Properties><string name="Name">ReplicatedStorage</string></Properties><Item class="Folder" referent="RBX0BB7554E3AF443F9ACC867803ABDACBD"><Properties><string name="Name">WhoSlappedMe</string></Properties><Item class="ModuleScript" referent="RBX02456BD402404DCD82953EC798A15460"><Properties><string name="Name">Config</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="Folder" referent="RBXD58A08C0AC5148ECB8641726DC5A10D7"><Properties><string name="Name">ReplicatedStorage</string></Properties><Item class="Folder" referent="RBX5E5C2AEF840D4008A7471FD8EFC215F3"><Properties><string name="Name">WhoSlappedMe</string></Properties><Item class="ModuleScript" referent="RBXC3A2713468924378B7050FFD66AD914D"><Properties><string name="Name">Config</string><ProtectedString name="Source">--[[
 	WHO SLAPPED ME? - Config
 	Every setting of the game lives here. Change values, press Play, done.
 ]]
@@ -139,7 +139,7 @@ function Config.minPlayers(): number
 end
 
 return Config
-</ProtectedString></Properties></Item><Item class="Folder" referent="RBXAE399E9BEFA64EEEB08A37165D3B3689"><Properties><string name="Name">Remotes</string></Properties><Item class="RemoteEvent" referent="RBX58138D34604041068120E99BB0CC8521"><Properties><string name="Name">Net</string></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBXFD4B1B704D934503B10AE1505C90A030"><Properties><string name="Name">ServerScriptService</string></Properties><Item class="Folder" referent="RBX9B0700ADD85F465EBDB3927D5080C2FB"><Properties><string name="Name">WhoSlappedMe</string></Properties><Item class="Script" referent="RBX7A9A9B93AABF4CC9BA386EB1EB99A592"><Properties><string name="Name">Main</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item><Item class="Folder" referent="RBX8ED5E32558D144B5B742DE847FA40D8D"><Properties><string name="Name">Remotes</string></Properties><Item class="RemoteEvent" referent="RBX9377118262014418AB95AA6469844724"><Properties><string name="Name">Net</string></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBXD482B366C8864010A83745AAC1F3C99A"><Properties><string name="Name">ServerScriptService</string></Properties><Item class="Folder" referent="RBX3DE8B00D9447480185BA17FEEDE01C06"><Properties><string name="Name">WhoSlappedMe</string></Properties><Item class="Script" referent="RBX1C6E784BDBEF4793A668EF728CA87866"><Properties><string name="Name">Main</string><ProtectedString name="Source">--[[
 	WHO SLAPPED ME? - server entry point
 	Lives in ServerScriptService &gt; WhoSlappedMe. Settings: ReplicatedStorage &gt; WhoSlappedMe &gt; Config
 ]]
@@ -172,7 +172,7 @@ while true do
 		task.wait(2)
 	end
 end
-</ProtectedString><bool name="Disabled">false</bool></Properties></Item><Item class="Folder" referent="RBX467C4A32AF2F434BA516663370E3530B"><Properties><string name="Name">Modules</string></Properties><Item class="ModuleScript" referent="RBX6B11F8D0C0E146859A45F7BB807B1F8B"><Properties><string name="Name">Anim</string><ProtectedString name="Source">-- Plays the animations from Config.ANIMATIONS. Empty ids are skipped. Tracks are loaded once per character.
+</ProtectedString><bool name="Disabled">false</bool></Properties></Item><Item class="Folder" referent="RBX8BF20518984344C99AAA6C8811EBC8D8"><Properties><string name="Name">Modules</string></Properties><Item class="ModuleScript" referent="RBXC66A1B4425B649088F0621DFEA65139E"><Properties><string name="Name">Anim</string><ProtectedString name="Source">-- Plays the animations from Config.ANIMATIONS. Empty ids are skipped. Tracks are loaded once per character.
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChild("Config"))
@@ -277,7 +277,7 @@ function Anim.stopAll(character: Model?)
 end
 
 return Anim
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX9E2821A2D0B049BCAD7FCF164DB56CF5"><Properties><string name="Name">Arena</string><ProtectedString name="Source">-- Finds every map piece BY NAME, so parts can be moved or replaced freely.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXEC66E6289094429B8C0B906DE8A0EC23"><Properties><string name="Name">Arena</string><ProtectedString name="Source">-- Finds every map piece BY NAME, so parts can be moved or replaced freely.
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChild("Config"))
@@ -379,7 +379,7 @@ function Arena.setPad(state: string, title: string, count: string, info: string)
 end
 
 return Arena
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX4AF265916D67465A8127AA4082058D37"><Properties><string name="Name">Game</string><ProtectedString name="Source">-- The game itself: lottery -&gt; vote -&gt; slap -&gt; guess, round after round, until 2 players are left.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX54B1E75BAE894D2ABEF6D8E31F1281FD"><Properties><string name="Name">Game</string><ProtectedString name="Source">-- The game itself: lottery -&gt; vote -&gt; slap -&gt; guess, round after round, until 2 players are left.
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Shared = ReplicatedStorage:WaitForChild("WhoSlappedMe")
@@ -1116,7 +1116,7 @@ function Game.init()
 end
 
 return Game
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX423A3427E1F849F1A13569BFB3454525"><Properties><string name="Name">JoinPad</string><ProtectedString name="Source">-- Who is standing on the join pad, the lobby countdown,
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXC2E0DFA4A8634EE5BBEBA20E3E7CFAD6"><Properties><string name="Name">JoinPad</string><ProtectedString name="Source">-- Who is standing on the join pad, the lobby countdown,
 -- and the safety check that never lets anyone stay stuck inside the arena.
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -1272,7 +1272,7 @@ function JoinPad.showInGame(open: boolean, count: number)
 end
 
 return JoinPad
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX73B8A2465ACC4886972ECFCAA89FB82A"><Properties><string name="Name">Net</string><ProtectedString name="Source">-- The single RemoteEvent of the game, with a per-player rate limit.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX4C2D3FDF77954B879B56586BBCC56C87"><Properties><string name="Name">Net</string><ProtectedString name="Source">-- The single RemoteEvent of the game, with a per-player rate limit.
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -1330,7 +1330,7 @@ Players.PlayerRemoving:Connect(function(player)
 end)
 
 return Net
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXCE759A12EE304D3298F5D308D54F9C4A"><Properties><string name="Name">Participants</string><ProtectedString name="Source">-- Everyone who is inside the current game: health, seat, locks and clean-up.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX8AA9061051F340878B9E44C8DA962BD3"><Properties><string name="Name">Participants</string><ProtectedString name="Source">-- Everyone who is inside the current game: health, seat, locks and clean-up.
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChild("Config"))
@@ -1607,7 +1607,7 @@ function Participants.remove(player: Player, reason: string, destination: CFrame
 end
 
 return Participants
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX82D74D3898CD4142ACCF4315053FE322"><Properties><string name="Name">Reveal</string><ProtectedString name="Source">-- TEST FEATURE (Config.ENABLE_REVEAL): after a wrong guess the slapper replays the slap
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX3567F2C1C6E242C8B9A2D3AE97CC4384"><Properties><string name="Name">Reveal</string><ProtectedString name="Source">-- TEST FEATURE (Config.ENABLE_REVEAL): after a wrong guess the slapper replays the slap
 -- while everyone in the game watches from the side camera, with "It was X!".
 -- Safe to delete: Game.lua checks Config.ENABLE_REVEAL before calling it.
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -1650,7 +1650,7 @@ function Reveal.run(slapper: any, front: any, sleep: (number) -&gt; boolean)
 end
 
 return Reveal
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX63908BFF888B4B5E894B47A302A55234"><Properties><string name="Name">Seating</string><ProtectedString name="Source">-- Moving characters in and out of seats. All server side.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX10051BBB8B654FE392BFC27D013E4AAA"><Properties><string name="Name">Seating</string><ProtectedString name="Source">-- Moving characters in and out of seats. All server side.
 local Seating = {}
 
 function Seating.root(character: Model): BasePart?
@@ -1727,7 +1727,7 @@ function Seating.release(character: Model, humanoid: Humanoid, cf: CFrame)
 end
 
 return Seating
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXC77B739939B34599A4A20B6172BBBAE8"><Properties><string name="Name">Titles</string><ProtectedString name="Source">-- TEST FEATURE (Config.ENABLE_TITLES): fun titles above heads during a game.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXBE11C9F8B23640ACA42870E1E04DA8BD"><Properties><string name="Name">Titles</string><ProtectedString name="Source">-- TEST FEATURE (Config.ENABLE_TITLES): fun titles above heads during a game.
 -- Safe to delete: Game.lua only calls these functions, and they do nothing when the feature is off.
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -1810,7 +1810,7 @@ function Titles.onSlapper(rec: any, caught: boolean)
 end
 
 return Titles
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX5AC594A047AC4959BC3D85679257FD07"><Properties><string name="Name">Waiter</string><ProtectedString name="Source">-- One-shot wait with a timeout. resolve() wakes the waiting thread right away (no polling).
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXADF06376F673440E91119C2394DB1308"><Properties><string name="Name">Waiter</string><ProtectedString name="Source">-- One-shot wait with a timeout. resolve() wakes the waiting thread right away (no polling).
 local Waiter = {}
 Waiter.__index = Waiter
 
@@ -1856,7 +1856,7 @@ function Waiter.await(self: Waiter, timeout: number): any
 end
 
 return Waiter
-</ProtectedString></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBX630F4E8610644DD18A309277E6001325"><Properties><string name="Name">StarterPlayerScripts</string></Properties><Item class="Folder" referent="RBX2BF993E9245C48548C09174F9DE9ACBC"><Properties><string name="Name">WhoSlappedMe</string></Properties><Item class="LocalScript" referent="RBX9704B12AD42146EE9303C5762BE787A3"><Properties><string name="Name">ClientMain</string><ProtectedString name="Source">--[[
+</ProtectedString></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBX02E39F61E24845539B760D5C1FE534B4"><Properties><string name="Name">StarterPlayerScripts</string></Properties><Item class="Folder" referent="RBXF84F1CAEE84943F2BEE5C25F0EEEBAA5"><Properties><string name="Name">WhoSlappedMe</string></Properties><Item class="LocalScript" referent="RBX9B1B081B0A8D49E6B16E046515AEF90C"><Properties><string name="Name">ClientMain</string><ProtectedString name="Source">--[[
 	WHO SLAPPED ME? - client entry point
 	Lives in StarterPlayer &gt; StarterPlayerScripts &gt; WhoSlappedMe
 ]]
@@ -1952,7 +1952,7 @@ handlers.Left = function(data)
 		moveOut(data.cf)
 	end
 	if data.reason == "ko" then
-		Hud.banner("KNOCKED OUT!", "Better luck next game", C.Red, myId, 3)
+		Hud.banner("Knocked out", "Better luck next game", C.Red, myId, 3)
 	end
 end
 
@@ -1969,7 +1969,7 @@ end
 handlers.Role = function(data)
 	if data.role == "front" then
 		CameraCtl.setFront(data.seatCFrame)
-		Hud.status("You are in the HOT SEAT! Don't look back...")
+		Hud.status("You're in the hot seat. Don't look back...")
 	else
 		CameraCtl.setFront(nil)
 	end
@@ -1995,22 +1995,23 @@ handlers.Lottery = function(data)
 		Fx.play("Correct", 0.6)
 		task.delay(1.2, Picker.close)
 		if data.winner == myId then
-			Hud.status("YOU are in the HOT SEAT!")
+			Hud.status("You're in the hot seat")
 		else
-			Hud.status(name .. " is in the HOT SEAT!")
+			Hud.status(name .. " is in the hot seat")
 		end
 	end)
 end
 
 handlers.VoteOpen = function(data)
 	Picker.open({
-		title = "🗳️ WHO SLAPS?",
-		sub = "Vote for the slapper (you can vote for yourself)",
+		eyebrow = "Vote",
+		title = "Who slaps?",
+		sub = "Pick the slapper. You can vote for yourself.",
 		cards = data.cards,
 		endsAt = data.endsAt,
 		onPick = function(userId)
 			net:FireServer("Vote", userId)
-			Picker.setSub("Waiting for the other votes...")
+			Picker.setSub("Vote sent. Waiting for the others...")
 		end,
 	})
 end
@@ -2018,7 +2019,7 @@ end
 handlers.VoteResult = function(data)
 	Picker.close()
 	if data.userId ~= myId then
-		Hud.status(data.name .. " will slap! Shhh... 🤫")
+		Hud.status(data.name .. " will slap. Keep it quiet")
 	end
 end
 
@@ -2073,10 +2074,12 @@ handlers.GuessOpen = function(data)
 	end
 	local sub = "Pick the player who slapped you"
 	if data.clue then
-		sub = #data.crossed &gt; 0 and "PERFECT BLOCK clue: ✕ did NOT slap you!" or "PERFECT BLOCK, but too few players for a clue"
+		sub = #data.crossed &gt; 0 and "Perfect block clue: crossed out players did not slap you"
+			or "Perfect block, but too few players for a clue"
 	end
 	Picker.open({
-		title = "🤔 WHO SLAPPED ME?",
+		eyebrow = "Your guess",
+		title = "Who slapped you?",
 		sub = sub,
 		cards = cards,
 		endsAt = data.endsAt,
@@ -2091,15 +2094,15 @@ handlers.GuessResult = function(data)
 	Picker.close()
 	if data.correct then
 		Fx.play("Correct")
-		Hud.banner("CORRECT!", data.front.name .. " caught " .. data.slapper.name, C.Green, data.slapper.userId, 3)
+		Hud.banner("Correct", data.front.name .. " caught " .. data.slapper.name, C.Green, data.slapper.userId, 3)
 	else
 		Fx.play("Wrong")
-		Hud.banner("WRONG GUESS!", data.revealed and "Let's see who it really was..." or "The slapper stays secret 🤫", C.Red, nil, 2.5)
+		Hud.banner("Wrong guess", data.revealed and "Let's see who it really was..." or "The slapper stays a secret", C.Red, nil, 2.5)
 	end
 end
 
 handlers.Reveal = function(data)
-	Hud.banner("IT WAS...", data.name .. "!", C.Gold, data.userId, data.duration)
+	Hud.banner("It was " .. data.name, "The real slapper", C.Gold, data.userId, data.duration)
 	if inGame then
 		local cf = Shared:GetAttribute("RevealCam")
 		if typeof(cf) == "CFrame" then
@@ -2140,7 +2143,7 @@ player.CharacterAdded:Connect(function()
 	-- a new character is never in the game (the server removes players when their character goes)
 	CameraCtl.reset()
 end)
-</ProtectedString><bool name="Disabled">false</bool></Properties></Item><Item class="Folder" referent="RBX8A70B7674B6743C08B2EF2CFC5DCA98E"><Properties><string name="Name">Modules</string></Properties><Item class="ModuleScript" referent="RBXAC4C7B1EB2AE4F7FB4FED9370F9C4BCE"><Properties><string name="Name">CameraCtl</string><ProtectedString name="Source">-- Camera modes: front-seat first person lock, reveal shot, and shake.
+</ProtectedString><bool name="Disabled">false</bool></Properties></Item><Item class="Folder" referent="RBX037EF401DBFE47A38916C22693CE07E8"><Properties><string name="Name">Modules</string></Properties><Item class="ModuleScript" referent="RBX0957AD952F3241A0A4ACF976FBDAA0DA"><Properties><string name="Name">CameraCtl</string><ProtectedString name="Source">-- Camera modes: front-seat first person lock, reveal shot, and shake.
 -- Priority: reveal &gt; front. With no mode the normal Roblox camera is back.
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -2239,7 +2242,7 @@ function CameraCtl.reset()
 end
 
 return CameraCtl
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX98B001E887E946D9973E12165E99DE0E"><Properties><string name="Name">Fx</string><ProtectedString name="Source">-- Sounds, slap particles, hand print, popups. Everything is local and reused (no new parts per slap).
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX40E6196E598E45BCAEBA227CE2B2B861"><Properties><string name="Name">Fx</string><ProtectedString name="Source">-- Sounds, slap particles, hand print, popups. Everything is local and reused (no new parts per slap).
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local SoundService = game:GetService("SoundService")
@@ -2481,11 +2484,11 @@ function Fx.ko(userId: number)
 end
 
 return Fx
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX3C13C7B0F6914CEA9998BD0084C94B09"><Properties><string name="Name">Hud</string><ProtectedString name="Source">-- Status line, pad info, Leave / ? buttons, result banners and the winners screen.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXC04B67F4D1A7452B8A04A4582C8F61F5"><Properties><string name="Name">Hud</string><ProtectedString name="Source">-- Status pill, pad info, Leave / ? buttons, result banner and the winners screen.
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local UI = require(script.Parent.UI)
-local C = UI.C
+local C, T, F = UI.C, UI.T, UI.F
 
 local Hud = {}
 
@@ -2493,121 +2496,156 @@ local root = UI.root()
 local onLeave: (() -&gt; ())? = nil
 local onHelp: (() -&gt; ())? = nil
 
--- status line (top)
-local status = UI.label({
+---------------------------------------------------------------------------
+-- status pill (top)
+---------------------------------------------------------------------------
+local toast, toastBody = UI.sheet({
 	Name = "Status",
 	AnchorPoint = Vector2.new(0.5, 0),
-	Position = UDim2.new(0.5, 0, 0, 58),
-	Size = UDim2.new(0.8, 0, 0, 34),
-	BackgroundTransparency = 0.25,
-	BackgroundColor3 = C.Background,
-	Font = Enum.Font.GothamBold,
-	MaxText = 24,
-	Visible = false,
+	Position = UDim2.new(0.5, 0, 0, 68),
+	Size = UDim2.fromOffset(500, 44),
 	ZIndex = 70,
-	Parent = root,
+}, 21)
+local toastText = UI.text({
+	Size = UDim2.fromScale(1, 1),
+	TextXAlignment = Enum.TextXAlignment.Center,
+	TextSize = 17,
+	Parent = toastBody,
 })
-UI.corner(10).Parent = status
-UI.make("UISizeConstraint", { MaxSize = Vector2.new(640, 34), Parent = status })
-local statusToken = 0
+UI.padding(18, 0).Parent = toastBody
+local toastToken = 0
 
 function Hud.status(text: string, seconds: number?)
-	statusToken += 1
-	local token = statusToken
-	status.Text = text
-	status.Visible = true
-	UI.pop(status, 0.85)
+	toastToken += 1
+	local token = toastToken
+	toastText.Text = text
+	UI.show(toast)
 	task.delay(seconds or 4, function()
-		if statusToken == token then
-			status.Visible = false
+		if toastToken == token then
+			UI.hide(toast)
 		end
 	end)
 end
 
--- pad info (above the bottom)
-local padInfo = UI.label({
+---------------------------------------------------------------------------
+-- pad info (bottom)
+---------------------------------------------------------------------------
+local pad, padBody = UI.sheet({
 	Name = "PadInfo",
 	AnchorPoint = Vector2.new(0.5, 1),
 	Position = UDim2.new(0.5, 0, 1, -110),
-	Size = UDim2.new(0.7, 0, 0, 44),
-	BackgroundTransparency = 0.2,
-	BackgroundColor3 = C.Background,
-	Font = Enum.Font.GothamBlack,
-	TextColor3 = C.Gold,
-	MaxText = 30,
-	Visible = false,
+	Size = UDim2.fromOffset(380, 58),
 	ZIndex = 60,
-	Parent = root,
+}, 14)
+UI.eyebrow("Join pad", {
+	Position = UDim2.fromOffset(0, 9),
+	TextXAlignment = Enum.TextXAlignment.Center,
+	Parent = padBody,
 })
-UI.corner(12).Parent = padInfo
-UI.make("UISizeConstraint", { MaxSize = Vector2.new(520, 44), Parent = padInfo })
+local padText = UI.text({
+	Position = UDim2.fromOffset(0, 26),
+	Size = UDim2.new(1, 0, 0, 22),
+	TextXAlignment = Enum.TextXAlignment.Center,
+	FontFace = F.Bold,
+	TextSize = 18,
+	Parent = padBody,
+})
+local padOn = false
 
 function Hud.setPad(on: boolean)
+	padOn = on
 	if not on then
-		padInfo.Visible = false
+		UI.hide(pad)
 		return
 	end
 	local joinState = ReplicatedStorage:WaitForChild("WhoSlappedMe"):GetAttribute("JoinState")
 	if joinState == "Closed" then
-		padInfo.Text = "Game is full. Wait for the next game!"
+		padText.Text = "Game is full. Wait for the next one"
 	elseif joinState == "Open" then
-		padInfo.Text = "You get a seat next round..."
+		padText.Text = "You get a seat next round"
 	else
-		padInfo.Text = "Waiting for players..."
+		padText.Text = "Waiting for players..."
 	end
-	padInfo.Visible = true
+	UI.show(pad)
 end
 
 function Hud.padCount(data: any)
-	if not padInfo.Visible then
+	if not padOn then
 		return
 	end
 	if data.seconds then
-		padInfo.Text = ("%d/%d players · Starting in %d"):format(data.count, data.max, data.seconds)
+		padText.Text = ("Starting in %d  ·  %d/%d players"):format(data.seconds, data.count, data.max)
 	else
-		padInfo.Text = ("Waiting for players %d/%d"):format(data.count, data.need)
+		padText.Text = ("Waiting for players  %d/%d"):format(data.count, data.need)
 	end
 end
 
--- buttons (left side)
+---------------------------------------------------------------------------
+-- buttons (bottom left)
+---------------------------------------------------------------------------
+local buttonBar = UI.make("Frame", {
+	Name = "Buttons",
+	AnchorPoint = Vector2.new(0, 1),
+	Position = UDim2.new(0, 18, 1, -18),
+	Size = UDim2.fromOffset(240, 42),
+	BackgroundTransparency = 1,
+	ZIndex = 75,
+	Parent = root,
+}, {
+	UI.make("UIListLayout", {
+		FillDirection = Enum.FillDirection.Horizontal,
+		Padding = UDim.new(0, 8),
+		VerticalAlignment = Enum.VerticalAlignment.Center,
+		SortOrder = Enum.SortOrder.LayoutOrder,
+	}),
+})
+UI.autoScale(buttonBar)
+
 local leaveButton = UI.button({
 	Name = "Leave",
-	AnchorPoint = Vector2.new(0, 1),
-	Position = UDim2.new(0, 16, 1, -16),
-	Size = UDim2.fromOffset(150, 46),
-	BackgroundColor3 = C.Red,
-	Text = "LEAVE GAME",
-	MaxText = 20,
+	LayoutOrder = 1,
+	Size = UDim2.fromOffset(120, 42),
+	BackgroundColor3 = C.Surface,
+	BackgroundTransparency = T.Surface,
+	Text = "Leave",
+	TextColor3 = C.Red,
 	Visible = false,
-	ZIndex = 75,
-	Parent = root,
-})
+	Parent = buttonBar,
+}, "ghost")
+
 local helpButton = UI.button({
 	Name = "Help",
-	AnchorPoint = Vector2.new(0, 1),
-	Position = UDim2.new(0, 176, 1, -16),
-	Size = UDim2.fromOffset(46, 46),
-	BackgroundColor3 = C.Card,
+	LayoutOrder = 2,
+	Size = UDim2.fromOffset(42, 42),
+	BackgroundColor3 = C.Surface,
+	BackgroundTransparency = T.Surface,
 	Text = "?",
+	TextSize = 19,
 	Visible = false,
-	ZIndex = 75,
-	Parent = root,
-})
+	Parent = buttonBar,
+}, "ghost")
+UI.round().Parent = helpButton
 
 local confirmUntil = 0
+local function resetLeave()
+	leaveButton.Text = "Leave"
+	leaveButton.TextColor3 = C.Red
+	leaveButton.Size = UDim2.fromOffset(120, 42)
+end
 leaveButton.Activated:Connect(function()
 	if os.clock() &lt; confirmUntil then
 		confirmUntil = 0
-		leaveButton.Text = "LEAVE GAME"
+		resetLeave()
 		if onLeave then
 			onLeave()
 		end
 	else
 		confirmUntil = os.clock() + 3
-		leaveButton.Text = "SURE? TAP AGAIN"
+		leaveButton.Text = "Tap again to leave"
+		leaveButton.Size = UDim2.fromOffset(180, 42)
 		task.delay(3, function()
 			if os.clock() &gt;= confirmUntil then
-				leaveButton.Text = "LEAVE GAME"
+				resetLeave()
 			end
 		end)
 	end
@@ -2625,95 +2663,109 @@ end
 function Hud.setButtons(inGame: boolean, showHelp: boolean)
 	leaveButton.Visible = inGame
 	helpButton.Visible = showHelp and onHelp ~= nil
-	helpButton.Position = inGame and UDim2.new(0, 176, 1, -16) or UDim2.new(0, 16, 1, -16)
+	if not inGame then
+		confirmUntil = 0
+		resetLeave()
+	end
 end
 
--- big banner (CORRECT / WRONG / IT WAS ...)
-local banner = UI.make("Frame", {
+---------------------------------------------------------------------------
+-- result banner (top): CORRECT / WRONG / IT WAS ...
+---------------------------------------------------------------------------
+local banner, bannerBody = UI.sheet({
 	Name = "Banner",
 	AnchorPoint = Vector2.new(0.5, 0),
-	Position = UDim2.new(0.5, 0, 0, 100),
-	Size = UDim2.new(0.9, 0, 0, 120),
-	BackgroundColor3 = C.Panel,
-	Visible = false,
+	Position = UDim2.new(0.5, 0, 0, 124),
+	Size = UDim2.fromOffset(440, 92),
 	ZIndex = 80,
-	Parent = root,
-}, { UI.corner(16), UI.stroke(C.Gold, 3), UI.make("UISizeConstraint", { MaxSize = Vector2.new(560, 120) }) })
-local bannerImage = UI.make("ImageLabel", {
-	Position = UDim2.new(0, 10, 0, 10),
-	Size = UDim2.fromOffset(100, 100),
-	BackgroundColor3 = C.Card,
-	Parent = banner,
-}, { UI.corner(50) })
-local bannerTitle = UI.label({
-	Position = UDim2.new(0, 120, 0, 12),
-	Size = UDim2.new(1, -132, 0, 54),
-	Font = Enum.Font.GothamBlack,
-	TextXAlignment = Enum.TextXAlignment.Left,
-	MaxText = 46,
-	Parent = banner,
+}, 16)
+local bannerBar = UI.make("Frame", {
+	Position = UDim2.fromOffset(0, 18),
+	Size = UDim2.new(0, 4, 1, -36),
+	BackgroundColor3 = C.Accent,
+	BorderSizePixel = 0,
+	Parent = bannerBody,
+}, { UI.round() })
+local bannerImage = UI.avatarImage(1, 56, {
+	AnchorPoint = Vector2.new(0, 0.5),
+	Position = UDim2.new(0, 22, 0.5, 0),
+	Parent = bannerBody,
 })
-local bannerSub = UI.label({
-	Position = UDim2.new(0, 120, 0, 68),
-	Size = UDim2.new(1, -132, 0, 36),
+local bannerTitle = UI.text({
+	FontFace = F.Heavy,
+	TextSize = 26,
+	Parent = bannerBody,
+})
+local bannerSub = UI.text({
 	TextColor3 = C.SubText,
-	TextXAlignment = Enum.TextXAlignment.Left,
-	MaxText = 26,
-	Parent = banner,
+	TextSize = 16,
+	Parent = bannerBody,
 })
 local bannerToken = 0
 
 function Hud.banner(title: string, sub: string, color: Color3, userId: number?, seconds: number?)
 	bannerToken += 1
 	local token = bannerToken
+	local left = userId and 92 or 24
 	bannerTitle.Text = title
 	bannerTitle.TextColor3 = color
+	bannerTitle.Position = UDim2.fromOffset(left, 18)
+	bannerTitle.Size = UDim2.new(1, -left - 20, 0, 30)
 	bannerSub.Text = sub
+	bannerSub.Position = UDim2.fromOffset(left, 50)
+	bannerSub.Size = UDim2.new(1, -left - 20, 0, 22)
+	bannerBar.BackgroundColor3 = color
 	bannerImage.Visible = userId ~= nil
 	if userId then
 		bannerImage.Image = UI.avatar(userId)
 	end
-	local hasImage = userId ~= nil
-	bannerTitle.Position = UDim2.new(0, hasImage and 120 or 16, 0, 12)
-	bannerTitle.Size = UDim2.new(1, hasImage and -132 or -32, 0, 54)
-	bannerSub.Position = UDim2.new(0, hasImage and 120 or 16, 0, 68)
-	bannerSub.Size = UDim2.new(1, hasImage and -132 or -32, 0, 36)
-	banner.Visible = true
-	UI.pop(banner, 0.5)
+	UI.show(banner)
 	task.delay(seconds or 3, function()
 		if bannerToken == token then
-			banner.Visible = false
+			UI.hide(banner)
 		end
 	end)
 end
 
 function Hud.hideBanner()
 	bannerToken += 1
-	banner.Visible = false
+	UI.hide(banner)
 end
 
--- winners screen
-local winners = UI.panel({ Name = "Winners", Size = UDim2.fromScale(0.9, 0.55), ZIndex = 85, MaxSize = Vector2.new(560, 330) })
-UI.stroke(C.Gold, 4).Parent = winners
-local winnersTitle = UI.label({
-	Position = UDim2.fromScale(0, 0.04),
-	Size = UDim2.fromScale(1, 0.2),
-	Text = "🏆 WINNERS 🏆",
-	Font = Enum.Font.GothamBlack,
-	TextColor3 = C.Gold,
-	MaxText = 48,
-	Parent = winners,
+---------------------------------------------------------------------------
+-- winners
+---------------------------------------------------------------------------
+local winners, winnersBody = UI.sheet({
+	Name = "Winners",
+	AnchorPoint = Vector2.new(0.5, 0.5),
+	Position = UDim2.fromScale(0.5, 0.45),
+	Size = UDim2.fromOffset(500, 330),
+	ZIndex = 85,
+}, 20)
+UI.eyebrow("Game over", {
+	Position = UDim2.fromOffset(0, 26),
+	TextXAlignment = Enum.TextXAlignment.Center,
+	Parent = winnersBody,
+})
+local winnersTitle = UI.text({
+	Position = UDim2.fromOffset(0, 44),
+	Size = UDim2.new(1, 0, 0, 38),
+	TextXAlignment = Enum.TextXAlignment.Center,
+	FontFace = F.Heavy,
+	TextSize = 34,
+	Text = "Winners",
+	Parent = winnersBody,
 })
 local winnersRow = UI.make("Frame", {
-	Position = UDim2.fromScale(0.04, 0.28),
-	Size = UDim2.fromScale(0.92, 0.66),
+	Position = UDim2.fromOffset(24, 104),
+	Size = UDim2.new(1, -48, 0, 196),
 	BackgroundTransparency = 1,
-	Parent = winners,
+	Parent = winnersBody,
 }, {
 	UI.make("UIListLayout", {
 		FillDirection = Enum.FillDirection.Horizontal,
 		HorizontalAlignment = Enum.HorizontalAlignment.Center,
-		Padding = UDim.new(0.04, 0),
+		Padding = UDim.new(0, 14),
 	}),
 })
 
@@ -2724,52 +2776,70 @@ function Hud.winners(list: { any }, seconds: number)
 		end
 	end
 	for i, entry in list do
+		local first = entry.place == 1
 		local card = UI.make("Frame", {
 			LayoutOrder = i,
-			Size = UDim2.fromScale(0.42, 1),
-			BackgroundColor3 = C.Card,
+			Size = UDim2.fromOffset(200, 196),
+			BackgroundColor3 = C.Raised,
+			BackgroundTransparency = T.Raised,
 			Parent = winnersRow,
-		}, { UI.corner(14), UI.stroke(entry.place == 1 and C.Gold or C.SubText, 2) })
-		UI.make("ImageLabel", {
+		}, { UI.corner(14), UI.stroke(first and C.Gold or C.Line, first and 0.4 or T.Line) })
+		UI.avatarImage(entry.userId, 84, {
 			AnchorPoint = Vector2.new(0.5, 0),
-			Position = UDim2.fromScale(0.5, 0.05),
-			Size = UDim2.fromScale(0.55, 0.55),
-			SizeConstraint = Enum.SizeConstraint.RelativeYY,
-			BackgroundTransparency = 1,
-			Image = UI.avatar(entry.userId),
-			Parent = card,
-		}, { UI.corner(100) })
-		UI.label({
-			Position = UDim2.fromScale(0.05, 0.6),
-			Size = UDim2.fromScale(0.9, 0.17),
-			Text = (entry.place == 1 and "🥇 1st  " or "🥈 2nd  ") .. entry.name,
-			Font = Enum.Font.GothamBlack,
+			Position = UDim2.new(0.5, 0, 0, 22),
 			Parent = card,
 		})
-		UI.label({
-			Position = UDim2.fromScale(0.05, 0.78),
-			Size = UDim2.fromScale(0.9, 0.14),
+		local badge = UI.make("Frame", {
+			AnchorPoint = Vector2.new(0.5, 0.5),
+			Position = UDim2.new(0.5, 0, 0, 108),
+			Size = UDim2.fromOffset(52, 22),
+			BackgroundColor3 = first and C.Gold or C.SubText,
+			Parent = card,
+		}, { UI.round() })
+		UI.text({
+			Size = UDim2.fromScale(1, 1),
+			Text = first and "1ST" or "2ND",
+			TextXAlignment = Enum.TextXAlignment.Center,
+			FontFace = F.Heavy,
+			TextSize = 13,
+			TextColor3 = C.Surface,
+			Parent = badge,
+		})
+		UI.text({
+			Position = UDim2.fromOffset(12, 128),
+			Size = UDim2.new(1, -24, 0, 24),
+			Text = entry.name,
+			TextXAlignment = Enum.TextXAlignment.Center,
+			FontFace = F.Bold,
+			TextSize = 19,
+			Parent = card,
+		})
+		UI.text({
+			Position = UDim2.fromOffset(12, 154),
+			Size = UDim2.new(1, -24, 0, 20),
 			Text = ("%d damage taken"):format(entry.damage),
+			TextXAlignment = Enum.TextXAlignment.Center,
 			TextColor3 = C.SubText,
+			TextSize = 14,
 			Parent = card,
 		})
 	end
-	winnersTitle.Text = #list &gt; 1 and "🏆 WINNERS 🏆" or "🏆 WINNER 🏆"
-	winners.Visible = true
-	UI.pop(winners, 0.4)
+	winnersTitle.Text = #list &gt; 1 and "Winners" or "Winner"
+	UI.show(winners)
 	task.delay(seconds, function()
-		winners.Visible = false
+		UI.hide(winners)
 	end)
 end
 
 return Hud
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX7B2B3FC7E7BF47008261C6B3B631B47E"><Properties><string name="Name">Picker</string><ProtectedString name="Source">-- Avatar card panel used for the lottery, the vote and the guess.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXC5DD214CF15F4E5FA975879D040B8933"><Properties><string name="Name">Picker</string><ProtectedString name="Source">-- Avatar card panel used for the lottery, the vote and the guess.
 local UI = require(script.Parent.UI)
 local Fx = require(script.Parent.Fx)
-local C = UI.C
+local C, T, F = UI.C, UI.T, UI.F
 
 type Card = { userId: number, name: string, blocked: boolean?, crossed: boolean? }
 type Options = {
+	eyebrow: string?,
 	title: string,
 	sub: string,
 	cards: { Card },
@@ -2777,51 +2847,76 @@ type Options = {
 	onPick: ((number) -&gt; ())?,
 }
 
+local W, H = 560, 430
+local PAD = 28
+
 local Picker = {}
 
-local panel = UI.panel({ Name = "Picker", ZIndex = 40, MaxSize = Vector2.new(620, 460) })
-local title = UI.label({
-	Position = UDim2.fromScale(0.04, 0.03),
-	Size = UDim2.fromScale(0.92, 0.13),
-	Font = Enum.Font.GothamBlack,
-	TextColor3 = C.Gold,
-	MaxText = 40,
-	Parent = panel,
+local group, body = UI.sheet({
+	Name = "Picker",
+	AnchorPoint = Vector2.new(0.5, 0.5),
+	Position = UDim2.fromScale(0.5, 0.5),
+	Size = UDim2.fromOffset(W, H),
+	ZIndex = 40,
+}, 20)
+
+local eyebrow = UI.eyebrow("", { Position = UDim2.fromOffset(PAD, 24), Size = UDim2.new(1, -PAD * 2 - 60, 0, 16), Parent = body })
+local title = UI.text({
+	Position = UDim2.fromOffset(PAD, 42),
+	Size = UDim2.new(1, -PAD * 2, 0, 34),
+	FontFace = F.Heavy,
+	TextSize = 30,
+	Parent = body,
 })
-local sub = UI.label({
-	Position = UDim2.fromScale(0.04, 0.16),
-	Size = UDim2.fromScale(0.92, 0.08),
+local sub = UI.text({
+	Position = UDim2.fromOffset(PAD, 78),
+	Size = UDim2.new(1, -PAD * 2, 0, 20),
 	TextColor3 = C.SubText,
-	MaxText = 22,
-	Parent = panel,
+	TextSize = 16,
+	Parent = body,
 })
+local seconds = UI.text({
+	AnchorPoint = Vector2.new(1, 0),
+	Position = UDim2.new(1, -PAD, 0, 22),
+	Size = UDim2.fromOffset(60, 20),
+	TextXAlignment = Enum.TextXAlignment.Right,
+	FontFace = F.Bold,
+	TextSize = 16,
+	TextColor3 = C.SubText,
+	Parent = body,
+})
+local timerBack = UI.make("Frame", {
+	Position = UDim2.fromOffset(PAD, 112),
+	Size = UDim2.new(1, -PAD * 2, 0, 3),
+	BackgroundColor3 = C.Raised,
+	BackgroundTransparency = 0.9,
+	BorderSizePixel = 0,
+	Parent = body,
+}, { UI.round() })
+local timerFill = UI.make("Frame", {
+	Size = UDim2.fromScale(1, 1),
+	BackgroundColor3 = C.Accent,
+	BorderSizePixel = 0,
+	Parent = timerBack,
+}, { UI.round() })
+
 local grid = UI.make("Frame", {
-	Position = UDim2.fromScale(0.04, 0.27),
-	Size = UDim2.fromScale(0.92, 0.64),
+	Position = UDim2.fromOffset(PAD, 132),
+	Size = UDim2.new(1, -PAD * 2, 1, -132 - PAD),
 	BackgroundTransparency = 1,
-	Parent = panel,
+	Parent = body,
 }, {
 	UI.make("UIGridLayout", {
-		CellSize = UDim2.fromScale(0.31, 0.47),
-		CellPadding = UDim2.fromScale(0.035, 0.05),
+		CellSize = UDim2.new(1 / 3, -8, 0.5, -6),
+		CellPadding = UDim2.fromOffset(12, 12),
 		HorizontalAlignment = Enum.HorizontalAlignment.Center,
 		VerticalAlignment = Enum.VerticalAlignment.Center,
 		SortOrder = Enum.SortOrder.LayoutOrder,
 	}),
 })
-local timerBack = UI.make("Frame", {
-	Position = UDim2.fromScale(0.04, 0.94),
-	Size = UDim2.fromScale(0.92, 0.025),
-	BackgroundColor3 = C.Card,
-	Parent = panel,
-}, { UI.corner(6) })
-local timerFill = UI.make("Frame", {
-	Size = UDim2.fromScale(1, 1),
-	BackgroundColor3 = C.Accent,
-	Parent = timerBack,
-}, { UI.corner(6) })
 
-local cardFrames: { [number]: TextButton } = {}
+type CardUI = { button: TextButton, stroke: UIStroke, image: ImageLabel, name: TextLabel, tag: TextLabel, check: Frame }
+local cards: { [number]: CardUI } = {}
 local picking = false
 local openToken = 0
 local timerTween: Tween? = nil
@@ -2832,75 +2927,97 @@ local function clear()
 			child:Destroy()
 		end
 	end
-	table.clear(cardFrames)
+	table.clear(cards)
+end
+
+local function setHighlight(ui: CardUI, on: boolean)
+	ui.stroke.Color = on and C.Accent or C.Line
+	ui.stroke.Transparency = on and 0 or T.Line
+	ui.button.BackgroundColor3 = on and C.Accent or C.Raised
+	ui.button.BackgroundTransparency = on and 0.82 or T.Raised
 end
 
 local function makeCard(card: Card, order: number, clickable: boolean, onPick: ((number) -&gt; ())?)
+	local disabled = card.crossed or card.blocked
 	local button = UI.make("TextButton", {
 		Name = tostring(card.userId),
 		LayoutOrder = order,
-		BackgroundColor3 = C.Card,
-		AutoButtonColor = clickable,
-		Active = clickable,
+		BackgroundColor3 = C.Raised,
+		BackgroundTransparency = T.Raised,
+		AutoButtonColor = false,
 		Text = "",
 		Parent = grid,
 	}, { UI.corner(14) })
-	local stroke = UI.stroke(C.Card, 3)
-	stroke.Name = "Highlight"
+	local stroke = UI.stroke()
 	stroke.Parent = button
-	UI.make("ImageLabel", {
+	local image = UI.avatarImage(card.userId, 64, {
 		AnchorPoint = Vector2.new(0.5, 0),
-		Position = UDim2.fromScale(0.5, 0.06),
-		Size = UDim2.fromScale(0.66, 0.66),
-		SizeConstraint = Enum.SizeConstraint.RelativeYY,
-		BackgroundTransparency = 1,
-		Image = UI.avatar(card.userId),
-		Parent = button,
-	}, { UI.corner(100) })
-	UI.label({
-		Position = UDim2.fromScale(0.05, 0.74),
-		Size = UDim2.fromScale(0.9, 0.2),
-		Text = card.name,
-		MaxText = 22,
+		Position = UDim2.new(0.5, 0, 0, 14),
+		ImageTransparency = disabled and 0.6 or 0,
 		Parent = button,
 	})
-	local tag = UI.label({
-		Name = "Tag",
-		AnchorPoint = Vector2.new(0.5, 0.5),
-		Position = UDim2.fromScale(0.5, 0.4),
-		Size = UDim2.fromScale(1, 0.5),
-		Font = Enum.Font.GothamBlack,
-		TextColor3 = C.Red,
-		TextStrokeTransparency = 0,
-		MaxText = 70,
+	local name = UI.text({
+		Position = UDim2.fromOffset(10, 86),
+		Size = UDim2.new(1, -20, 0, 20),
+		Text = card.name,
+		TextXAlignment = Enum.TextXAlignment.Center,
+		FontFace = F.Bold,
+		TextSize = 16,
+		TextColor3 = disabled and C.SubText or C.Text,
+		Parent = button,
+	})
+	local tag = UI.text({
+		Position = UDim2.fromOffset(10, 106),
+		Size = UDim2.new(1, -20, 0, 16),
+		TextXAlignment = Enum.TextXAlignment.Center,
+		FontFace = F.Bold,
+		TextSize = 12,
+		Text = card.crossed and "NOT THEM" or card.blocked and "RESTING" or "",
+		TextColor3 = card.crossed and C.Red or C.SubText,
+		Parent = button,
+	})
+	local check = UI.make("Frame", {
+		AnchorPoint = Vector2.new(1, 0),
+		Position = UDim2.new(1, -8, 0, 8),
+		Size = UDim2.fromOffset(22, 22),
+		BackgroundColor3 = C.Accent,
 		Visible = false,
 		Parent = button,
+	}, { UI.round() })
+	UI.text({
+		Size = UDim2.fromScale(1, 1),
+		Text = "✓",
+		TextXAlignment = Enum.TextXAlignment.Center,
+		FontFace = F.Heavy,
+		TextSize = 14,
+		Parent = check,
 	})
-	if card.crossed then
-		tag.Text = "✕"
-		tag.Visible = true
-		button.BackgroundTransparency = 0.6
-	elseif card.blocked then
-		tag.Text = "RESTING"
-		tag.TextColor3 = C.SubText
-		tag.Visible = true
-		button.BackgroundTransparency = 0.6
-	end
-	if clickable and onPick and not card.crossed and not card.blocked then
+	local ui: CardUI = { button = button, stroke = stroke, image = image, name = name, tag = tag, check = check }
+	cards[card.userId] = ui
+
+	if clickable and onPick and not disabled then
+		button.MouseEnter:Connect(function()
+			if picking then
+				button.BackgroundTransparency = T.RaisedHover
+			end
+		end)
+		button.MouseLeave:Connect(function()
+			if picking then
+				button.BackgroundTransparency = T.Raised
+			end
+		end)
 		button.Activated:Connect(function()
 			if not picking then
 				return
 			end
 			picking = false
-			stroke.Color = C.Gold
-			tag.Text = "✓"
-			tag.TextColor3 = C.Green
-			tag.Visible = true
+			setHighlight(ui, true)
+			check.Visible = true
+			UI.pop(check, 0.4)
 			Fx.play("Vote")
 			onPick(card.userId)
 		end)
 	end
-	cardFrames[card.userId] = button
 end
 
 local function startTimer(endsAt: number?)
@@ -2908,18 +3025,32 @@ local function startTimer(endsAt: number?)
 		timerTween:Cancel()
 	end
 	timerFill.Size = UDim2.fromScale(1, 1)
+	seconds.Text = ""
 	if not endsAt then
 		timerBack.Visible = false
 		return
 	end
 	timerBack.Visible = true
+	local token = openToken
 	local left = math.max(endsAt - workspace:GetServerTimeNow(), 0.1)
 	timerTween = UI.tween(timerFill, left, { Size = UDim2.fromScale(0, 1) }, Enum.EasingStyle.Linear)
+	task.spawn(function()
+		while token == openToken do
+			local s = math.max(math.ceil(endsAt - workspace:GetServerTimeNow()), 0)
+			seconds.Text = s .. "s"
+			seconds.TextColor3 = s &lt;= 3 and C.Accent or C.SubText
+			if s &lt;= 0 then
+				return
+			end
+			task.wait(0.25)
+		end
+	end)
 end
 
 function Picker.open(options: Options)
 	openToken += 1
 	clear()
+	eyebrow.Text = string.upper(options.eyebrow or "")
 	title.Text = options.title
 	sub.Text = options.sub
 	local clickable = options.onPick ~= nil
@@ -2928,8 +3059,7 @@ function Picker.open(options: Options)
 	end
 	picking = clickable
 	startTimer(options.endsAt)
-	panel.Visible = true
-	UI.pop(panel)
+	UI.show(group)
 end
 
 function Picker.setSub(text: string)
@@ -2939,57 +3069,57 @@ end
 function Picker.close()
 	openToken += 1
 	picking = false
-	panel.Visible = false
+	UI.hide(group)
 end
 
 -- Lottery: a highlight jumps from card to card, slows down and lands on the winner.
-function Picker.lottery(cards: { Card }, winner: number, duration: number, onDone: (string) -&gt; ())
-	Picker.open({ title = "🎰 LOTTERY", sub = "Who goes into the HOT SEAT?", cards = cards })
+function Picker.lottery(list: { Card }, winner: number, duration: number, onDone: (string) -&gt; ())
+	Picker.open({ eyebrow = "Lottery", title = "Who takes the hot seat?", sub = "Picking a player...", cards = list })
 	local token = openToken
 	local order = {}
-	for _, card in cards do
+	for _, card in list do
 		table.insert(order, card.userId)
 	end
 	local winnerIndex = table.find(order, winner) or 1
 	local steps = #order * 3 + winnerIndex
 	task.spawn(function()
 		local spin = duration * 0.85
-		local previous: TextButton? = nil
+		local previous: CardUI? = nil
 		for step = 1, steps do
 			if token ~= openToken then
 				return
 			end
-			local userId = order[(step - 1) % #order + 1]
-			local frame = cardFrames[userId]
+			local ui = cards[order[(step - 1) % #order + 1]]
 			if previous then
-				(previous:FindFirstChild("Highlight") :: UIStroke).Color = C.Card
-				previous.BackgroundColor3 = C.Card
+				setHighlight(previous, false)
 			end
-			if frame then
-				(frame:FindFirstChild("Highlight") :: UIStroke).Color = C.Gold
-				frame.BackgroundColor3 = C.Accent
-				previous = frame
+			if ui then
+				setHighlight(ui, true)
+				previous = ui
 			end
 			Fx.play("Tick", 0.5, 1 + step / steps * 0.5)
-			-- slows down towards the end
 			local t = step / steps
-			task.wait(spin / steps * (0.4 + t * t * 2.2))
+			task.wait(spin / steps * (0.4 + t * t * 2.2)) -- slows down towards the end
 		end
 		local name = ""
-		for _, card in cards do
+		for _, card in list do
 			if card.userId == winner then
 				name = card.name
 			end
 		end
 		if token == openToken then
-			Picker.setSub(name .. " goes into the HOT SEAT!")
+			local ui = cards[winner]
+			if ui then
+				UI.pop(ui.button, 0.9)
+			end
+			Picker.setSub(name .. " takes the hot seat")
 			onDone(name)
 		end
 	end)
 end
 
 return Picker
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXCE5271AC055F4518ABF137E2E0AE9A3D"><Properties><string name="Name">PowerBar</string><ProtectedString name="Source">-- Slapper mini-game: the needle sweeps ONCE per charge. Tap in the green middle.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXAFA1C417FC1046D684D2740791D61465"><Properties><string name="Name">PowerBar</string><ProtectedString name="Source">-- Slapper mini-game: the needle sweeps ONCE per charge. Tap in the green middle.
 -- No tap = it stops at the end by itself (red, weakest).
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
@@ -2997,85 +3127,56 @@ local UserInputService = game:GetService("UserInputService")
 local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChild("Config"))
 local UI = require(script.Parent.UI)
 local Fx = require(script.Parent.Fx)
-local C = UI.C
+local C, T, F = UI.C, UI.T, UI.F
+
+local W, H, PAD = 520, 236, 24
 
 local PowerBar = {}
 local send: ((number, number) -&gt; ())? = nil
 
-local panel = UI.make("Frame", {
+local group, body = UI.sheet({
 	Name = "PowerBar",
 	AnchorPoint = Vector2.new(0.5, 1),
-	Position = UDim2.new(0.5, 0, 1, -20),
-	Size = UDim2.new(0.94, 0, 0, 250),
-	BackgroundColor3 = C.Panel,
-	Visible = false,
+	Position = UDim2.new(0.5, 0, 1, -24),
+	Size = UDim2.fromOffset(W, H),
 	ZIndex = 40,
-	Parent = UI.root(),
-}, { UI.corner(18), UI.stroke(C.Accent, 3), UI.make("UISizeConstraint", { MaxSize = Vector2.new(560, 250) }) })
+}, 18)
 
-UI.label({
-	Position = UDim2.new(0, 16, 0, 10),
-	Size = UDim2.new(0.5, -16, 0, 30),
-	Text = "✋ SLAP POWER",
-	Font = Enum.Font.GothamBlack,
-	TextColor3 = C.Gold,
-	TextXAlignment = Enum.TextXAlignment.Left,
-	MaxText = 26,
-	Parent = panel,
+UI.eyebrow("Slap power", { Position = UDim2.fromOffset(PAD, 20), Size = UDim2.fromOffset(200, 16), Parent = body })
+local hint = UI.text({
+	Position = UDim2.fromOffset(PAD, 38),
+	Size = UDim2.new(1, -PAD * 2 - 120, 0, 26),
+	FontFace = F.Heavy,
+	TextSize = 22,
+	Text = "Tap in the green",
+	Parent = body,
 })
-local totalLabel = UI.label({
+local totalLabel = UI.text({
 	AnchorPoint = Vector2.new(1, 0),
-	Position = UDim2.new(1, -16, 0, 6),
-	Size = UDim2.new(0.4, 0, 0, 38),
-	Text = "0%",
-	Font = Enum.Font.GothamBlack,
+	Position = UDim2.new(1, -PAD, 0, 18),
+	Size = UDim2.fromOffset(120, 44),
 	TextXAlignment = Enum.TextXAlignment.Right,
-	MaxText = 36,
-	Parent = panel,
+	FontFace = F.Heavy,
+	TextSize = 40,
+	Text = "0%",
+	Parent = body,
 })
 
--- three chips: what each charge added
-local chipRow = UI.make("Frame", {
-	Position = UDim2.new(0, 16, 0, 50),
-	Size = UDim2.new(1, -32, 0, 34),
-	BackgroundTransparency = 1,
-	Parent = panel,
-}, {
-	UI.make("UIListLayout", {
-		FillDirection = Enum.FillDirection.Horizontal,
-		HorizontalAlignment = Enum.HorizontalAlignment.Center,
-		Padding = UDim.new(0, 10),
-	}),
-})
-local chips: { TextLabel } = {}
-for i, value in Config.CHARGE_VALUES do
-	local chip = UI.label({
-		LayoutOrder = i,
-		Size = UDim2.new(1 / #Config.CHARGE_VALUES, -10, 1, 0),
-		BackgroundTransparency = 0,
-		BackgroundColor3 = C.Card,
-		Text = ("up to %d%%"):format(value),
-		TextColor3 = C.SubText,
-		MaxText = 20,
-		Parent = chipRow,
-	})
-	UI.corner(10).Parent = chip
-	chips[i] = chip
-end
-
--- the bar: red everywhere, yellow around the middle, green in the middle
+-- the bar: red outside, yellow around the middle, green in the middle
 local bar = UI.make("Frame", {
-	Position = UDim2.new(0, 16, 0, 96),
-	Size = UDim2.new(1, -32, 0, 46),
+	Position = UDim2.fromOffset(PAD, 80),
+	Size = UDim2.new(1, -PAD * 2, 0, 34),
 	BackgroundColor3 = C.Red,
-	ClipsDescendants = true,
-	Parent = panel,
+	BackgroundTransparency = 0.55,
+	BorderSizePixel = 0,
+	Parent = body,
 }, { UI.corner(10) })
 UI.make("Frame", {
 	AnchorPoint = Vector2.new(0.5, 0),
 	Position = UDim2.fromScale(0.5, 0),
 	Size = UDim2.fromScale(Config.YELLOW_HALF_WIDTH * 2, 1),
 	BackgroundColor3 = C.Yellow,
+	BackgroundTransparency = 0.3,
 	BorderSizePixel = 0,
 	Parent = bar,
 })
@@ -3090,27 +3191,67 @@ UI.make("Frame", {
 local needle = UI.make("Frame", {
 	AnchorPoint = Vector2.new(0.5, 0.5),
 	Position = UDim2.fromScale(0, 0.5),
-	Size = UDim2.new(0, 8, 1.3, 0),
-	BackgroundColor3 = Color3.new(1, 1, 1),
+	Size = UDim2.new(0, 5, 1, 14),
+	BackgroundColor3 = C.Text,
+	BorderSizePixel = 0,
 	ZIndex = 3,
 	Parent = bar,
-}, { UI.corner(4), UI.stroke(Color3.new(0, 0, 0), 2) })
+}, { UI.round(), UI.stroke(C.Black, 0.5, 1) })
 
-local zoneLabel = UI.label({
-	Position = UDim2.new(0, 16, 0, 146),
-	Size = UDim2.new(1, -32, 0, 28),
-	Text = "",
-	Font = Enum.Font.GothamBlack,
-	MaxText = 26,
-	Parent = panel,
+-- one chip per charge: what it added
+local chipRow = UI.make("Frame", {
+	Position = UDim2.fromOffset(PAD, 128),
+	Size = UDim2.new(1, -PAD * 2, 0, 32),
+	BackgroundTransparency = 1,
+	Parent = body,
+}, {
+	UI.make("UIListLayout", {
+		FillDirection = Enum.FillDirection.Horizontal,
+		Padding = UDim.new(0, 8),
+		SortOrder = Enum.SortOrder.LayoutOrder,
+	}),
 })
+type Chip = { frame: Frame, stroke: UIStroke, text: TextLabel }
+local chips: { Chip } = {}
+local count = #Config.CHARGE_VALUES
+for i = 1, count do
+	local frame = UI.make("Frame", {
+		LayoutOrder = i,
+		Size = UDim2.new(1 / count, -8 * (count - 1) / count, 1, 0),
+		BackgroundColor3 = C.Raised,
+		BackgroundTransparency = T.Raised,
+		Parent = chipRow,
+	}, { UI.corner(8) })
+	local stroke = UI.stroke()
+	stroke.Parent = frame
+	local text = UI.text({
+		Size = UDim2.fromScale(1, 1),
+		TextXAlignment = Enum.TextXAlignment.Center,
+		TextSize = 14,
+		FontFace = F.Bold,
+		TextColor3 = C.SubText,
+		Parent = frame,
+	})
+	chips[i] = { frame = frame, stroke = stroke, text = text }
+end
+
 local tapButton = UI.button({
-	AnchorPoint = Vector2.new(0.5, 1),
-	Position = UDim2.new(0.5, 0, 1, -12),
-	Size = UDim2.new(0.6, 0, 0, 56),
-	Text = "TAP!",
-	MaxText = 34,
-	Parent = panel,
+	Position = UDim2.fromOffset(PAD, 172),
+	Size = UDim2.new(1, -PAD * 2, 0, 44),
+	Text = "TAP",
+	TextSize = 19,
+	Parent = body,
+})
+UI.text({
+	AnchorPoint = Vector2.new(1, 0.5),
+	Position = UDim2.new(1, -14, 0.5, 0),
+	Size = UDim2.fromOffset(80, 16),
+	Text = "or Space",
+	TextXAlignment = Enum.TextXAlignment.Right,
+	TextSize = 13,
+	TextColor3 = C.Text,
+	TextTransparency = 0.35,
+	Parent = tapButton,
 })
 
 local active = false
@@ -3118,6 +3259,16 @@ local index = 0
 local sweepTime = 1
 local tween: Tween? = nil
 local token = 0
+
+local function resetChips()
+	for i, chip in chips do
+		chip.text.Text = ("up to %d%%"):format(Config.CHARGE_VALUES[i])
+		chip.text.TextColor3 = C.SubText
+		chip.stroke.Color = C.Line
+		chip.stroke.Transparency = T.Line
+		chip.frame.BackgroundTransparency = T.Raised
+	end
+end
 
 local function stopAt(pos: number)
 	if not active then
@@ -3159,24 +3310,19 @@ end
 function PowerBar.start(data: any)
 	token += 1
 	if data.index == 1 then
-		for i, chip in chips do
-			chip.Text = ("up to %d%%"):format(Config.CHARGE_VALUES[i])
-			chip.TextColor3 = C.SubText
-			chip.BackgroundColor3 = C.Card
-		end
+		resetChips()
 		totalLabel.Text = "0%"
+		totalLabel.TextColor3 = C.Text
 	end
 	local chip = chips[data.index]
 	if chip then
-		chip.BackgroundColor3 = C.Accent
-		chip.TextColor3 = C.Text
+		chip.stroke.Color = C.Accent
+		chip.stroke.Transparency = 0
+		chip.text.TextColor3 = C.Text
 	end
-	zoneLabel.Text = "Tap when the needle is in the GREEN!"
-	zoneLabel.TextColor3 = C.SubText
-	if not panel.Visible then
-		panel.Visible = true
-		UI.pop(panel)
-	end
+	hint.Text = ("Charge %d · tap in the green"):format(data.index)
+	hint.TextColor3 = C.Text
+	UI.show(group)
 	index = data.index
 	sweepTime = math.max(data.sweep, 0.2)
 	active = true
@@ -3191,17 +3337,18 @@ function PowerBar.start(data: any)
 end
 
 function PowerBar.result(data: any)
-	local chip = chips[data.index]
 	local color = data.zone == "PERFECT" and C.Green or data.zone == "GOOD" and C.Yellow or C.Red
+	local chip = chips[data.index]
 	if chip then
-		chip.Text = ("+%d%%"):format(data.add)
-		chip.BackgroundColor3 = color
-		chip.TextColor3 = C.Background
+		chip.text.Text = ("+%d%%"):format(data.add)
+		chip.text.TextColor3 = color
+		chip.stroke.Color = color
+		chip.stroke.Transparency = 0.2
 	end
 	totalLabel.Text = ("%d%%"):format(data.total)
-	zoneLabel.Text = data.zone .. "!  +" .. data.add .. "%"
-	zoneLabel.TextColor3 = color
-	UI.pop(zoneLabel, 0.6)
+	UI.pop(totalLabel, 0.85)
+	hint.Text = data.zone == "PERFECT" and "Perfect!" or data.zone == "GOOD" and "Good" or "Weak"
+	hint.TextColor3 = color
 	if data.zone == "PERFECT" then
 		Fx.play("Perfect")
 	end
@@ -3209,8 +3356,9 @@ end
 
 function PowerBar.done(data: any)
 	totalLabel.Text = ("%d%%"):format(data.total)
-	zoneLabel.Text = ("SLAP AT %d%% POWER!"):format(data.total)
-	zoneLabel.TextColor3 = C.Gold
+	totalLabel.TextColor3 = C.Accent
+	hint.Text = "Slap incoming..."
+	hint.TextColor3 = C.Text
 	token += 1
 	local myToken = token
 	task.delay(1.2, function()
@@ -3226,100 +3374,127 @@ function PowerBar.close()
 		tween:Cancel()
 		tween = nil
 	end
-	panel.Visible = false
+	UI.hide(group)
 end
 
 return PowerBar
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX7E9C9F1924E347D8BF523D064D5B2D3E"><Properties><string name="Name">Protect</string><ProtectedString name="Source">-- Front player: black screen while the slapper is behind, and the BLOCK mini-game
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX498AC0BCE8194C159B1339646FD5C2AD"><Properties><string name="Name">Protect</string><ProtectedString name="Source">-- Front player: black screen while the slapper is behind, and the BLOCK mini-game
 -- (a ring shrinks onto the circle; the slap lands exactly when it touches).
 local UserInputService = game:GetService("UserInputService")
 
 local UI = require(script.Parent.UI)
 local Fx = require(script.Parent.Fx)
-local C = UI.C
+local C, F = UI.C, UI.F
 
-local RING_START = 3.6 -- ring starts this many times bigger than the circle
-local CIRCLE = 0.24 -- circle size (fraction of screen height)
+local CIRCLE = 150 -- target circle size (px, before auto scale)
+local RING_START = 3.4 -- ring starts this many times bigger
 
 local Protect = {}
 local send: ((number) -&gt; ())? = nil
 
+-- full screen black (not scaled, always covers everything)
 local black = UI.make("Frame", {
 	Name = "Blackout",
 	Size = UDim2.fromScale(1, 1),
-	BackgroundColor3 = Color3.new(0, 0, 0),
+	BackgroundColor3 = Color3.fromRGB(4, 4, 7),
 	BackgroundTransparency = 1,
 	Visible = false,
 	ZIndex = 50,
 	Parent = UI.root(),
 })
-local eyes = UI.label({
-	AnchorPoint = Vector2.new(0.5, 0),
-	Position = UDim2.fromScale(0.5, 0.1),
-	Size = UDim2.fromScale(0.9, 0.08),
-	Text = "😵 EYES CLOSED...",
-	Font = Enum.Font.GothamBlack,
-	TextColor3 = C.SubText,
-	MaxText = 40,
+local center = UI.make("Frame", {
+	AnchorPoint = Vector2.new(0.5, 0.5),
+	Position = UDim2.fromScale(0.5, 0.5),
+	Size = UDim2.fromOffset(560, 560),
+	BackgroundTransparency = 1,
 	Parent = black,
 })
-local hint = UI.label({
-	AnchorPoint = Vector2.new(0.5, 0),
-	Position = UDim2.fromScale(0.5, 0.19),
-	Size = UDim2.fromScale(0.9, 0.05),
-	Text = "Someone is coming. Block at the right moment!",
-	TextColor3 = C.SubText,
-	MaxText = 22,
-	Parent = black,
+UI.autoScale(center)
+
+local heading = UI.make("Frame", {
+	Size = UDim2.new(1, 0, 0, 80),
+	BackgroundTransparency = 1,
+	Parent = center,
 })
+UI.eyebrow("Eyes closed", { TextXAlignment = Enum.TextXAlignment.Center, Parent = heading })
+UI.text({
+	Position = UDim2.fromOffset(0, 20),
+	Size = UDim2.new(1, 0, 0, 32),
+	Text = "Someone is behind you",
+	TextXAlignment = Enum.TextXAlignment.Center,
+	FontFace = F.Heavy,
+	TextSize = 28,
+	Parent = heading,
+})
+UI.text({
+	Position = UDim2.fromOffset(0, 54),
+	Size = UDim2.new(1, 0, 0, 20),
+	Text = "Press BLOCK when the ring meets the circle",
+	TextXAlignment = Enum.TextXAlignment.Center,
+	TextColor3 = C.SubText,
+	TextSize = 16,
+	Parent = heading,
+})
+
 local target = UI.make("Frame", {
 	AnchorPoint = Vector2.new(0.5, 0.5),
 	Position = UDim2.fromScale(0.5, 0.5),
-	Size = UDim2.fromScale(CIRCLE, CIRCLE),
-	SizeConstraint = Enum.SizeConstraint.RelativeYY,
-	BackgroundColor3 = C.Accent,
-	BackgroundTransparency = 0.75,
+	Size = UDim2.fromOffset(CIRCLE, CIRCLE),
+	BackgroundColor3 = C.Raised,
+	BackgroundTransparency = 0.95,
 	Visible = false,
-	Parent = black,
-}, { UI.corner(1000), UI.stroke(Color3.new(1, 1, 1), 5) })
+	Parent = center,
+}, { UI.round(), UI.stroke(C.Text, 0.25, 2) })
 local ring = UI.make("Frame", {
 	AnchorPoint = Vector2.new(0.5, 0.5),
 	Position = UDim2.fromScale(0.5, 0.5),
-	Size = UDim2.fromScale(CIRCLE * RING_START, CIRCLE * RING_START),
-	SizeConstraint = Enum.SizeConstraint.RelativeYY,
+	Size = UDim2.fromOffset(CIRCLE * RING_START, CIRCLE * RING_START),
 	BackgroundTransparency = 1,
 	Visible = false,
 	ZIndex = 2,
-	Parent = black,
-}, { UI.corner(1000), UI.stroke(C.Gold, 6) })
-local result = UI.label({
+	Parent = center,
+}, { UI.round(), UI.stroke(C.Accent, 0, 3) })
+
+local resultTitle = UI.text({
 	AnchorPoint = Vector2.new(0.5, 0.5),
-	Position = UDim2.fromScale(0.5, 0.5),
-	Size = UDim2.fromScale(0.9, 0.14),
-	Text = "",
-	Font = Enum.Font.GothamBlack,
-	MaxText = 70,
+	Position = UDim2.fromScale(0.5, 0.47),
+	Size = UDim2.new(1, 0, 0, 44),
+	TextXAlignment = Enum.TextXAlignment.Center,
+	FontFace = F.Heavy,
+	TextSize = 40,
 	ZIndex = 4,
-	Parent = black,
+	Parent = center,
 })
+local resultSub = UI.text({
+	AnchorPoint = Vector2.new(0.5, 0.5),
+	Position = UDim2.fromScale(0.5, 0.56),
+	Size = UDim2.new(1, 0, 0, 26),
+	TextXAlignment = Enum.TextXAlignment.Center,
+	FontFace = F.Bold,
+	TextSize = 22,
+	TextColor3 = C.SubText,
+	ZIndex = 4,
+	Parent = center,
+})
+
+local blockButton = UI.button({
+	AnchorPoint = Vector2.new(0.5, 1),
+	Position = UDim2.fromScale(0.5, 1),
+	Size = UDim2.fromOffset(240, 54),
+	Text = "BLOCK",
+	TextSize = 20,
+	Visible = false,
+	ZIndex = 5,
+	Parent = center,
+})
+
 local flash = UI.make("Frame", {
 	Size = UDim2.fromScale(1, 1),
 	BackgroundColor3 = Color3.new(1, 1, 1),
 	BackgroundTransparency = 1,
-	ZIndex = 3,
+	ZIndex = 6,
 	Parent = black,
 })
-local blockButton = UI.button({
-	AnchorPoint = Vector2.new(0.5, 1),
-	Position = UDim2.new(0.5, 0, 1, -40),
-	Size = UDim2.new(0.5, 0, 0, 70),
-	Text = "🛡️ BLOCK",
-	MaxText = 40,
-	Visible = false,
-	ZIndex = 5,
-	Parent = black,
-})
-UI.make("UISizeConstraint", { MaxSize = Vector2.new(360, 70), Parent = blockButton })
 
 local ringActive = false
 local pressed = false
@@ -3371,15 +3546,14 @@ function Protect.bind(sender: (number) -&gt; ())
 end
 
 function Protect.blackout(on: boolean)
+	hideRing()
 	if on then
-		hideRing()
-		result.Text = ""
-		eyes.Visible, hint.Visible = true, true
+		resultTitle.Text, resultSub.Text = "", ""
+		heading.Visible = true
 		black.Visible = true
 		UI.tween(black, 0.5, { BackgroundTransparency = 0 })
 		Fx.loop("Heartbeat", true)
 	else
-		hideRing()
 		Fx.loop("Heartbeat", false)
 		local t = UI.tween(black, 0.4, { BackgroundTransparency = 1 })
 		t.Completed:Connect(function(state)
@@ -3394,20 +3568,19 @@ function Protect.start(duration: number)
 	pressed = false
 	ringActive = true
 	hitAt = os.clock() + duration
-	result.Text = ""
+	resultTitle.Text, resultSub.Text = "", ""
 	target.Visible = true
 	ring.Visible = true
 	blockButton.Visible = true
-	ring.Size = UDim2.fromScale(CIRCLE * RING_START, CIRCLE * RING_START)
-	ringTween = UI.tween(ring, duration, { Size = UDim2.fromScale(CIRCLE, CIRCLE) }, Enum.EasingStyle.Linear)
+	ring.Size = UDim2.fromOffset(CIRCLE * RING_START, CIRCLE * RING_START)
+	ringTween = UI.tween(ring, duration, { Size = UDim2.fromOffset(CIRCLE, CIRCLE) }, Enum.EasingStyle.Linear)
 	Fx.play("Whoosh")
-	UI.pop(blockButton, 0.5)
 end
 
 -- The slap landed on me
 function Protect.hit()
-	flash.BackgroundTransparency = 0.1
-	UI.tween(flash, 0.5, { BackgroundTransparency = 1 })
+	flash.BackgroundTransparency = 0.2
+	UI.tween(flash, 0.45, { BackgroundTransparency = 1 })
 	task.delay(0.5, function()
 		if ringActive and not pressed then
 			hideRing()
@@ -3417,19 +3590,20 @@ end
 
 function Protect.showResult(block: string, damage: number)
 	hideRing()
-	eyes.Visible, hint.Visible = false, false
+	heading.Visible = false
 	if block == "PERFECT" then
-		result.Text = ("🛡️ PERFECT BLOCK!  -%d HP"):format(damage)
-		result.TextColor3 = C.Green
+		resultTitle.Text = "Perfect block"
+		resultTitle.TextColor3 = C.Green
 		Fx.play("Perfect")
 	elseif block == "GOOD" then
-		result.Text = ("GOOD BLOCK!  -%d HP"):format(damage)
-		result.TextColor3 = C.Yellow
+		resultTitle.Text = "Good block"
+		resultTitle.TextColor3 = C.Yellow
 	else
-		result.Text = ("OUCH!  -%d HP"):format(damage)
-		result.TextColor3 = C.Red
+		resultTitle.Text = "Ouch!"
+		resultTitle.TextColor3 = C.Red
 	end
-	UI.pop(result, 0.4)
+	resultSub.Text = ("-%d HP"):format(damage)
+	UI.pop(resultTitle, 0.8)
 end
 
 function Protect.reset()
@@ -3440,78 +3614,100 @@ function Protect.reset()
 end
 
 return Protect
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX59C90BACD131413DB420A405C8531FF0"><Properties><string name="Name">Rules</string><ProtectedString name="Source">-- TEST FEATURE (Config.ENABLE_RULES_SCREEN): one panel with all the rules, opened only by the "?" button.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXAB28CFA54BCB45D886FDBD830F6FE229"><Properties><string name="Name">Rules</string><ProtectedString name="Source">-- TEST FEATURE (Config.ENABLE_RULES_SCREEN): one panel with all the rules, opened only by the "?" button.
 -- Safe to delete: ClientMain checks the setting before using it.
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChild("Config"))
 local UI = require(script.Parent.UI)
-local C = UI.C
+local C, F = UI.C, UI.F
 
 local RULES = {
-	{ "🎰 LOTTERY", "One player goes into the HOT SEAT. The others sit behind." },
-	{ "🗳️ VOTE", "The back seats vote who slaps. Most votes wins, a tie is random." },
-	{ "🛡️ BLOCK", "Slapper taps in the GREEN 3 times. Hot seat: press BLOCK when the ring hits the circle. PERFECT = less damage + 2 innocent players crossed out." },
-	{ "🤔 GUESS", "Right guess: swap seats. Wrong: stay. 0 HP = out. Last 2 win!" },
+	{ "Lottery", "One player is picked for the hot seat. Everyone else sits behind them." },
+	{ "Vote", "The back seats vote who slaps. Most votes slaps, a tie is decided at random." },
+	{ "Slap &amp; block", "The slapper taps in the green 3 times. Press BLOCK when the ring meets the circle. Perfect = less damage + a clue." },
+	{ "Guess", "Right guess: you swap seats. Wrong: you stay. 0 HP means you're out. The last 2 win." },
 }
+
+local W, PAD, ROW = 520, 28, 72
 
 local Rules = {}
 
-local panel = UI.panel({ Name = "Rules", ZIndex = 90, Size = UDim2.fromScale(0.92, 0.75), MaxSize = Vector2.new(560, 420) })
-UI.label({
-	Position = UDim2.fromScale(0.05, 0.03),
-	Size = UDim2.fromScale(0.9, 0.11),
-	Text = "HOW TO PLAY",
-	Font = Enum.Font.GothamBlack,
-	TextColor3 = C.Gold,
-	MaxText = 34,
-	Parent = panel,
+local group, body = UI.sheet({
+	Name = "Rules",
+	AnchorPoint = Vector2.new(0.5, 0.5),
+	Position = UDim2.fromScale(0.5, 0.5),
+	Size = UDim2.fromOffset(W, 112 + #RULES * ROW + PAD - 8),
+	ZIndex = 90,
+}, 20)
+
+UI.eyebrow("Rules", { Position = UDim2.fromOffset(PAD, 24), Parent = body })
+UI.text({
+	Position = UDim2.fromOffset(PAD, 42),
+	Size = UDim2.new(1, -PAD * 2, 0, 34),
+	Text = "How to play",
+	FontFace = F.Heavy,
+	TextSize = 30,
+	Parent = body,
 })
-local list = UI.make("Frame", {
-	Position = UDim2.fromScale(0.05, 0.16),
-	Size = UDim2.fromScale(0.9, 0.66),
-	BackgroundTransparency = 1,
-	Parent = panel,
-}, { UI.make("UIListLayout", { Padding = UDim.new(0.02, 0), SortOrder = Enum.SortOrder.LayoutOrder }) })
+local closeButton = UI.button({
+	AnchorPoint = Vector2.new(1, 0),
+	Position = UDim2.new(1, -20, 0, 20),
+	Size = UDim2.fromOffset(36, 36),
+	Text = "✕",
+	TextSize = 16,
+	Parent = body,
+}, "ghost")
+UI.round().Parent = closeButton
 
 for i, rule in RULES do
 	local row = UI.make("Frame", {
-		LayoutOrder = i,
-		Size = UDim2.fromScale(1, 0.235),
-		BackgroundColor3 = C.Card,
-		Parent = list,
-	}, { UI.corner(10) })
-	UI.label({
-		Position = UDim2.fromScale(0.03, 0.1),
-		Size = UDim2.fromScale(0.27, 0.8),
+		Position = UDim2.fromOffset(PAD, 100 + (i - 1) * ROW),
+		Size = UDim2.new(1, -PAD * 2, 0, ROW - 8),
+		BackgroundColor3 = C.Raised,
+		BackgroundTransparency = UI.T.Raised,
+		Parent = body,
+	}, { UI.corner(12) })
+	local badge = UI.make("Frame", {
+		AnchorPoint = Vector2.new(0, 0.5),
+		Position = UDim2.new(0, 14, 0.5, 0),
+		Size = UDim2.fromOffset(30, 30),
+		BackgroundColor3 = C.Accent,
+		BackgroundTransparency = 0.8,
+		Parent = row,
+	}, { UI.round() })
+	UI.text({
+		Size = UDim2.fromScale(1, 1),
+		Text = tostring(i),
+		TextXAlignment = Enum.TextXAlignment.Center,
+		FontFace = F.Heavy,
+		TextSize = 15,
+		TextColor3 = C.Accent,
+		Parent = badge,
+	})
+	UI.text({
+		Position = UDim2.fromOffset(58, 8),
+		Size = UDim2.new(1, -72, 0, 20),
 		Text = rule[1],
-		Font = Enum.Font.GothamBlack,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		MaxText = 20,
+		FontFace = F.Bold,
+		TextSize = 17,
 		Parent = row,
 	})
-	UI.label({
-		Position = UDim2.fromScale(0.31, 0.08),
-		Size = UDim2.fromScale(0.67, 0.84),
+	UI.text({
+		Position = UDim2.fromOffset(58, 28),
+		Size = UDim2.new(1, -72, 0, 32),
 		Text = rule[2],
-		Font = Enum.Font.GothamMedium,
 		TextColor3 = C.SubText,
+		TextSize = 14,
 		TextWrapped = true,
-		TextXAlignment = Enum.TextXAlignment.Left,
-		MaxText = 16,
+		TextTruncate = Enum.TextTruncate.None,
+		TextYAlignment = Enum.TextYAlignment.Top,
 		Parent = row,
 	})
 end
 
-local closeButton = UI.button({
-	AnchorPoint = Vector2.new(0.5, 1),
-	Position = UDim2.fromScale(0.5, 0.96),
-	Size = UDim2.fromScale(0.4, 0.1),
-	Text = "GOT IT",
-	Parent = panel,
-})
 closeButton.Activated:Connect(function()
-	panel.Visible = false
+	UI.hide(group)
 end)
 
 -- "?" button: open / close
@@ -3519,25 +3715,52 @@ function Rules.show()
 	if not Config.ENABLE_RULES_SCREEN then
 		return
 	end
-	if panel.Visible then
-		panel.Visible = false
-		return
+	if group.Visible and group.GroupTransparency &lt; 0.5 then
+		UI.hide(group)
+	else
+		UI.show(group)
 	end
-	panel.Visible = true
-	UI.pop(panel)
 end
 
 return Rules
-</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBXC9FD6A9A06F74F54BF55001C9036DBA3"><Properties><string name="Name">UI</string><ProtectedString name="Source">-- Small helpers to build the UI in code, plus the one ScreenGui everything lives in.
+</ProtectedString></Properties></Item><Item class="ModuleScript" referent="RBX2D955F83A2994D729A47E14261F7442B"><Properties><string name="Name">UI</string><ProtectedString name="Source">-- One look for the whole game: theme, fonts, small builders, fade/scale animations
+-- and auto-scaling so the same layout works on phone and PC.
 local Players = game:GetService("Players")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
 
-local Config = require(ReplicatedStorage:WaitForChild("WhoSlappedMe"):WaitForChild("Config"))
-
 local UI = {}
-UI.C = Config.COLORS
 
+-- Theme -------------------------------------------------------------------
+UI.C = {
+	Surface = Color3.fromRGB(13, 14, 20), -- panels (used semi-transparent)
+	Raised = Color3.fromRGB(255, 255, 255), -- cards inside panels (used very transparent)
+	Line = Color3.fromRGB(255, 255, 255), -- thin borders (used very transparent)
+	Text = Color3.fromRGB(244, 245, 250),
+	SubText = Color3.fromRGB(158, 163, 181),
+	Accent = Color3.fromRGB(255, 82, 110),
+	Gold = Color3.fromRGB(250, 197, 85),
+	Green = Color3.fromRGB(62, 211, 148),
+	Yellow = Color3.fromRGB(250, 197, 85),
+	Red = Color3.fromRGB(244, 96, 96),
+	Black = Color3.fromRGB(0, 0, 0),
+}
+-- transparencies
+UI.T = {
+	Surface = 0.22,
+	Raised = 0.94,
+	RaisedHover = 0.88,
+	Line = 0.86,
+}
+
+local FAMILY = "rbxasset://fonts/families/BuilderSans.json"
+UI.F = {
+	Regular = Font.new(FAMILY, Enum.FontWeight.Regular),
+	Medium = Font.new(FAMILY, Enum.FontWeight.Medium),
+	Bold = Font.new(FAMILY, Enum.FontWeight.Bold),
+	Heavy = Font.new(FAMILY, Enum.FontWeight.ExtraBold),
+}
+
+-- Builders ----------------------------------------------------------------
 function UI.make(className: string, props: { [string]: any }?, children: { Instance }?): any
 	local inst = Instance.new(className)
 	local parent = nil
@@ -3565,74 +3788,185 @@ function UI.corner(radius: number?): UICorner
 	return UI.make("UICorner", { CornerRadius = UDim.new(0, radius or 12) })
 end
 
-function UI.stroke(color: Color3?, thickness: number?): UIStroke
+function UI.round(): UICorner
+	return UI.make("UICorner", { CornerRadius = UDim.new(1, 0) })
+end
+
+function UI.stroke(color: Color3?, transparency: number?, thickness: number?): UIStroke
 	return UI.make("UIStroke", {
-		Color = color or UI.C.Accent,
-		Thickness = thickness or 2,
+		Color = color or UI.C.Line,
+		Transparency = transparency or UI.T.Line,
+		Thickness = thickness or 1,
 		ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
 	})
 end
 
-function UI.label(props: { [string]: any }): TextLabel
-	local base = {
+function UI.padding(x: number, y: number?): UIPadding
+	return UI.make("UIPadding", {
+		PaddingLeft = UDim.new(0, x),
+		PaddingRight = UDim.new(0, x),
+		PaddingTop = UDim.new(0, y or x),
+		PaddingBottom = UDim.new(0, y or x),
+	})
+end
+
+-- Plain text with a fixed size (sharper and more consistent than TextScaled)
+function UI.text(props: { [string]: any }): TextLabel
+	local base: { [string]: any } = {
 		BackgroundTransparency = 1,
-		Font = Enum.Font.GothamBold,
+		FontFace = UI.F.Medium,
+		TextSize = 16,
+		TextColor3 = UI.C.Text,
+		TextXAlignment = Enum.TextXAlignment.Left,
+		TextTruncate = Enum.TextTruncate.AtEnd,
+		Text = "",
+	}
+	for k, v in props do
+		base[k] = v
+	end
+	return UI.make("TextLabel", base)
+end
+
+-- Auto-fitting text (used by world popups in Fx)
+function UI.label(props: { [string]: any }): TextLabel
+	local base: { [string]: any } = {
+		BackgroundTransparency = 1,
+		FontFace = UI.F.Bold,
 		TextColor3 = UI.C.Text,
 		TextScaled = true,
 		Text = "",
 	}
 	for k, v in props do
-		if k ~= "MaxText" then
+		if k ~= "MaxText" and k ~= "Font" then
 			base[k] = v
 		end
+	end
+	if props.Font == Enum.Font.GothamBlack then
+		base.FontFace = UI.F.Heavy
 	end
 	return UI.make("TextLabel", base, { UI.make("UITextSizeConstraint", { MaxTextSize = props.MaxText or 40 }) })
 end
 
-function UI.button(props: { [string]: any }): TextButton
-	local base = {
-		BackgroundColor3 = UI.C.Accent,
-		Font = Enum.Font.GothamBlack,
+-- style: "primary" | "ghost" | "danger"
+function UI.button(props: { [string]: any }, style: string?): TextButton
+	style = style or "primary"
+	local fill = style == "primary" and UI.C.Accent or style == "danger" and UI.C.Red or UI.C.Raised
+	local fillT = style == "ghost" and UI.T.Raised or 0
+	local base: { [string]: any } = {
+		BackgroundColor3 = fill,
+		BackgroundTransparency = fillT,
+		FontFace = UI.F.Bold,
+		TextSize = 17,
 		TextColor3 = UI.C.Text,
-		TextScaled = true,
-		AutoButtonColor = true,
+		AutoButtonColor = false,
+		Text = "",
 	}
 	for k, v in props do
-		if k ~= "MaxText" then
-			base[k] = v
-		end
+		base[k] = v
 	end
-	return UI.make("TextButton", base, {
-		UI.corner(10),
-		UI.make("UITextSizeConstraint", { MaxTextSize = props.MaxText or 32 }),
-		UI.make("UIPadding", {
-			PaddingLeft = UDim.new(0, 8),
-			PaddingRight = UDim.new(0, 8),
-			PaddingTop = UDim.new(0, 4),
-			PaddingBottom = UDim.new(0, 4),
-		}),
-	})
+	local button = UI.make("TextButton", base, { UI.corner(10) })
+	if style == "ghost" then
+		UI.stroke().Parent = button
+	end
+	-- hover: a bit lighter, press: a bit smaller
+	local rest = button.BackgroundTransparency
+	local hover = if rest == 0 then 0.12 else math.max(rest - 0.08, 0)
+	local scale = UI.make("UIScale", { Parent = button })
+	local function to(t: number, s: number)
+		TweenService:Create(button, TweenInfo.new(0.12), { BackgroundTransparency = t }):Play()
+		TweenService:Create(scale, TweenInfo.new(0.12), { Scale = s }):Play()
+	end
+	button.MouseEnter:Connect(function()
+		to(hover, 1)
+	end)
+	button.MouseLeave:Connect(function()
+		to(rest, 1)
+	end)
+	button.MouseButton1Down:Connect(function()
+		to(rest, 0.96)
+	end)
+	button.MouseButton1Up:Connect(function()
+		to(rest, 1)
+	end)
+	return button
 end
 
 function UI.avatar(userId: number): string
 	return ("rbxthumb://type=AvatarHeadShot&amp;id=%d&amp;w=150&amp;h=150"):format(math.max(userId, 1))
 end
 
--- Pop-in animation (adds a UIScale once)
+-- Round avatar picture with a thin ring
+function UI.avatarImage(userId: number, size: number, props: { [string]: any }?): ImageLabel
+	local base: { [string]: any } = {
+		Size = UDim2.fromOffset(size, size),
+		BackgroundColor3 = UI.C.Raised,
+		BackgroundTransparency = 0.9,
+		Image = UI.avatar(userId),
+	}
+	if props then
+		for k, v in props do
+			base[k] = v
+		end
+	end
+	return UI.make("ImageLabel", base, { UI.round(), UI.stroke() })
+end
+
+-- Small upper-case label above titles
+function UI.eyebrow(text: string, props: { [string]: any }?): TextLabel
+	local label = UI.text({
+		Text = string.upper(text),
+		FontFace = UI.F.Bold,
+		TextSize = 12,
+		TextColor3 = UI.C.Accent,
+		Size = UDim2.new(1, 0, 0, 16),
+	})
+	if props then
+		for k, v in props do
+			(label :: any)[k] = v
+		end
+	end
+	return label
+end
+
+-- Animations ----------------------------------------------------------------
+function UI.tween(inst: Instance, time: number, goal: { [string]: any }, style: Enum.EasingStyle?): Tween
+	local t = TweenService:Create(inst, TweenInfo.new(time, style or Enum.EasingStyle.Quad, Enum.EasingDirection.Out), goal)
+	t:Play()
+	return t
+end
+
 function UI.pop(gui: GuiObject, from: number?)
 	local scale = gui:FindFirstChild("PopScale") :: UIScale?
 	if not scale then
 		scale = UI.make("UIScale", { Name = "PopScale", Parent = gui })
 	end
 	local s = scale :: UIScale
-	s.Scale = from or 0.6
-	TweenService:Create(s, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.Out), { Scale = 1 }):Play()
+	s.Scale = from or 0.9
+	TweenService:Create(s, TweenInfo.new(0.25, Enum.EasingStyle.Back, Enum.EasingDirection.Out), { Scale = 1 }):Play()
 end
 
-function UI.tween(inst: Instance, time: number, goal: { [string]: any }, style: Enum.EasingStyle?): Tween
-	local t = TweenService:Create(inst, TweenInfo.new(time, style or Enum.EasingStyle.Quad, Enum.EasingDirection.Out), goal)
-	t:Play()
-	return t
+-- Root + auto scale ---------------------------------------------------------
+local REFERENCE = Vector2.new(1280, 720)
+local scaled: { UIScale } = {}
+local current = 1
+
+local function computeScale(): number
+	local camera = workspace.CurrentCamera
+	local size = camera and camera.ViewportSize or REFERENCE
+	return math.clamp(math.min(size.X / REFERENCE.X, size.Y / REFERENCE.Y) * 1.1, 0.62, 1.15)
+end
+
+local function rescale()
+	current = computeScale()
+	for _, s in scaled do
+		s.Scale = current
+	end
+end
+
+-- Makes a component grow/shrink with the screen size
+function UI.autoScale(gui: GuiObject)
+	local s = UI.make("UIScale", { Name = "AutoScale", Scale = current, Parent = gui })
+	table.insert(scaled, s)
 end
 
 local root: ScreenGui? = nil
@@ -3648,31 +3982,64 @@ function UI.root(): ScreenGui
 		ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
 		Parent = Players.LocalPlayer:WaitForChild("PlayerGui"),
 	})
+	current = computeScale()
+	local camera = workspace.CurrentCamera
+	if camera then
+		camera:GetPropertyChangedSignal("ViewportSize"):Connect(rescale)
+	end
 	return root :: ScreenGui
 end
 
--- Centered panel with a max size, works on phone and PC.
-function UI.panel(props: { [string]: any }): Frame
-	local maxSize = props.MaxSize or Vector2.new(620, 440)
-	local base = {
-		AnchorPoint = Vector2.new(0.5, 0.5),
-		Position = UDim2.fromScale(0.5, 0.5),
-		Size = UDim2.fromScale(0.92, 0.7),
-		BackgroundColor3 = UI.C.Panel,
+-- A fading panel: CanvasGroup (for smooth fade) + Body frame (background, border).
+-- Returns the group (show/hide this) and the body (put content here).
+function UI.sheet(props: { [string]: any }, radius: number?): (CanvasGroup, Frame)
+	local base: { [string]: any } = {
+		BackgroundTransparency = 1,
+		GroupTransparency = 1,
 		Visible = false,
 		Parent = UI.root(),
 	}
 	for k, v in props do
-		if k ~= "MaxSize" then
-			base[k] = v
-		end
+		base[k] = v
 	end
-	return UI.make("Frame", base, {
-		UI.corner(18),
-		UI.stroke(UI.C.Accent, 3),
-		UI.make("UISizeConstraint", { MaxSize = maxSize }),
-	})
+	local group = UI.make("CanvasGroup", base, { UI.corner((radius or 16) + 1) })
+	local body = UI.make("Frame", {
+		Name = "Body",
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		Position = UDim2.fromScale(0.5, 0.5),
+		Size = UDim2.new(1, -2, 1, -2),
+		BackgroundColor3 = UI.C.Surface,
+		BackgroundTransparency = UI.T.Surface,
+		Parent = group,
+	}, { UI.corner(radius or 16), UI.stroke() })
+	UI.autoScale(group)
+	return group, body
+end
+
+local shownToken: { [Instance]: number } = setmetatable({}, { __mode = "k" }) :: any
+
+function UI.show(group: CanvasGroup)
+	shownToken[group] = (shownToken[group] or 0) + 1
+	if not group.Visible then
+		group.GroupTransparency = 1
+	end
+	group.Visible = true
+	UI.tween(group, 0.2, { GroupTransparency = 0 })
+end
+
+function UI.hide(group: CanvasGroup)
+	shownToken[group] = (shownToken[group] or 0) + 1
+	local token = shownToken[group]
+	if not group.Visible then
+		return
+	end
+	local t = UI.tween(group, 0.15, { GroupTransparency = 1 })
+	t.Completed:Connect(function()
+		if shownToken[group] == token then
+			group.Visible = false
+		end
+	end)
 end
 
 return UI
-</ProtectedString></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBX0976703E3A3C4C908D8F86962D713518"><Properties><string name="Name">Workspace</string></Properties><Item class="Model" referent="RBX0CA4AE766926423D9E343F0B564FD83D"><Properties><string name="Name">WhoSlappedMe</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>0.0</X><Y>0.0</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Folder" referent="RBX5F9348B3DA114129A28979EF695D1DE6"><Properties><string name="Name">Map</string></Properties><Item class="Part" referent="RBX37BE93690DB044F2ADB4A58B48D386C2"><Properties><string name="Name">Plaza</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>-0.15</Y><Z>-57.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>30.0</X><Y>0.4</Y><Z>33.0</Z></Vector3><Color3uint8 name="Color3uint8">4279506470</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX80913C3155964FFFA73E167DA8994016"><Properties><string name="Name">Stage</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>0.8</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.0</X><Y>1.5</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4280164924</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX25E55740F9AD4AAFA5B04F937AE4B648"><Properties><string name="Name">EdgeFront</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>1.45</Y><Z>-53.45</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.3</X><Y>0.25</Y><Z>0.25</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX0A3DC40A65C340D1A7E1F1DF4C0404EB"><Properties><string name="Name">EdgeLeft</string><CoordinateFrame name="CFrame"><X>-10.05</X><Y>1.45</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.25</X><Y>0.25</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXD7394997C25E4B529332044722055B6D"><Properties><string name="Name">EdgeRight</string><CoordinateFrame name="CFrame"><X>10.05</X><Y>1.45</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.25</X><Y>0.25</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX43985380B1A14792A8E34DC82A6E5D9E"><Properties><string name="Name">HotSeatCircle</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>1.58</Y><Z>-65.5</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.05</X><Y>6.5</Y><Z>6.5</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.55</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">2</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXE06C78BB06304168ADB0BBD344E10A14"><Properties><string name="Name">LogoWall</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>5.55</Y><Z>-70.9</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.6</X><Y>8.0</Y><Z>0.8</Z></Vector3><Color3uint8 name="Color3uint8">4280164924</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX19A8E02A9AE3472F97E773FEB4F225EE"><Properties><string name="Name">LogoWallTop</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>9.7</Y><Z>-70.9</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.6</X><Y>0.3</Y><Z>0.9</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX03494900860C4957829EC97DD63EBCBD"><Properties><string name="Name">Logo</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>6.8</Y><Z>-70.45</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>11.0</X><Y>2.2</Y><Z>0.2</Z></Vector3><Color3uint8 name="Color3uint8">4279506470</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBX4E8436A204B648C0958197E710E63D24"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">40.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBXCD91A87B11B24D20932B0E7CAED5162A"><Properties><string name="Name">Title</string><string name="Text">WHO SLAPPED ME?</string><UDim2 name="Position"><XS>0.03</XS><XO>0</XO><YS>0.08</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.94</XS><XO>0</XO><YS>0.84</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.901961</R><G>0.705882</G><B>0.27451</B></Color3><float name="TextStrokeTransparency">0.5</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item><Item class="Part" referent="RBX1996EF2F796246999C47F21124DA6623"><Properties><string name="Name">Spotlight</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>14.0</Y><Z>-65.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.5</X><Y>0.5</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SpotLight" referent="RBXAFB42D42A44642A4BBCE46AFF6557FF0"><Properties><string name="Name">SpotLight</string><float name="Angle">50.0</float><float name="Brightness">3.0</float><Color3 name="Color"><R>1.0</R><G>0.894118</G><B>0.823529</B></Color3><token name="Face">4</token><float name="Range">16.0</float><bool name="Shadows">true</bool><bool name="Enabled">true</bool></Properties></Item></Item></Item><Item class="Folder" referent="RBX21184A2D9E8549A9ABCCBDE614E49571"><Properties><string name="Name">Border</string></Properties><Item class="Part" referent="RBXEC44D2213DEA4B68AF185A3A45D6A5DC"><Properties><string name="Name">GlassLeft</string><CoordinateFrame name="CFrame"><X>-10.0</X><Y>4.8</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.3</X><Y>6.5</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">1568</token><float name="Transparency">0.6</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXD5DFD05C46764A979F89D7A73EB2E633"><Properties><string name="Name">GlassRight</string><CoordinateFrame name="CFrame"><X>10.0</X><Y>4.8</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.3</X><Y>6.5</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">1568</token><float name="Transparency">0.6</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX2BCF532497284690A4BB9649730285E2"><Properties><string name="Name">GlassFront</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>4.8</Y><Z>-53.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.3</X><Y>6.5</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">1568</token><float name="Transparency">0.6</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX38D7C527FE724B24A4104946FC514E01"><Properties><string name="Name">RailLeft</string><CoordinateFrame name="CFrame"><X>-10.0</X><Y>8.17</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.45</X><Y>0.25</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXB6A96529B40C48799C4AB11F7CB31880"><Properties><string name="Name">RailRight</string><CoordinateFrame name="CFrame"><X>10.0</X><Y>8.17</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.45</X><Y>0.25</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXFE1684A4A9EB41EEBAF5F2806846DE68"><Properties><string name="Name">RailFront</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>8.17</Y><Z>-53.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.45</X><Y>0.25</Y><Z>0.45</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX7B3CFA9C01D84ABC8695E04E6EED7182"><Properties><string name="Name">PostLeft</string><CoordinateFrame name="CFrame"><X>-10.0</X><Y>5.15</Y><Z>-53.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.9</X><Y>7.2</Y><Z>0.9</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXD4FD8F748D724DDD83A073C745F0D333"><Properties><string name="Name">PostRight</string><CoordinateFrame name="CFrame"><X>10.0</X><Y>5.15</Y><Z>-53.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.9</X><Y>7.2</Y><Z>0.9</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXAFD31E5AD6E74F38B0FE7F00910D0514"><Properties><string name="Name">BarrierLeft</string><CoordinateFrame name="CFrame"><X>-10.0</X><Y>16.025</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.3</X><Y>15.95</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXB593D996BE5C40658C95D4A0E00623B2"><Properties><string name="Name">BarrierRight</string><CoordinateFrame name="CFrame"><X>10.0</X><Y>16.025</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.3</X><Y>15.95</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX7344DB33680E4B39BB8D92C2A47766D8"><Properties><string name="Name">BarrierFront</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>16.025</Y><Z>-53.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.3</X><Y>15.95</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXBF6FFD80905C4B3BAD2303CD695C7B08"><Properties><string name="Name">BarrierBack</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>16.925</Y><Z>-70.9</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.6</X><Y>14.15</Y><Z>0.8</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXD856D4F27DCA4D83919B4659BFF58AF2"><Properties><string name="Name">Roof</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>24.0</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.6</X><Y>0.5</Y><Z>17.8</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item></Item><Item class="Folder" referent="RBX42F33F1ED87045AB933ED08149715E51"><Properties><string name="Name">Seats</string></Properties><Item class="Model" referent="RBX76A2AEE3F86A401791558E630211F03F"><Properties><string name="Name">HotSeat</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>0.0</X><Y>2.55</Y><Z>-65.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBX4B1376CCBF2D4717B12AB0FADDA4D5F5"><Properties><string name="Name">Pedestal</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>1.85</Y><Z>-65.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.6</X><Y>0.6</Y><Z>3.6</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBX3168E894D11445BF9B84C5CC6382505E"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.55</Y><Z>-65.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>2.6</X><Y>0.8</Y><Z>2.6</Z></Vector3><Color3uint8 name="Color3uint8">4291635260</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX3C81379D31484A1BB60EA0A33DD3E0DE"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>3.85</Y><Z>-64.05</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>2.8</X><Y>1.8</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4291635260</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXC35ADA2B17F443029122A19E9816F526"><Properties><string name="Name">BackTrim</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>4.9</Y><Z>-64.05</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.1</X><Y>0.3</Y><Z>0.7</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXFA2EA72E6B6A4C8DBA0A4E48D54F6825"><Properties><string name="Name">ArmLeft</string><CoordinateFrame name="CFrame"><X>-1.55</X><Y>3.35</Y><Z>-65.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.5</X><Y>0.8</Y><Z>2.8</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXFC4C585B4BF045048B71A4ADD297CFED"><Properties><string name="Name">ArmRight</string><CoordinateFrame name="CFrame"><X>1.55</X><Y>3.35</Y><Z>-65.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.5</X><Y>0.8</Y><Z>2.8</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item></Item><Item class="Model" referent="RBX97FF5761CFE34E1287168EED2E469E1A"><Properties><string name="Name">BackSeat1</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>-6.128356</X><Y>2.55</Y><Z>-60.357699</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBXF63A945DA2604BBB89C3321D6473D5BF"><Properties><string name="Name">Leg</string><CoordinateFrame name="CFrame"><X>-6.128356</X><Y>2.05</Y><Z>-60.357699</Z><R00>0.642788</R00><R01>0.0</R01><R02>-0.766044</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.766044</R20><R21>0.0</R21><R22>0.642788</R22></CoordinateFrame><Vector3 name="size"><X>1.4</X><Y>1.0</Y><Z>1.4</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBXF3FC02F3B25F4946808307A3F16F49A5"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>-6.128356</X><Y>2.8</Y><Z>-60.357699</Z><R00>0.642788</R00><R01>0.0</R01><R02>-0.766044</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.766044</R20><R21>0.0</R21><R22>0.642788</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>0.5</Y><Z>2.2</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXB1692686C9274EBD828EF60435647802"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>-6.971004</X><Y>3.7</Y><Z>-59.650633</Z><R00>0.642788</R00><R01>0.0</R01><R02>-0.766044</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.766044</R20><R21>0.0</R21><R22>0.642788</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>1.3</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBX1042C3EB874D4F419B978896F718E891"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBXDFE059C193D64C75AFE84F678E1AF84B"><Properties><string name="Name">Number</string><string name="Text">1</string><UDim2 name="Position"><XS>0.3</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.4</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.117647</R><G>0.133333</G><B>0.235294</B></Color3><float name="TextStrokeTransparency">1.0</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item><Item class="Model" referent="RBXC2831C88036741F189A716E57D0A565C"><Properties><string name="Name">BackSeat2</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>-3.380946</X><Y>2.55</Y><Z>-58.249538</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBX9EFD8A452F934A02B2D54B1523C4DE06"><Properties><string name="Name">Leg</string><CoordinateFrame name="CFrame"><X>-3.380946</X><Y>2.05</Y><Z>-58.249538</Z><R00>0.906308</R00><R01>0.0</R01><R02>-0.422618</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.422618</R20><R21>0.0</R21><R22>0.906308</R22></CoordinateFrame><Vector3 name="size"><X>1.4</X><Y>1.0</Y><Z>1.4</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBX66E58A90AF58459A8571858E6490D1EE"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>-3.380946</X><Y>2.8</Y><Z>-58.249538</Z><R00>0.906308</R00><R01>0.0</R01><R02>-0.422618</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.422618</R20><R21>0.0</R21><R22>0.906308</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>0.5</Y><Z>2.2</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX473B44E48BD743398B92EC8216BAE4B4"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>-3.845826</X><Y>3.7</Y><Z>-57.252599</Z><R00>0.906308</R00><R01>0.0</R01><R02>-0.422618</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.422618</R20><R21>0.0</R21><R22>0.906308</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>1.3</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBXE0CDAA61B6B24254ADDFC51C50AB40BE"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBXB55E174C93294E5BA8C54E6BE2CFAF85"><Properties><string name="Name">Number</string><string name="Text">2</string><UDim2 name="Position"><XS>0.3</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.4</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.117647</R><G>0.133333</G><B>0.235294</B></Color3><float name="TextStrokeTransparency">1.0</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item><Item class="Model" referent="RBX3A9BB5A774674D3E8D5304B76555BF9B"><Properties><string name="Name">BackSeat3</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>0.0</X><Y>2.55</Y><Z>-57.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBX0E3AE466C17848C895C5CB77C19BB00C"><Properties><string name="Name">Leg</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.05</Y><Z>-57.5</Z><R00>1.0</R00><R01>0.0</R01><R02>-0.0</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.0</R20><R21>0.0</R21><R22>1.0</R22></CoordinateFrame><Vector3 name="size"><X>1.4</X><Y>1.0</Y><Z>1.4</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBXBE46B87A35C844B78025C9AFCC828B87"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.8</Y><Z>-57.5</Z><R00>1.0</R00><R01>0.0</R01><R02>-0.0</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.0</R20><R21>0.0</R21><R22>1.0</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>0.5</Y><Z>2.2</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX627C42E02847438FABEDDF00AB536A71"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>3.7</Y><Z>-56.4</Z><R00>1.0</R00><R01>0.0</R01><R02>-0.0</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.0</R20><R21>0.0</R21><R22>1.0</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>1.3</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBX912D03AD1E524B40B037A88D2B3E2195"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBX4059B08D100A4347A701914164809909"><Properties><string name="Name">Number</string><string name="Text">3</string><UDim2 name="Position"><XS>0.3</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.4</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.117647</R><G>0.133333</G><B>0.235294</B></Color3><float name="TextStrokeTransparency">1.0</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item><Item class="Model" referent="RBX304039A9A9E1476991D559F41F951D78"><Properties><string name="Name">BackSeat4</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>3.380946</X><Y>2.55</Y><Z>-58.249538</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBXA22B4F0E84BD4ADE99976C05BC9EB45F"><Properties><string name="Name">Leg</string><CoordinateFrame name="CFrame"><X>3.380946</X><Y>2.05</Y><Z>-58.249538</Z><R00>0.906308</R00><R01>0.0</R01><R02>0.422618</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.422618</R20><R21>0.0</R21><R22>0.906308</R22></CoordinateFrame><Vector3 name="size"><X>1.4</X><Y>1.0</Y><Z>1.4</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBX6EB56AB2CCE5424482BFD67897EE0C0C"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>3.380946</X><Y>2.8</Y><Z>-58.249538</Z><R00>0.906308</R00><R01>0.0</R01><R02>0.422618</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.422618</R20><R21>0.0</R21><R22>0.906308</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>0.5</Y><Z>2.2</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX022E778143A6446386A1CA931C5E7FE6"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>3.845826</X><Y>3.7</Y><Z>-57.252599</Z><R00>0.906308</R00><R01>0.0</R01><R02>0.422618</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.422618</R20><R21>0.0</R21><R22>0.906308</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>1.3</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBX1EE5B1CD16D54C84A33777F08EC2C668"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBXDFC262FDC62B454B95740D23BEDE7CBA"><Properties><string name="Name">Number</string><string name="Text">4</string><UDim2 name="Position"><XS>0.3</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.4</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.117647</R><G>0.133333</G><B>0.235294</B></Color3><float name="TextStrokeTransparency">1.0</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item><Item class="Model" referent="RBX3AB64FE7197E48AFB60E779729E7023B"><Properties><string name="Name">BackSeat5</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>6.128356</X><Y>2.55</Y><Z>-60.357699</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBX34076D3465024252AB4B51189768B855"><Properties><string name="Name">Leg</string><CoordinateFrame name="CFrame"><X>6.128356</X><Y>2.05</Y><Z>-60.357699</Z><R00>0.642788</R00><R01>0.0</R01><R02>0.766044</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.766044</R20><R21>0.0</R21><R22>0.642788</R22></CoordinateFrame><Vector3 name="size"><X>1.4</X><Y>1.0</Y><Z>1.4</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBX928E093F498D46CEB98524AE67DBE2A5"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>6.128356</X><Y>2.8</Y><Z>-60.357699</Z><R00>0.642788</R00><R01>0.0</R01><R02>0.766044</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.766044</R20><R21>0.0</R21><R22>0.642788</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>0.5</Y><Z>2.2</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX6BFC7B83884047EEA2330AD02ABF4717"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>6.971004</X><Y>3.7</Y><Z>-59.650633</Z><R00>0.642788</R00><R01>0.0</R01><R02>0.766044</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.766044</R20><R21>0.0</R21><R22>0.642788</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>1.3</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBX89DB64F8542B4B6BBDCF729514056D6A"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBX50700A7411AC45F4866ED580D5F02716"><Properties><string name="Name">Number</string><string name="Text">5</string><UDim2 name="Position"><XS>0.3</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.4</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.117647</R><G>0.133333</G><B>0.235294</B></Color3><float name="TextStrokeTransparency">1.0</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item></Item><Item class="Folder" referent="RBX6986547DA5034B78AE6B96AA498F38A1"><Properties><string name="Name">Points</string></Properties><Item class="Part" referent="RBX929E0E18ADE441A1A13E233D4C896060"><Properties><string name="Name">SlapSpot</string><CoordinateFrame name="CFrame"><X>1.2</X><Y>4.55</Y><Z>-62.9</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>2.0</X><Y>2.0</Y><Z>1.0</Z></Vector3><Color3uint8 name="Color3uint8">4294922320</Color3uint8><token name="Material">288</token><float name="Transparency">0.5</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXCF1892C0E0D3484F89F40F7C8F8F9B9A"><Properties><string name="Name">KOSpot</string><CoordinateFrame name="CFrame"><X>12.5</X><Y>3.3</Y><Z>-60.0</Z><R00>0.0</R00><R01>0.0</R01><R02>1.0</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-1.0</R20><R21>0.0</R21><R22>-0.0</R22></CoordinateFrame><Vector3 name="size"><X>2.0</X><Y>2.0</Y><Z>1.0</Z></Vector3><Color3uint8 name="Color3uint8">4294922320</Color3uint8><token name="Material">288</token><float name="Transparency">0.5</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXD91E4BEFE59D40DB8BA058B5D07BE1D5"><Properties><string name="Name">ExitSpot</string><CoordinateFrame name="CFrame"><X>6.5</X><Y>3.3</Y><Z>-47.5</Z><R00>1.0</R00><R01>0.0</R01><R02>-0.0</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.0</R20><R21>0.0</R21><R22>1.0</R22></CoordinateFrame><Vector3 name="size"><X>2.0</X><Y>2.0</Y><Z>1.0</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.5</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX7E329854A69742CB94890A24BA4DEFA0"><Properties><string name="Name">RevealCam</string><CoordinateFrame name="CFrame"><X>7.5</X><Y>6.5</Y><Z>-61.5</Z><R00>0.470588</R00><R01>-0.197297</R01><R02>0.860012</R02><R10>0.0</R10><R11>0.97468</R11><R12>0.223603</R12><R20>-0.882353</R20><R21>-0.105225</R21><R22>0.458673</R22></CoordinateFrame><Vector3 name="size"><X>1.0</X><Y>1.0</Y><Z>2.0</Z></Vector3><Color3uint8 name="Color3uint8">4283474175</Color3uint8><token name="Material">288</token><float name="Transparency">0.5</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX71DFF6B1C4FD48AE9A0EB20330257B93"><Properties><string name="Name">ArenaBounds</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>12.55</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>19.4</X><Y>22.0</Y><Z>16.4</Z></Vector3><Color3uint8 name="Color3uint8">4283474175</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item></Item><Item class="Model" referent="RBX6BCC8A77108640EB8CA944DC31E86DE5"><Properties><string name="Name">JoinPad</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>0.0</X><Y>0.2</Y><Z>-47.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBX0B9B3336B172496CA2162B92F08714D4"><Properties><string name="Name">Zone</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>0.2</Y><Z>-47.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>8.0</X><Y>0.3</Y><Z>8.0</Z></Vector3><Color3uint8 name="Color3uint8">4280164924</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX5767055B48394DB4800A6B9C67561262"><Properties><string name="Name">Glow</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>0.25</Y><Z>-51.6</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>8.6</X><Y>0.35</Y><Z>0.4</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX5D89951B707B430F85B089CEC37C337D"><Properties><string name="Name">Glow</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>0.25</Y><Z>-43.4</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>8.6</X><Y>0.35</Y><Z>0.4</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX622EE37ADCF04E02A852DDEAFB52F4AD"><Properties><string name="Name">Glow</string><CoordinateFrame name="CFrame"><X>-4.1</X><Y>0.25</Y><Z>-47.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.4</X><Y>0.35</Y><Z>8.6</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX5E232749CFFA435B8A837C2296A3D627"><Properties><string name="Name">Glow</string><CoordinateFrame name="CFrame"><X>4.1</X><Y>0.25</Y><Z>-47.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.4</X><Y>0.35</Y><Z>8.6</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX3B3E9F41EBDD41C0960D836899DD3C4B"><Properties><string name="Name">Sign</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>6.5</Y><Z>-47.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.4</X><Y>0.4</Y><Z>0.4</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="BillboardGui" referent="RBXA6871C4411BE4F98A0418046EE78AA5E"><Properties><string name="Name">Board</string><UDim2 name="Size"><XS>10</XS><XO>0</XO><YS>3.6</YS><YO>0</YO></UDim2><float name="MaxDistance">120.0</float><float name="LightInfluence">0.0</float><bool name="AlwaysOnTop">false</bool></Properties><Item class="TextLabel" referent="RBXD5A82C52B41F4E73B0A8C9894CD16F53"><Properties><string name="Name">Title</string><string name="Text">STAND HERE TO JOIN</string><UDim2 name="Position"><XS>0</XS><XO>0</XO><YS>0</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>1</XS><XO>0</XO><YS>0.42</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.313725</R><G>0.862745</G><B>0.470588</B></Color3><float name="TextStrokeTransparency">0.2</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item><Item class="TextLabel" referent="RBXFB68516CA8FD4529909005F721F450BD"><Properties><string name="Name">Count</string><string name="Text">0/6</string><UDim2 name="Position"><XS>0</XS><XO>0</XO><YS>0.42</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>1</XS><XO>0</XO><YS>0.3</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>1.0</R><G>1.0</G><B>1.0</B></Color3><float name="TextStrokeTransparency">0.2</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item><Item class="TextLabel" referent="RBX9743A9262A544A51B7E2A691CB61F518"><Properties><string name="Name">Info</string><string name="Text">Waiting for players 0/3</string><UDim2 name="Position"><XS>0</XS><XO>0</XO><YS>0.72</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>1</XS><XO>0</XO><YS>0.28</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.901961</R><G>0.705882</G><B>0.27451</B></Color3><float name="TextStrokeTransparency">0.2</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>700</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item></Item></Item></Item></roblox>
+</ProtectedString></Properties></Item></Item></Item></Item><Item class="Folder" referent="RBX65AB43A5C67F43B98062D9EC150612C3"><Properties><string name="Name">Workspace</string></Properties><Item class="Model" referent="RBXF371D56EDBA642B58F3528AC5AA151B5"><Properties><string name="Name">WhoSlappedMe</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>0.0</X><Y>0.0</Y><Z>-60.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Folder" referent="RBX84D850BC15584640A4EDC24483DC8E6A"><Properties><string name="Name">Map</string></Properties><Item class="Part" referent="RBXF1E459C49B084154BDDE0EA436C27E13"><Properties><string name="Name">Plaza</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>-0.15</Y><Z>-57.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>30.0</X><Y>0.4</Y><Z>33.0</Z></Vector3><Color3uint8 name="Color3uint8">4279506470</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXC8F98C7C44734240AAC095AA4C1E76C5"><Properties><string name="Name">Stage</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>0.8</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.0</X><Y>1.5</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4280164924</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX71537E6CAD3D4AFEB7374C8568F14DBF"><Properties><string name="Name">EdgeFront</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>1.45</Y><Z>-53.45</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.3</X><Y>0.25</Y><Z>0.25</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXF54E01FB958840E4A66536098469530B"><Properties><string name="Name">EdgeLeft</string><CoordinateFrame name="CFrame"><X>-10.05</X><Y>1.45</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.25</X><Y>0.25</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXD9C5072334EA4FC2903D1917CD140782"><Properties><string name="Name">EdgeRight</string><CoordinateFrame name="CFrame"><X>10.05</X><Y>1.45</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.25</X><Y>0.25</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX7C026FE4A2E14E638C5FA1E420C6EF6B"><Properties><string name="Name">HotSeatCircle</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>1.58</Y><Z>-65.5</Z><R00>0</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>0</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.05</X><Y>6.5</Y><Z>6.5</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.55</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">2</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXD4CA8EE88F29440AB282A3A8051BE34E"><Properties><string name="Name">LogoWall</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>5.55</Y><Z>-70.9</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.6</X><Y>8.0</Y><Z>0.8</Z></Vector3><Color3uint8 name="Color3uint8">4280164924</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX86EBD56AA9AB4A129321EF034EEC77FE"><Properties><string name="Name">LogoWallTop</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>9.7</Y><Z>-70.9</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.6</X><Y>0.3</Y><Z>0.9</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX051A4314F8364A07BAB7706DC4AED722"><Properties><string name="Name">Logo</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>6.8</Y><Z>-70.45</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>11.0</X><Y>2.2</Y><Z>0.2</Z></Vector3><Color3uint8 name="Color3uint8">4279506470</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBXF9F0E78AB8C743BCB1DE4E051083C70C"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">40.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBX16687DE6299E4C7087E542B9F7B1429F"><Properties><string name="Name">Title</string><string name="Text">WHO SLAPPED ME?</string><UDim2 name="Position"><XS>0.03</XS><XO>0</XO><YS>0.08</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.94</XS><XO>0</XO><YS>0.84</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.901961</R><G>0.705882</G><B>0.27451</B></Color3><float name="TextStrokeTransparency">0.5</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item><Item class="Part" referent="RBX2A0DF720C8284B9C97930B05ABEDCDCE"><Properties><string name="Name">Spotlight</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>14.0</Y><Z>-65.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.5</X><Y>0.5</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SpotLight" referent="RBX199F69FB92CB4DE1A2B267C2D11DDD4F"><Properties><string name="Name">SpotLight</string><float name="Angle">50.0</float><float name="Brightness">3.0</float><Color3 name="Color"><R>1.0</R><G>0.894118</G><B>0.823529</B></Color3><token name="Face">4</token><float name="Range">16.0</float><bool name="Shadows">true</bool><bool name="Enabled">true</bool></Properties></Item></Item></Item><Item class="Folder" referent="RBX38910B1CCC26470FA34F6D0FC1E04010"><Properties><string name="Name">Border</string></Properties><Item class="Part" referent="RBXB3B402CD04C2404797D8FDD11B31EF27"><Properties><string name="Name">GlassLeft</string><CoordinateFrame name="CFrame"><X>-10.0</X><Y>4.8</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.3</X><Y>6.5</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">1568</token><float name="Transparency">0.6</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXEFFBDB1E7C5F4B9588279EF1E53016ED"><Properties><string name="Name">GlassRight</string><CoordinateFrame name="CFrame"><X>10.0</X><Y>4.8</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.3</X><Y>6.5</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">1568</token><float name="Transparency">0.6</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXD292B942E30E40F5991B8053713BB07F"><Properties><string name="Name">GlassFront</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>4.8</Y><Z>-53.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.3</X><Y>6.5</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">1568</token><float name="Transparency">0.6</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXAB44671558C94EC695086B505A5BC32E"><Properties><string name="Name">RailLeft</string><CoordinateFrame name="CFrame"><X>-10.0</X><Y>8.17</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.45</X><Y>0.25</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX0DEF63BCBF0547FD9485017AEE30D582"><Properties><string name="Name">RailRight</string><CoordinateFrame name="CFrame"><X>10.0</X><Y>8.17</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.45</X><Y>0.25</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXB3D16524B8B64211A5D8A1A744E322E3"><Properties><string name="Name">RailFront</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>8.17</Y><Z>-53.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.45</X><Y>0.25</Y><Z>0.45</Z></Vector3><Color3uint8 name="Color3uint8">4294919830</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX8EDC7CA06ABE4FEAA0B291C88CF10AEE"><Properties><string name="Name">PostLeft</string><CoordinateFrame name="CFrame"><X>-10.0</X><Y>5.15</Y><Z>-53.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.9</X><Y>7.2</Y><Z>0.9</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXECCB369BD22F41869A1FEE6443886DDC"><Properties><string name="Name">PostRight</string><CoordinateFrame name="CFrame"><X>10.0</X><Y>5.15</Y><Z>-53.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.9</X><Y>7.2</Y><Z>0.9</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXABE96CF5DF924908BCCB5CB035F8181A"><Properties><string name="Name">BarrierLeft</string><CoordinateFrame name="CFrame"><X>-10.0</X><Y>16.025</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.3</X><Y>15.95</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX930C7D7AA3254170821E2EB3F13A3254"><Properties><string name="Name">BarrierRight</string><CoordinateFrame name="CFrame"><X>10.0</X><Y>16.025</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.3</X><Y>15.95</Y><Z>17.0</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXF78F9DE40D4D401EB1C48C1ABA33224B"><Properties><string name="Name">BarrierFront</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>16.025</Y><Z>-53.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.3</X><Y>15.95</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXB0F3D0D309574E4187BF0B4C5E531F0B"><Properties><string name="Name">BarrierBack</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>16.925</Y><Z>-70.9</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.6</X><Y>14.15</Y><Z>0.8</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX77124C972A324F93982AD1D453F6B5F9"><Properties><string name="Name">Roof</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>24.0</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>20.6</X><Y>0.5</Y><Z>17.8</Z></Vector3><Color3uint8 name="Color3uint8">4291353840</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item></Item><Item class="Folder" referent="RBX24AB8B3232134285BC1807D839309769"><Properties><string name="Name">Seats</string></Properties><Item class="Model" referent="RBX4AA3D7184B764A1481EB9270458E1316"><Properties><string name="Name">HotSeat</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>0.0</X><Y>2.55</Y><Z>-65.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBXBDD88E26E4DF479E915A5DBC03BF459C"><Properties><string name="Name">Pedestal</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>1.85</Y><Z>-65.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.6</X><Y>0.6</Y><Z>3.6</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBXA39E86329B384425AAA8A9C3DBAE736C"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.55</Y><Z>-65.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>2.6</X><Y>0.8</Y><Z>2.6</Z></Vector3><Color3uint8 name="Color3uint8">4291635260</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXA2C1E1C101684794A76784A91D4AA8FE"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>3.85</Y><Z>-64.05</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>2.8</X><Y>1.8</Y><Z>0.5</Z></Vector3><Color3uint8 name="Color3uint8">4291635260</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXC507A03A5CE64580BDE3CB8F7A07CD4A"><Properties><string name="Name">BackTrim</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>4.9</Y><Z>-64.05</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>3.1</X><Y>0.3</Y><Z>0.7</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX1D779AADFE9D419285788458DAAB6859"><Properties><string name="Name">ArmLeft</string><CoordinateFrame name="CFrame"><X>-1.55</X><Y>3.35</Y><Z>-65.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.5</X><Y>0.8</Y><Z>2.8</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXCBC5AE65294248378AFB22E21D113A02"><Properties><string name="Name">ArmRight</string><CoordinateFrame name="CFrame"><X>1.55</X><Y>3.35</Y><Z>-65.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.5</X><Y>0.8</Y><Z>2.8</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item></Item><Item class="Model" referent="RBX053E0AF1E9E9432AB3DC6322BA1A35B7"><Properties><string name="Name">BackSeat1</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>-6.128356</X><Y>2.55</Y><Z>-60.357699</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBX35A0373DD4364CBEB2C9BFE0972C8B4E"><Properties><string name="Name">Leg</string><CoordinateFrame name="CFrame"><X>-6.128356</X><Y>2.05</Y><Z>-60.357699</Z><R00>0.642788</R00><R01>0.0</R01><R02>-0.766044</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.766044</R20><R21>0.0</R21><R22>0.642788</R22></CoordinateFrame><Vector3 name="size"><X>1.4</X><Y>1.0</Y><Z>1.4</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBX3B06E79F75B34F8C8B1249C183D1E5D8"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>-6.128356</X><Y>2.8</Y><Z>-60.357699</Z><R00>0.642788</R00><R01>0.0</R01><R02>-0.766044</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.766044</R20><R21>0.0</R21><R22>0.642788</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>0.5</Y><Z>2.2</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXA4ECCEB3690A447FAD03B10CADF26A42"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>-6.971004</X><Y>3.7</Y><Z>-59.650633</Z><R00>0.642788</R00><R01>0.0</R01><R02>-0.766044</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.766044</R20><R21>0.0</R21><R22>0.642788</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>1.3</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBXE42995EE9F924587BC8CF8A9786C676F"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBX0A61A5DF5B3946E4A87807B90484D4FD"><Properties><string name="Name">Number</string><string name="Text">1</string><UDim2 name="Position"><XS>0.3</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.4</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.117647</R><G>0.133333</G><B>0.235294</B></Color3><float name="TextStrokeTransparency">1.0</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item><Item class="Model" referent="RBXE8EF10926A184E9AAD17BD247E9C86A0"><Properties><string name="Name">BackSeat2</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>-3.380946</X><Y>2.55</Y><Z>-58.249538</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBX04F4575DA686405DA06C7DC73ACEF26C"><Properties><string name="Name">Leg</string><CoordinateFrame name="CFrame"><X>-3.380946</X><Y>2.05</Y><Z>-58.249538</Z><R00>0.906308</R00><R01>0.0</R01><R02>-0.422618</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.422618</R20><R21>0.0</R21><R22>0.906308</R22></CoordinateFrame><Vector3 name="size"><X>1.4</X><Y>1.0</Y><Z>1.4</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBX2D293038C5A3417C93285253AF52BD29"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>-3.380946</X><Y>2.8</Y><Z>-58.249538</Z><R00>0.906308</R00><R01>0.0</R01><R02>-0.422618</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.422618</R20><R21>0.0</R21><R22>0.906308</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>0.5</Y><Z>2.2</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX1C7DE1A9E2944DD2BC31A15C5E8C3B98"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>-3.845826</X><Y>3.7</Y><Z>-57.252599</Z><R00>0.906308</R00><R01>0.0</R01><R02>-0.422618</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.422618</R20><R21>0.0</R21><R22>0.906308</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>1.3</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBX212BED90755A4A699AC1A05D9B50BFBE"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBX1FB1BF511BE74858A9973799074BA966"><Properties><string name="Name">Number</string><string name="Text">2</string><UDim2 name="Position"><XS>0.3</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.4</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.117647</R><G>0.133333</G><B>0.235294</B></Color3><float name="TextStrokeTransparency">1.0</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item><Item class="Model" referent="RBXC76963FB81514651B3C9FDB039C34308"><Properties><string name="Name">BackSeat3</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>0.0</X><Y>2.55</Y><Z>-57.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBX0A6022A7F0894F93BCCC80F09C9213A3"><Properties><string name="Name">Leg</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.05</Y><Z>-57.5</Z><R00>1.0</R00><R01>0.0</R01><R02>-0.0</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.0</R20><R21>0.0</R21><R22>1.0</R22></CoordinateFrame><Vector3 name="size"><X>1.4</X><Y>1.0</Y><Z>1.4</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBXD9A087AAC18946338AD4AEA90E20D2C5"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>2.8</Y><Z>-57.5</Z><R00>1.0</R00><R01>0.0</R01><R02>-0.0</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.0</R20><R21>0.0</R21><R22>1.0</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>0.5</Y><Z>2.2</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX038330E6046A4E2981B35741D8FD9877"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>3.7</Y><Z>-56.4</Z><R00>1.0</R00><R01>0.0</R01><R02>-0.0</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.0</R20><R21>0.0</R21><R22>1.0</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>1.3</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBXD70818D30B1B49EB9485C621EC8CB502"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBXCF118FFE4FDB42BEB096DE5318C6A130"><Properties><string name="Name">Number</string><string name="Text">3</string><UDim2 name="Position"><XS>0.3</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.4</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.117647</R><G>0.133333</G><B>0.235294</B></Color3><float name="TextStrokeTransparency">1.0</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item><Item class="Model" referent="RBXB6607F075385451CA1B99945708660DC"><Properties><string name="Name">BackSeat4</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>3.380946</X><Y>2.55</Y><Z>-58.249538</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBX329B377BFE7C48D9924360F9AF1C86D4"><Properties><string name="Name">Leg</string><CoordinateFrame name="CFrame"><X>3.380946</X><Y>2.05</Y><Z>-58.249538</Z><R00>0.906308</R00><R01>0.0</R01><R02>0.422618</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.422618</R20><R21>0.0</R21><R22>0.906308</R22></CoordinateFrame><Vector3 name="size"><X>1.4</X><Y>1.0</Y><Z>1.4</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBX72DA72CECA494F7DB7D68560E14068C9"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>3.380946</X><Y>2.8</Y><Z>-58.249538</Z><R00>0.906308</R00><R01>0.0</R01><R02>0.422618</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.422618</R20><R21>0.0</R21><R22>0.906308</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>0.5</Y><Z>2.2</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX9C42F312D6A341E5AD638C7738A29548"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>3.845826</X><Y>3.7</Y><Z>-57.252599</Z><R00>0.906308</R00><R01>0.0</R01><R02>0.422618</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.422618</R20><R21>0.0</R21><R22>0.906308</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>1.3</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBXADEF13A148A24E77914983EE49260BF5"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBXF4A6CD147B6D46A6BAE817DF40E2F5F4"><Properties><string name="Name">Number</string><string name="Text">4</string><UDim2 name="Position"><XS>0.3</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.4</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.117647</R><G>0.133333</G><B>0.235294</B></Color3><float name="TextStrokeTransparency">1.0</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item><Item class="Model" referent="RBX9AD9A9C0754446C58C1990C6B0E57F54"><Properties><string name="Name">BackSeat5</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>6.128356</X><Y>2.55</Y><Z>-60.357699</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBXD2467781FFAD435FBB93E25036E0A9FD"><Properties><string name="Name">Leg</string><CoordinateFrame name="CFrame"><X>6.128356</X><Y>2.05</Y><Z>-60.357699</Z><R00>0.642788</R00><R01>0.0</R01><R02>0.766044</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.766044</R20><R21>0.0</R21><R22>0.642788</R22></CoordinateFrame><Vector3 name="size"><X>1.4</X><Y>1.0</Y><Z>1.4</Z></Vector3><Color3uint8 name="Color3uint8">4293309510</Color3uint8><token name="Material">1088</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Seat" referent="RBXE8B68336964B45E28ACB85963AC715B3"><Properties><string name="Name">Seat</string><CoordinateFrame name="CFrame"><X>6.128356</X><Y>2.8</Y><Z>-60.357699</Z><R00>0.642788</R00><R01>0.0</R01><R02>0.766044</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.766044</R20><R21>0.0</R21><R22>0.642788</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>0.5</Y><Z>2.2</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">true</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXA6C24CE92A0A43B082F7AE5E892DC266"><Properties><string name="Name">Backrest</string><CoordinateFrame name="CFrame"><X>6.971004</X><Y>3.7</Y><Z>-59.650633</Z><R00>0.642788</R00><R01>0.0</R01><R02>0.766044</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-0.766044</R20><R21>0.0</R21><R22>0.642788</R22></CoordinateFrame><Vector3 name="size"><X>2.2</X><Y>1.3</Y><Z>0.3</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">1312</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="SurfaceGui" referent="RBX1685E2692DE3479F8C03EFB9B291A0C7"><Properties><string name="Name">Gui</string><token name="Face">2</token><token name="SizingMode">1</token><float name="PixelsPerStud">50.0</float><float name="LightInfluence">0.0</float></Properties><Item class="TextLabel" referent="RBX52C6F16BA993422FAB9B798E075D96A4"><Properties><string name="Name">Number</string><string name="Text">5</string><UDim2 name="Position"><XS>0.3</XS><XO>0</XO><YS>0.05</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>0.4</XS><XO>0</XO><YS>0.9</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.117647</R><G>0.133333</G><B>0.235294</B></Color3><float name="TextStrokeTransparency">1.0</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item></Item><Item class="Folder" referent="RBX96B4D6C7BBF14180B605F876867355A7"><Properties><string name="Name">Points</string></Properties><Item class="Part" referent="RBXDB03D9DFA5064962AE747BC4EC9DC8AE"><Properties><string name="Name">SlapSpot</string><CoordinateFrame name="CFrame"><X>1.2</X><Y>4.55</Y><Z>-62.9</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>2.0</X><Y>2.0</Y><Z>1.0</Z></Vector3><Color3uint8 name="Color3uint8">4294922320</Color3uint8><token name="Material">288</token><float name="Transparency">0.5</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX827F63E30AEA4133A40259F4F129C55D"><Properties><string name="Name">KOSpot</string><CoordinateFrame name="CFrame"><X>12.5</X><Y>3.3</Y><Z>-60.0</Z><R00>0.0</R00><R01>0.0</R01><R02>1.0</R02><R10>0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>-1.0</R20><R21>0.0</R21><R22>-0.0</R22></CoordinateFrame><Vector3 name="size"><X>2.0</X><Y>2.0</Y><Z>1.0</Z></Vector3><Color3uint8 name="Color3uint8">4294922320</Color3uint8><token name="Material">288</token><float name="Transparency">0.5</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBXEACE807D983548A7A074EBCA1B4156EA"><Properties><string name="Name">ExitSpot</string><CoordinateFrame name="CFrame"><X>6.5</X><Y>3.3</Y><Z>-47.5</Z><R00>1.0</R00><R01>0.0</R01><R02>-0.0</R02><R10>-0.0</R10><R11>1.0</R11><R12>-0.0</R12><R20>0.0</R20><R21>0.0</R21><R22>1.0</R22></CoordinateFrame><Vector3 name="size"><X>2.0</X><Y>2.0</Y><Z>1.0</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.5</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX2B88080D81C7407B9AA01BA857479AD7"><Properties><string name="Name">RevealCam</string><CoordinateFrame name="CFrame"><X>7.5</X><Y>6.5</Y><Z>-61.5</Z><R00>0.470588</R00><R01>-0.197297</R01><R02>0.860012</R02><R10>0.0</R10><R11>0.97468</R11><R12>0.223603</R12><R20>-0.882353</R20><R21>-0.105225</R21><R22>0.458673</R22></CoordinateFrame><Vector3 name="size"><X>1.0</X><Y>1.0</Y><Z>2.0</Z></Vector3><Color3uint8 name="Color3uint8">4283474175</Color3uint8><token name="Material">288</token><float name="Transparency">0.5</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX53348D1B703E4E5AAD1A8183D9AF4A93"><Properties><string name="Name">ArenaBounds</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>12.55</Y><Z>-62.0</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>19.4</X><Y>22.0</Y><Z>16.4</Z></Vector3><Color3uint8 name="Color3uint8">4283474175</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item></Item><Item class="Model" referent="RBXE7CFFC78DAA34DDAB02E06D84ACF2A06"><Properties><string name="Name">JoinPad</string><OptionalCoordinateFrame name="WorldPivotData"><CFrame><X>0.0</X><Y>0.2</Y><Z>-47.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CFrame></OptionalCoordinateFrame></Properties><Item class="Part" referent="RBXA8C00ABC409A447497F8261E9D06DD2E"><Properties><string name="Name">Zone</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>0.2</Y><Z>-47.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>8.0</X><Y>0.3</Y><Z>8.0</Z></Vector3><Color3uint8 name="Color3uint8">4280164924</Color3uint8><token name="Material">272</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">true</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX6CC2248D529E4CF6B357D5895C58128A"><Properties><string name="Name">Glow</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>0.25</Y><Z>-51.6</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>8.6</X><Y>0.35</Y><Z>0.4</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX4EF48D57A70A45DE973667C6FBDAF770"><Properties><string name="Name">Glow</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>0.25</Y><Z>-43.4</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>8.6</X><Y>0.35</Y><Z>0.4</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX2A0DF5D59FBA4849A37E91EC35426FA9"><Properties><string name="Name">Glow</string><CoordinateFrame name="CFrame"><X>-4.1</X><Y>0.25</Y><Z>-47.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.4</X><Y>0.35</Y><Z>8.6</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX61139851CA1946FF9BF28BBC36B42D83"><Properties><string name="Name">Glow</string><CoordinateFrame name="CFrame"><X>4.1</X><Y>0.25</Y><Z>-47.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.4</X><Y>0.35</Y><Z>8.6</Z></Vector3><Color3uint8 name="Color3uint8">4283489400</Color3uint8><token name="Material">288</token><float name="Transparency">0.0</float><bool name="Anchored">true</bool><bool name="CanCollide">true</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties></Item><Item class="Part" referent="RBX905F5327F6B04BA888851278EA104B92"><Properties><string name="Name">Sign</string><CoordinateFrame name="CFrame"><X>0.0</X><Y>6.5</Y><Z>-47.5</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame><Vector3 name="size"><X>0.4</X><Y>0.4</Y><Z>0.4</Z></Vector3><Color3uint8 name="Color3uint8">4293848820</Color3uint8><token name="Material">272</token><float name="Transparency">1.0</float><bool name="Anchored">true</bool><bool name="CanCollide">false</bool><bool name="CanTouch">false</bool><bool name="CastShadow">false</bool><token name="shape">1</token><token name="TopSurface">0</token><token name="BottomSurface">0</token></Properties><Item class="BillboardGui" referent="RBX5EF5E9AE45A14E0C9B70B69123494AC4"><Properties><string name="Name">Board</string><UDim2 name="Size"><XS>10</XS><XO>0</XO><YS>3.6</YS><YO>0</YO></UDim2><float name="MaxDistance">120.0</float><float name="LightInfluence">0.0</float><bool name="AlwaysOnTop">false</bool></Properties><Item class="TextLabel" referent="RBXB71AA915669147B7B1C81FEA45C8085C"><Properties><string name="Name">Title</string><string name="Text">STAND HERE TO JOIN</string><UDim2 name="Position"><XS>0</XS><XO>0</XO><YS>0</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>1</XS><XO>0</XO><YS>0.42</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.313725</R><G>0.862745</G><B>0.470588</B></Color3><float name="TextStrokeTransparency">0.2</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item><Item class="TextLabel" referent="RBX872B60CB96F8482EB05F528B42A64D4F"><Properties><string name="Name">Count</string><string name="Text">0/6</string><UDim2 name="Position"><XS>0</XS><XO>0</XO><YS>0.42</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>1</XS><XO>0</XO><YS>0.3</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>1.0</R><G>1.0</G><B>1.0</B></Color3><float name="TextStrokeTransparency">0.2</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>900</Weight><Style>Normal</Style></Font></Properties></Item><Item class="TextLabel" referent="RBX2BBACD43E65B4D75878B6125A7DDC76A"><Properties><string name="Name">Info</string><string name="Text">Waiting for players 0/3</string><UDim2 name="Position"><XS>0</XS><XO>0</XO><YS>0.72</YS><YO>0</YO></UDim2><UDim2 name="Size"><XS>1</XS><XO>0</XO><YS>0.28</YS><YO>0</YO></UDim2><float name="BackgroundTransparency">1.0</float><bool name="TextScaled">true</bool><bool name="TextWrapped">true</bool><Color3 name="TextColor3"><R>0.901961</R><G>0.705882</G><B>0.27451</B></Color3><float name="TextStrokeTransparency">0.2</float><Font name="FontFace"><Family><url>rbxasset://fonts/families/GothamSSm.json</url></Family><Weight>700</Weight><Style>Normal</Style></Font></Properties></Item></Item></Item></Item></Item></Item></Item></roblox>
