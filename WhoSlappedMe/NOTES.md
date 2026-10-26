@@ -298,3 +298,26 @@ Theme: a **game-show stage**. Everything is plain anchored Parts, so it's easy t
 `Seats/HotSeat`, `Seats/BackSeat1..5`, `Points/SlapSpot`, `Points/KOSpot`, `Points/ExitSpot`, `JoinPad`, `Border`, `Screens/PhaseScreen`, `Screens/JoinSign`
 
 **Performance for the map:** about 80-100 parts, all **Anchored**, `CanTouch` off and `CastShadow` off on decoration, `CanCollide` off on things nobody walks on, no unions or heavy meshes, only 1-2 lights. Screens update only when the phase changes, not every frame.
+
+---
+
+## 11. v2 feedback from the user (after playing v1) 📝
+
+**Main point:** this game goes into a **hangout game**, so it must stay **simple**. v1 is too complicated.
+
+| # | Feedback | Plan for v2 |
+|---|----------|-------------|
+| V1 | **Too complicated** overall | Remove everything below that isn't needed; keep the core loop (pad → lottery → vote → slap/block → guess) |
+| V2 | **Big phase screen** in front of the players (showing what happens in the game) is not needed | Remove the backdrop screen + title sign. Phase info only in each player's own small UI |
+| V3 | **Spectate button/camera** is not needed — people outside can just watch | Remove `Spectate` module, `SpectateCam` point and the setting |
+| V4 | **Map is too big**, takes a lot of space | Much smaller arena: just enough room for the hot seat + 5 back seats + slap spot. Smaller pad |
+| V5 | **Spectator bleachers** not needed | Remove them. KO'd players go outside next to the arena |
+| V6 | **Too much empty space inside** the arena | Shrink the stage to fit the seats tightly |
+| V7 | 🐞 **Bug: the slapper chose the power while still sitting in the seat.** Wanted: the slapper stands **behind the front player**, raise-hand animation plays there, power is chosen there, then the slap animation | Make standing up reliable: unseat → wait until the seat is really empty → tell the slapper's client to stand up (`Sit = false`, state GettingUp) → teleport + freeze behind the hot seat → only then start the power bar. Check position before continuing |
+| V8 | The **wrong-guess preview** (who slapped) must show the slapper standing behind and slapping, same as V7 | Reveal replay uses the same reliable stand-up from V7 |
+| V9 | 🐞 **Bug: after the game ends / someone wins / someone leaves, players stay trapped inside the arena box** and can't get out | Never leave anyone inside: (1) stand-up fix from V7 before teleporting out, (2) the player's own client also moves its character to the exit (client owns its character, so this always works), (3) safety check every second: anyone inside the arena who is **not** in the game is moved outside automatically |
+
+### Already done, not released yet
+| # | Change |
+|---|--------|
+| S1 | **Studio test mode:** `Config.STUDIO_TEST_PLAYERS = 2` lets a game start with 2 players **only in Studio** (live servers still need `MIN_PLAYERS`). A test game with fewer than `MIN_PLAYERS` plays until 1 player is left. Ships with v2 |
