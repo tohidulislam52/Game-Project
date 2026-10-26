@@ -33,6 +33,7 @@ All scripts live **only inside the `.rbxmx`** (no copies elsewhere in the repo).
    | `ReplicatedStorage/WhoSlappedMe` | **ReplicatedStorage** |
    | `ServerScriptService/WhoSlappedMe` | **ServerScriptService** |
    | `StarterPlayerScripts/WhoSlappedMe` | **StarterPlayer → StarterPlayerScripts** |
+   | `StarterGui/WhoSlappedMeUI` (the UI) | **StarterGui** |
    | `Workspace/WhoSlappedMe` (the arena model) | **Workspace** (move it anywhere you like) |
 
 3. Delete the empty `WhoSlappedMe_INSTALL` folder.
@@ -65,9 +66,19 @@ StarterPlayer > StarterPlayerScripts
         ├── Protect            black screen + BLOCK mini-game
         ├── CameraCtl · Fx · Hud · UI
         └── Rules              🧪 test feature
+StarterGui
+└── WhoSlappedMeUI (ScreenGui) the whole UI, real instances: edit it in Studio
 Workspace
 └── WhoSlappedMe (Model)       the arena
 ```
+
+### 🎨 Editing the UI
+The UI is a normal ScreenGui (`StarterGui → WhoSlappedMeUI`), built in the same style as the Park UI kit
+(dark see-through windows, 8px corners, drop shadow, light cards, green buttons, font `16658221428`).
+Change colours, sizes, images and texts freely in Studio. **Only keep the names**, the scripts look them up:
+`Status`, `PadInfo`, `Buttons/Leave`, `Buttons/Help`, `Banner`, `Picker` (`Title`, `Desc`, `Timer`, `TimerBar/Fill`,
+`Content`, `CardTemplate`), `Power` (`Desc`, `Total`, `Bar/Needle`, `Bar/Yellow`, `Bar/Green`, `Chips/Chip1..3`, `Tap`),
+`Blackout` (`Center/…`, `Flash`), `Rules` (`Close`), `Winners` (`Row`, `WinnerTemplate`).
 
 ### Test it
 **Test → Clients and Servers → 2 or 3 players → Start.** Walk everyone onto the glowing pad.

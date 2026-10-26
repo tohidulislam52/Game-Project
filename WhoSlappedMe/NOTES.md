@@ -377,3 +377,19 @@ User feedback: the UI looked unprofessional / "AI made". Only the client UI scri
 
 Changed scripts (StarterPlayerScripts > WhoSlappedMe): `ClientMain` (texts only), `Modules/UI`, `Hud`, `Picker`, `PowerBar`, `Protect`, `Rules`.
 
+---
+
+## 13. v2.2 UI in the user's own style ✅
+
+The v2.1 UI (built in code) still did not fit. The user shared their **Park UI kit** (`Ui_Kit_Park_.rbxmx`) to copy its style.
+
+**What the kit does (analysed):**
+- Windows: `#272930` at 0.7 transparency, 8px corners, drop shadow `6014261993` (slice), sizes in screen scale + `UIAspectRatioConstraint` + `UISizeConstraint`
+- Text: font `rbxassetid://16658221428` (weights 600/700/800), `TextScaled`, white titles with a grey→white `UIGradient` ("Shadow"), descriptions `#c8c8c8`
+- Cards: `#dcdcdc` with a 1px `#969696` stroke; picture cards get a dark bottom gradient with white text on top
+- Buttons: green `#78c846` with the same sheen gradient; small icon buttons orange `#ffaa00` / red `#ff0000` at 0.3
+- UI is made of **real instances** in StarterGui, scripts only fill them in
+
+**v2.2:** the UI is now a real ScreenGui `StarterGui/WhoSlappedMeUI` built with those rules, editable in Studio.
+Client scripts (`UI`, `Hud`, `Picker`, `PowerBar`, `Protect`, `Rules`) only look up parts by name and fill them.
+
