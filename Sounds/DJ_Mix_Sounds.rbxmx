@@ -1,0 +1,778 @@
+<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
+	<External>null</External>
+	<External>nil</External>
+	<Item class="Folder" referent="RBXC0FC42E06B2B404882294B93D1E1A7C6">
+		<Properties>
+			<string name="Name">DJ Mix</string>
+			<BinaryString name="AttributesSerialize">AQAAAAQAAABJY29uAgMAAADil4g=</BinaryString>
+		</Properties>
+		<Item class="Sound" referent="RBX4930D96A680B42C682E0826DD816D648">
+			<Properties>
+				<string name="Name">DJ ENGGAK DULU</string>
+				<Content name="SoundId"><url>rbxassetid://86998222368138</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX1556623241E742998E16D906B494A2CC">
+			<Properties>
+				<string name="Name">Jhumka</string>
+				<Content name="SoundId"><url>rbxassetid://135364572485853</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX31989D2756F84EBDAB78DCDEAC0B3903">
+			<Properties>
+				<string name="Name">Tunir Maa</string>
+				<Content name="SoundId"><url>rbxassetid://123611332096684</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX0FC5BAED827E4220A425EB419AF25DC6">
+			<Properties>
+				<string name="Name">Pangkha</string>
+				<Content name="SoundId"><url>rbxassetid://79608618724480</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBXBD70F48806894DA7A35A5FC5BBFCDE79">
+			<Properties>
+				<string name="Name">Faitta Jay</string>
+				<Content name="SoundId"><url>rbxassetid://119214945107185</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX2D1031B9847F4536BE39491380C241A4">
+			<Properties>
+				<string name="Name">Murir Tin</string>
+				<Content name="SoundId"><url>rbxassetid://108441175347644</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX305BAFBD2BFF47D0A767228BFBF75101">
+			<Properties>
+				<string name="Name">Takla Takla</string>
+				<Content name="SoundId"><url>rbxassetid://115110306929406</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX144503ABBCD34E5E9AC610545230BAB7">
+			<Properties>
+				<string name="Name">Tajim Vai</string>
+				<Content name="SoundId"><url>rbxassetid://121435039919087</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBXFE7CD0B5629B4906B8378DDD0C6078B0">
+			<Properties>
+				<string name="Name">Tajim Vai 2</string>
+				<Content name="SoundId"><url>rbxassetid://96931610954488</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBXE85E8B0266364B4D9AA16806E7DFE028">
+			<Properties>
+				<string name="Name">Rojin Vai</string>
+				<Content name="SoundId"><url>rbxassetid://90666668593723</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX1920F6F49A1341998EB149610D754102">
+			<Properties>
+				<string name="Name">Ghum Vai</string>
+				<Content name="SoundId"><url>rbxassetid://76657836744765</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX420B437033ED4A879F9E6B307D33EF38">
+			<Properties>
+				<string name="Name">Lucks Vai</string>
+				<Content name="SoundId"><url>rbxassetid://133748832183360</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBXADF69051AE544AA387447A6A3190544B">
+			<Properties>
+				<string name="Name">Sonena Jatona</string>
+				<Content name="SoundId"><url>rbxassetid://132809846799884</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX5A1567F2A92148CBA137F32C2371B400">
+			<Properties>
+				<string name="Name">Rupbane Nache</string>
+				<Content name="SoundId"><url>rbxassetid://105253368499404</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBXB3CB501A3D404F10B0295CEA888FDC50">
+			<Properties>
+				<string name="Name">Ohona</string>
+				<Content name="SoundId"><url>rbxassetid://103410382592893</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX713B7F497276428C92E09134511F7E30">
+			<Properties>
+				<string name="Name">Ki Nmake Deke</string>
+				<Content name="SoundId"><url>rbxassetid://96968493761798</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX5C63EC1A7E5245BE8AF56B8765326698">
+			<Properties>
+				<string name="Name">Khairun Lo</string>
+				<Content name="SoundId"><url>rbxassetid://82426281457095</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBXECCD884BAF5F46389289ECD87745D5B7">
+			<Properties>
+				<string name="Name">Chumki Choleche</string>
+				<Content name="SoundId"><url>rbxassetid://76637314823879</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBXFCCCDBE006C94F8BAE2BBECC96E4ED43">
+			<Properties>
+				<string name="Name">Sanam</string>
+				<Content name="SoundId"><url>rbxassetid://78147414693860</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX8AE4E9DA429549C38F921E59AC984210">
+			<Properties>
+				<string name="Name">Chander Bati</string>
+				<Content name="SoundId"><url>rbxassetid://114894121130315</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX4809443A836A4DA58C8A85400837C82F">
+			<Properties>
+				<string name="Name">Bapuram Sapure</string>
+				<Content name="SoundId"><url>rbxassetid://76133728693760</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBXE7B05E654F814398B25FC18927A43115">
+			<Properties>
+				<string name="Name">Shohore Ami</string>
+				<Content name="SoundId"><url>rbxassetid://94110668849314</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX29E03029523747BE8035DC4E95C493FB">
+			<Properties>
+				<string name="Name">Sadher Lau</string>
+				<Content name="SoundId"><url>rbxassetid://75330419048205</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX1DDAACBEB6184C66AC970FCC74BC493B">
+			<Properties>
+				<string name="Name">Dekhna O Rosiya</string>
+				<Content name="SoundId"><url>rbxassetid://79817636615756</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX540100EC94B34CA7B44107D92B82DF90">
+			<Properties>
+				<string name="Name">Amay Charle</string>
+				<Content name="SoundId"><url>rbxassetid://122489797794059</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX92C66D8C98EE4088B48EE50E8F269A6D">
+			<Properties>
+				<string name="Name">Amer Boi Lagay</string>
+				<Content name="SoundId"><url>rbxassetid://107737461089802</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX623D94EA80284102BCC892728F1CA9DC">
+			<Properties>
+				<string name="Name">Je Shohore Ami</string>
+				<Content name="SoundId"><url>rbxassetid://94110668849314</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX5A30E9B261694F96B65C1CE5E2CF3B88">
+			<Properties>
+				<string name="Name">Ekaki Mon</string>
+				<Content name="SoundId"><url>rbxassetid://72590803933824</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBXBC32E010B1684850BE8EF0ACAC56CD83">
+			<Properties>
+				<string name="Name">কেনো বুঝোস না !</string>
+				<Content name="SoundId"><url>rbxassetid://79332658393561</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBXAECCD9756F9648459991A838C44AAA3E">
+			<Properties>
+				<string name="Name">Kaizo — রাতের রাজা</string>
+				<Content name="SoundId"><url>rbxassetid://124947912031157</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBXC21E1FE6D58644AD920C428BDEED6C73">
+			<Properties>
+				<string name="Name">Sobi Acay Tumer</string>
+				<Content name="SoundId"><url>rbxassetid://96973309730257</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX6771B02067E74E07928A289A8B246831">
+			<Properties>
+				<string name="Name">বিয়ে আমায় দিতে হবে</string>
+				<Content name="SoundId"><url>rbxassetid://108228266667298</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX940F4CC31C844ED0B3FD2D622D001724">
+			<Properties>
+				<string name="Name">Dj</string>
+				<Content name="SoundId"><url>rbxassetid://108228266667298</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX41DE683AE1A4460F88FB2A4FBF26731D">
+			<Properties>
+				<string name="Name">Milon Hobe Koto Dine</string>
+				<Content name="SoundId"><url>rbxassetid://115357387798628</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX490A3DEFDEAA437F87DFDC40C55FFE12">
+			<Properties>
+				<string name="Name">কতদিন তোমাকে ছাড়া</string>
+				<Content name="SoundId"><url>rbxassetid://100146514198534</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBXA900823049D44ADE914CCAC3AC18C3AF">
+			<Properties>
+				<string name="Name">তোমাকে দিয়েছিলাম কথা</string>
+				<Content name="SoundId"><url>rbxassetid://140283941564606</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBXEA580B70CA5940F59692876696AD3E59">
+			<Properties>
+				<string name="Name">বেঁচে থাকার গান</string>
+				<Content name="SoundId"><url>rbxassetid://73902546614628</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBXFA5AD35DD23440F98528E4C3D56D8AEF">
+			<Properties>
+				<string name="Name">Tobu Asho Na Tumi</string>
+				<Content name="SoundId"><url>rbxassetid://138540265742777</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX5EF2DBAFC4C5420CA27AEB864CA08E35">
+			<Properties>
+				<string name="Name">SANAM</string>
+				<Content name="SoundId"><url>rbxassetid://98953741331345</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBXEFF6C7A6DAD74F168333D2DAC24997C3">
+			<Properties>
+				<string name="Name">10a10</string>
+				<Content name="SoundId"><url>rbxassetid://82644926664296</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX256098267C9D4405B5A92FC0F489C187">
+			<Properties>
+				<string name="Name">Aci</string>
+				<Content name="SoundId"><url>rbxassetid://140248883613100</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX5A8229AD88C44CD092357BBB6FB35A2B">
+			<Properties>
+				<string name="Name">Nagin</string>
+				<Content name="SoundId"><url>rbxassetid://114745339091876</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBXA9A3F23E75A8460A86A700EB43F813BC">
+			<Properties>
+				<string name="Name">রেশমি চুরি</string>
+				<Content name="SoundId"><url>rbxassetid://128051760542939</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX5C52B38D43C841B8B64CCD973CA837CF">
+			<Properties>
+				<string name="Name">Bandook chalegi</string>
+				<Content name="SoundId"><url>rbxassetid://77306840433163</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBXD52C5220D1B141DE897243283D2C7E42">
+			<Properties>
+				<string name="Name">Dana Kata Pori DJ</string>
+				<Content name="SoundId"><url>rbxassetid://70622525194092</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBXD3818A059A254454B7CA44504F440F4B">
+			<Properties>
+				<string name="Name">Laage Ura Dhura</string>
+				<Content name="SoundId"><url>rbxassetid://132465211059396</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX75829480D28449C4A2CA12E03FAA3529">
+			<Properties>
+				<string name="Name">Le Paglu Dance</string>
+				<Content name="SoundId"><url>rbxassetid://127743959830845</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX2817C5032A334DCF9F6FDB71261489BD">
+			<Properties>
+				<string name="Name">Tumi Jalaiya Gela Moner Agun</string>
+				<Content name="SoundId"><url>rbxassetid://131951456543285</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX458E8C943FEF414C98F4BEEA74CD88A6">
+			<Properties>
+				<string name="Name">Latai Dj</string>
+				<Content name="SoundId"><url>rbxassetid://86004761898597</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX232D5BFB5548458A85A495F2122D9320">
+			<Properties>
+				<string name="Name">Shami Ar Stri</string>
+				<Content name="SoundId"><url>rbxassetid://101933646489934</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX8FC8DD57F9C84F0EBF3A80382AD6A3BE">
+			<Properties>
+				<string name="Name">Not Enough</string>
+				<Content name="SoundId"><url>rbxassetid://90368124845461</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBXAE9A6728B7CC4E40B55E22F9D7751595">
+			<Properties>
+				<string name="Name">Savage love</string>
+				<Content name="SoundId"><url>rbxassetid://76544856861961</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX4D73EA26620147C79DD7C208B1B115F2">
+			<Properties>
+				<string name="Name">DJ HOTEL</string>
+				<Content name="SoundId"><url>rbxassetid://129157117038287</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX1D6D5A31CA164EAB802CAA4366CA6A5D">
+			<Properties>
+				<string name="Name">Khaja Baba</string>
+				<Content name="SoundId"><url>rbxassetid://82549757322373</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX8903991C6CFD4F3DBD3BF7B88F39A899">
+			<Properties>
+				<string name="Name">pagol chara duniya cole na</string>
+				<Content name="SoundId"><url>rbxassetid://88681225662267</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX88F94AC394F04BE48CE87823023B14ED">
+			<Properties>
+				<string name="Name">Gulistaner Morey</string>
+				<Content name="SoundId"><url>rbxassetid://111394798456326</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX4982EEA74DA0415B9D0FA2FF7BF779C9">
+			<Properties>
+				<string name="Name">১ গুরা মটর</string>
+				<Content name="SoundId"><url>rbxassetid://74831017481982</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX29A9E6DEACDC44B6AF797B0D228D9B63">
+			<Properties>
+				<string name="Name">লোকাল বাস</string>
+				<Content name="SoundId"><url>rbxassetid://70605574812913</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBXA1B5104F1DED45F28760F6AC09A26334">
+			<Properties>
+				<string name="Name">Love Mashup_?</string>
+				<Content name="SoundId"><url>rbxassetid://85969912883985</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX75DDFD53FE04416DAB0562E541AAABB8">
+			<Properties>
+				<string name="Name">Old vs New Bangla Mashup</string>
+				<Content name="SoundId"><url>rbxassetid://139738937763724</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX0068DBBAC852416E85B0D168CE1AD622">
+			<Properties>
+				<string name="Name">Behula</string>
+				<Content name="SoundId"><url>rbxassetid://84827259064075</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBXF15EA2345A064C69979818007F88E977">
+			<Properties>
+				<string name="Name">Nantu Ghotok</string>
+				<Content name="SoundId"><url>rbxassetid://127361294576887</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX20A4C96DBCD44CF7818A3FCE8D2B95B4">
+			<Properties>
+				<string name="Name">Pinik Pinik Lagey</string>
+				<Content name="SoundId"><url>rbxassetid://88684666350054</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+		<Item class="Sound" referent="RBX3F33B0CF374E49DA8EB68EA4B1C38028">
+			<Properties>
+				<string name="Name">Bala Nacho To Dekhi</string>
+				<Content name="SoundId"><url>rbxassetid://119534727946786</url></Content>
+				<float name="Volume">0.5</float>
+				<float name="PlaybackSpeed">1</float>
+				<bool name="Looped">false</bool>
+				<bool name="Playing">false</bool>
+				<bool name="PlayOnRemove">false</bool>
+				<double name="TimePosition">0</double>
+			</Properties>
+		</Item>
+	</Item>
+</roblox>
